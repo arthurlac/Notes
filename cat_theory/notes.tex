@@ -1,0 +1,130 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows}
+\tikzset{
+	commutative diagrams/.cd,
+	arrow style=tikz,
+	diagrams={>=space}
+ }
+\tikzcdset{
+	arrow style=tikz,
+	diagrams={>={Straight Barb[scale=0.8]}}
+}
+
+\begin{document}
+
+\section{The most important definition}
+\begin{definition}
+	A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ has a \textit{left adjoint} if
+		$$
+		\forall\ X \in \mathcal{D}
+		\quad\exists\quad
+		FX \in \mathcal{C} \ \textrm{and}\ \eta_X : X \rightarrow UFX \in \mathcal{D}
+		$$
+		such that
+		$$
+		\forall\ A \in \mathcal{C}\ \textrm{and}\ \forall\ f : X \rightarrow UA
+		\quad\exists\quad
+		!g : FX \rightarrow A
+		$$
+		such that the following diagram commutes
+\end{definition}
+
+\begin{center}
+	\begin{tikzcd}
+		X \drar[swap]{f} \rar{\eta_X} & UFX \dar{Ug} \\
+		& UA
+	\end{tikzcd}
+\end{center}
+
+\section{Categories and Functors}
+
+\begin{definition}
+	A \textit{category} $\mathcal{C}$ consists of
+	\begin{itemize}
+		\item a set $Ob\,\mathcal{C}$, elements of which are called \textit{objects} of $\mathcal{C}$.
+		\item for each $X, Y \in Ob\,\mathcal{C}$ a set called the \textit{homset} from $X$ to $Y$.
+		\item for each $X, Y, Z \in Ob\,\mathcal{C}$ a \textit{composition function} $\circ$
+			$$\mathcal{C}(X,Y) \circ \mathcal{C}(Y,Z) \rightarrow \mathcal{C}(X,Z)$$
+		\item for each $X \in Ob\,\mathcal{C}$ a \textit{identity function} $\iota_X$
+			$$\iota_X \mathcal{C}(X) \rightarrow \mathcal{C}(X)$$
+			\begin{center}
+				\begin{tikzcd}
+					X\ar[r,"\iota_X"] & X
+				\end{tikzcd}
+			\end{center}
+		\item Composition is associative.
+			$$\forall
+			f \in \mathcal{C}(X,Y),\ 
+			g \in \mathcal{C}(Y,Z),\ 
+			h \in \mathcal{C}(X,Z)\quad
+			f \circ (g \circ h) = (f \circ g) \circ h
+			$$
+			\begin{center}
+				\begin{tikzcd}
+					X\ar[r,"f"]\ar[rr,out=-30,in=210,swap,"h"] & Y\ar[r,"g"] & Z
+				\end{tikzcd}
+			\end{center}
+		\item $\forall f \in \mathcal{C}(X,Y)\quad f \circ \iota_X = \iota_Y \circ f = f$
+	\end{itemize}
+\end{definition}
+
+\par
+An element $f$ of $\mathcal{C}(X,Y)$ is called an \textit{arrow}, or a \textit{function}
+or a \textit{morphism}. The object $X$ is called the \textit{domain} of $f$ and $Y$ is
+the \textit{codomain}.
+
+\begin{example}
+	The foremost example of a category is the category of \textit{small sets}.
+	The objects in $Ob\,\mathcal{C}$ are sets,
+	a morphism from $X$ to $Y$ is a function $f : X \rightarrow Y$.
+	The composition of Set is given by composition of functions,
+	and the identity maps are given by the identity functions.
+\end{example}
+
+
+
+
+
+\begin{definition}
+	A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ consists of
+	\begin{itemize}
+		\item a function $Ob\,U : Ob\,\mathcal{C} \rightarrow Ob\,\mathcal{D}$.
+		\item For each $X, Y \in Ob\,\mathcal{C}$ a function
+			$$U_{X,Y} : \mathcal{C}(X,Y) \rightarrow \mathcal{D}(UX, UY)$$
+			such that $U$ respects both composition and identity.
+	\end{itemize}
+\end{definition}
+
+\section{Monoids}
+
+\begin{definition}
+	A \textit{monoid} is a set $M$ together with an associative binary operation $\cdot$ and
+	a unit element $e \in M$ where
+	$$\forall\: m \in M\: \quad m \cdot e = e \cdot m = m$$
+\end{definition}
+
+\begin{definition}
+    A \textit{commutative monoid} is 
+\end{definition}
+
+\begin{definition}
+	A \textit{group} is a monoid where there exists an inverse operation where
+	$$\forall\: m \in M\: \exists\: n \in M\: \quad m \cdot n = e$$
+\end{definition}
+
+\begin{definition}
+    A \textit{monoid map} is
+\end{definition}
+
+\end{document}

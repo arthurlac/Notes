@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\begin{document}
+
+\section{What is the problem}
+Cryptography allows for the secure exchange of information.
+It is important to begin by noting that cryptography does not mean security.
+What cryptography does is provide us \textit{primitives} for security; it also
+allows us to analyse how secure we are being.
+
+\subsection{Areas of cryptography}
+\begin{itemize}
+  \item Encryption - Only the intended recipient can understand the message.
+  \item Steganography - Only the intended recipient is aware that there is a message.
+  \item Chaffing and winnowing - Only the intended recipient can find the real message.
+\end{itemize}
+
+We will focus on encryption.
+
+\subsection{Goals}
+
+\begin{itemize}
+  \item Confidentiality
+  \item Data integrity
+  \item Authentication
+  \item Message Authentication
+  \item Signature
+  \item Certification
+  \item Non-repudiation
+  \item Revocation
+\end{itemize}
+
+\end{document}
