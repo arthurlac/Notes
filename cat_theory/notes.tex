@@ -2,6 +2,8 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{mathtools}
 
@@ -52,17 +54,15 @@
 \begin{definition}
 	A \textit{category} $\mathcal{C}$ consists of
 	\begin{itemize}
-		\item a set $Ob\,\mathcal{C}$, elements of which are called \textit{objects} of $\mathcal{C}$.
-		\item for each $X, Y \in Ob\,\mathcal{C}$ a set called the \textit{homset} from $X$ to $Y$.
-		\item for each $X, Y, Z \in Ob\,\mathcal{C}$ a \textit{composition function} $\circ$
+		\item A set $Ob\,\mathcal{C}$, elements of which are called \textit{objects} of $\mathcal{C}$.
+		\item For each $X, Y \in Ob\,\mathcal{C}$
+			a set $\mathcal{C}(X,Y)$ called the \textit{homset} from $X$ to $Y$.
+		\item For each $X, Y, Z \in Ob\,\mathcal{C}$ a \textit{composition function} $\circ$
 			$$\mathcal{C}(X,Y) \circ \mathcal{C}(Y,Z) \rightarrow \mathcal{C}(X,Z)$$
-		\item for each $X \in Ob\,\mathcal{C}$ a \textit{identity function} $\iota_X$
-			$$\iota_X \mathcal{C}(X) \rightarrow \mathcal{C}(X)$$
-			\begin{center}
-				\begin{tikzcd}
-					X\ar[r,"\iota_X"] & X
-				\end{tikzcd}
-			\end{center}
+		\item For all $X \in Ob\,\mathcal{C}$ an element $\iota_X$ of $\mathcal{C}(X,\ X)$,
+			or equivalently a function $\iota_X : 1 \rightarrow \mathcal(X,\ X)$.
+			Such that
+			$$\forall f \in \mathcal{C}(X,Y)\quad f \circ \iota_X = \iota_Y \circ f = f$$
 		\item Composition is associative.
 			$$\forall
 			f \in \mathcal{C}(X,Y),\ 
@@ -75,7 +75,6 @@
 					X\ar[r,"f"]\ar[rr,out=-30,in=210,swap,"h"] & Y\ar[r,"g"] & Z
 				\end{tikzcd}
 			\end{center}
-		\item $\forall f \in \mathcal{C}(X,Y)\quad f \circ \iota_X = \iota_Y \circ f = f$
 	\end{itemize}
 \end{definition}
 
@@ -86,6 +85,9 @@ the \textit{codomain}.
 
 \begin{example}
 	The foremost example of a category is the category of \textit{small sets}.
+	We say small sets due to Russel's paradox, conversely phrased a category is small
+	if its objects and arrow consitute sets; otherwise it is large.
+
 	The objects in $Ob\,\mathcal{C}$ are sets,
 	a morphism from $X$ to $Y$ is a function $f : X \rightarrow Y$.
 	The composition of Set is given by composition of functions,
@@ -106,25 +108,89 @@ the \textit{codomain}.
 	\end{itemize}
 \end{definition}
 
-\section{Monoids}
+
+
+
+\section{Monoids and Groups}
 
 \begin{definition}
-	A \textit{monoid} is a set $M$ together with an associative binary operation $\cdot$ and
-	a unit element $e \in M$ where
-	$$\forall\: m \in M\: \quad m \cdot e = e \cdot m = m$$
+	A \textit{monoid} is a set $M$ together with an associative binary operation $\cdot$ such that
+	$$\forall\ x, y, z \in M\ (x \cdot y) \cdot z = x \cdot (y \cdot z)$$
+	and a unit element $e \in M$ where
+	$$\forall\ m \in M\ m \cdot e = e \cdot m = m$$
+	Thus a monoid could be a considered a triple $(M,\ \cdot,\ e)$.
+\end{definition}
+
+At this point we can define the "forgetful functor", consider a functor from the
+category of monoids to the category of sets. For this functor we can simply prise the
+set $M$ from the monoid and "forget" the binary associative operation $\cdot$ as well as
+the unit $e$. It is called the forgetful functor because it forgets some of the structure of
+the domain category.
+
+\begin{definition}
+	Given two monoids $M$ and $N$, a \textit{monoid map} is a function $f : M \rightarrow N$
+	which preserves multiplication and the unit where
+	$$f(e_M) = e_N\ \textrm{and}\ \forall x, y \in M f(x \cdot y) = z, z \in N$$
+\end{definition}
+
+\begin{example}
+	Perhaps the simplest example of a monoid is taking the natural numbers $\mathbb{N}$
+	(including zero), addition, and zero.
+	Thus the monoid is $(\mathbb{N}, +, 0)$. We can see that axioms
+	are obeyed. Addition is associative and $\forall x \in \mathbb{N}\ x + 0 = x$.
+	A further example is multiplication with unit element being 1.
+\end{example}
+
+\begin{definition}
+	A \textit{commutative monoid} is a monoid $(M,\ \cdot,\ e)$ where
+	$$\forall x, y \in M\ x \cdot y = y \cdot x$$
+\end{definition}
+
+Because both addition and multiplication are commutative, the monoids $(\mathbb{N},\ +,\ 0)$
+and $(\mathbb{N},\ \times,\ 1)$ are commutative monoids.
+$$ \forall x, y \in \mathbb{N}$$
+$$x + y = y + x$$
+$$x \times y = y \times x$$
+
+\begin{example}
+	An example of a monoid which is not commutative is that of strings and concatenation.
+	Consider the alphabet $\Sigma = \{a,\ b,\ \epsilon\}$ where $\epsilon$ is the empty string.
+	Strings in this alphabet include $\epsilon,\ aa,\ ab,\ bbb$ and so on.
+	Our binary associative operation is concatenation ($+$).
+	The unit element is $\epsilon$.
+	From this we can see that
+	$$aa + (bb + ab) = (aa + bb) + aa = aabbaa$$
+	$$aa + \epsilon = aa = \epsilon + aa$$
+	Furthermore that
+	$$aa + bb \ne bb + aa$$
+\end{example}
+
+A further example of a non-commutative monoid is that of matrix multiplication.
+
+\begin{definition}
+	A \textit{idempotent monoid} is one where $\forall\ x \in M\ x \cdot x = x$.
+\end{definition}
+
+To understand this definition consider the monoid of sets and union, $(P_f(X), \cup, \varnothing)$.
+$M$ is the finite power set of $X$ (set of all finite subsets), $\cdot$ is union, and $e$ is
+the empty set $\varnothing$.
+This is an example of an idempotent monoid because
+$$\forall\ x \in P_f(X)\ x \cup x = x$$
+It is also a commutative monoid because
+$$\forall\ x,\ y \in P_f(X)\ x \cup y = y \cup x$$
+
+\begin{definition}
+	A \textit{group} is a monoid where there exists an inverse element such that
+	$$\forall\ m \in M\ \exists\ n \in M\ m \cdot n = e$$
 \end{definition}
 
 \begin{definition}
-    A \textit{commutative monoid} is 
+	A \textit{Abelian group} is a commutative group, i.e.
+	$$\forall\ x, y \in M\ x \cdot y = y \cdot x$$
 \end{definition}
 
-\begin{definition}
-	A \textit{group} is a monoid where there exists an inverse operation where
-	$$\forall\: m \in M\: \exists\: n \in M\: \quad m \cdot n = e$$
-\end{definition}
-
-\begin{definition}
-    A \textit{monoid map} is
-\end{definition}
+\begin{example}
+	An exmaple of an Abelian group
+\end{example}
 
 \end{document}
