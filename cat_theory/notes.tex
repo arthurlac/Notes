@@ -30,14 +30,14 @@
 	A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ has a \textit{left adjoint} if
 		$$
 		\forall\ X \in \mathcal{D}
-		\quad\exists\quad
-		FX \in \mathcal{C} \ \textrm{and}\ \eta_X : X \rightarrow UFX \in \mathcal{D}
+		\ \exists
+		\ FX \in \mathcal{C} \ \textrm{and}\ \eta_X : X \rightarrow UFX \in \mathcal{D}
 		$$
 		such that
 		$$
 		\forall\ A \in \mathcal{C}\ \textrm{and}\ \forall\ f : X \rightarrow UA
-		\quad\exists\quad
-		!g : FX \rightarrow A
+		\ \exists
+		\ !g : FX \rightarrow A
 		$$
 		such that the following diagram commutes
 \end{definition}
@@ -62,13 +62,13 @@
 		\item For all $X \in Ob\,\mathcal{C}$ an element $\iota_X$ of $\mathcal{C}(X,\ X)$,
 			or equivalently a function $\iota_X : 1 \rightarrow \mathcal(X,\ X)$.
 			Such that
-			$$\forall f \in \mathcal{C}(X,Y)\quad f \circ \iota_X = \iota_Y \circ f = f$$
+			$$\forall f \in \mathcal{C}(X,Y)\ f \circ \iota_X = \iota_Y \circ f = f$$
 		\item Composition is associative.
 			$$\forall
-			f \in \mathcal{C}(X,Y),\ 
-			g \in \mathcal{C}(Y,Z),\ 
-			h \in \mathcal{C}(X,Z)\quad
-			f \circ (g \circ h) = (f \circ g) \circ h
+			  f \in \mathcal{C}(X,Y),
+			\ g \in \mathcal{C}(Y,Z),
+			\ h \in \mathcal{C}(X,Z)
+			\ f \circ (g \circ h) = (f \circ g) \circ h
 			$$
 			%%\begin{center}
 				%%\begin{tikzcd}
@@ -94,10 +94,6 @@ the \textit{codomain}.
 	and the identity maps are given by the identity functions.
 \end{example}
 
-
-
-
-
 \begin{definition}
 	A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ consists of
 	\begin{itemize}
@@ -107,9 +103,6 @@ the \textit{codomain}.
 			such that $U$ respects both composition and identity.
 	\end{itemize}
 \end{definition}
-
-
-
 
 \section{Monoids and Groups}
 
@@ -179,9 +172,12 @@ $$\forall\ x \in P_f(X)\ x \cup x = x$$
 It is also a commutative monoid because
 $$\forall\ x,\ y \in P_f(X)\ x \cup y = y \cup x$$
 
+Note that is is convention for commutative monoids to use the notation
+$(M,+,0)$ rather than $(M,\cdot,e)$.
+
 \begin{definition}
 	A \textit{group} is a monoid where there exists an inverse element such that
-	$$\forall\ m \in M\ \exists\ n \in M\ m \cdot n = e$$
+	$$\forall\ m \in M\ \exists\ n \in M\ s.t.\ m \cdot n = e$$
 \end{definition}
 
 \begin{definition}
@@ -190,7 +186,139 @@ $$\forall\ x,\ y \in P_f(X)\ x \cup y = y \cup x$$
 \end{definition}
 
 \begin{example}
-	An exmaple of an Abelian group
+	An exmaple of an Abelian group is the integers $\mathbb{Z}$ and addition.
 \end{example}
+
+\section{Left adjoints}
+
+\begin{definition}
+	An \textit{isomorphism}
+\end{definition}
+
+\begin{definition}
+	A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ has a \textit{left adjoint} if
+		$$
+		\forall\ X \in \mathcal{D}
+		\ \exists
+		\ FX \in \mathcal{C} \ \textrm{and}\ \eta_X : X \rightarrow UFX \in \mathcal{D}
+		$$
+		such that
+		$$
+		\forall\ A \in \mathcal{C}\ \textrm{and}\ \forall\ f : X \rightarrow UA
+		\ \exists
+		\ !g : FX \rightarrow A
+		$$
+		such that the following diagram commutes
+\end{definition}
+
+\begin{center}
+	\begin{tikzcd}
+		X \drar[swap]{f} \rar{\eta_X} & UFX \dar{Ug} \\
+		& UA
+	\end{tikzcd}
+\end{center}
+
+We will now go through a proof that a functor has a left adjoint.
+In this proof $\mathcal{C}$ is the category of idempotent commutative monoids,
+and $\mathcal{D}$ is the category of sets.
+An example of an $ICMonoid$ is that of $(P_f(X),\ \cup,\ \varnothing)$,
+where $P_f(X)$ is the finite power set of $X$;
+i.e. $P_f(X)$ is the set of all finite subsets of $X$.
+
+\begin{proof}
+	The forgetful functor $U : ICMonoid \rightarrow Set$,
+	from the category of idempotent commutative monoids
+	to the category of sets,
+	has a left adjoint.
+
+
+	Given an arbitrary set $X \in \mathcal{D}$,
+	let $\eta_X : X \rightarrow UFX$,
+	$FX$ will be $P_f(X)$
+
+
+	The unit $\eta_X : X \rightarrow P_f(X)$ sends an elemenxt $x$ of $X$ to the singleton $\{x\}$.
+
+
+	Consider $FX$ to be $P_f(X)$, the finite power sets
+
+
+
+%%TODO
+%%Given any idempotent commutative monoid M and any function f : X −→ M, define g : Pf (X) −→ M by g(A) =  x∈A f(x). It follows from idempotence and commutativity of M that g is a map of monoids, hence necessarily a map of idempotent commutative monoids. It is routine to check gηX = f.
+%%Unicity of g is routine.
+
+
+\end{proof}
+
+\section{Name me pls}
+
+\begin{definition}
+	A \textit{Pre-Order} is a set $S$ with a binary relation $\leq$ such that
+	$\forall\ x,\  y,\  z \in S$
+	\begin{enumerate}
+		\item Reflexivity - $x \leq x$
+		\item Transitivity - $x \leq y$ and $y \leq z$ means that $x \leq z$
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}
+	A \textit{Partially Ordered Set} or a \textit{POSet} is a set $S$ and a binary relation $\leq$ such that
+	$\forall\ x,\  y,\  z \in S$
+	\begin{enumerate}
+		\item Reflexivity - $x \leq x$
+		\item Anti-symmetry - $x \leq y$ and $y \leq x$ means that $x = y$
+		\item Transitivity - $x \leq y$ and $y \leq z$ means that $x \leq z$
+	\end{enumerate}
+\end{definition}
+
+Immediate examples of POSets include $(\mathbb{N},\leq)$ and $(\mathbb{N},\geq)$.
+This is also true for the rationals and real numbers.
+We can also see that $(P(X), \subseteq)$ is a POSet.
+For any set $X$ we also have simply $(X,=)$.
+These are also all pre-orders.
+\\ \\
+An example of a pre-order which is not a POSet is that of the complex numbers
+where $\leq$ compares $x = (r_1,\theta_1)$ and $y = (r_2,\theta_2)$ by $r_1 \leq r_2$;
+this means that where $r_1 = r_2$ it follows that $x \leq y$ and $y \leq x$
+but it does not follow that $x = y$ because it is possible that $\theta_1 \neq \theta_2$.
+\\ \\
+Another example if that of $(\mathbb{Z},\leq)$ where comparison of $x$ and $y$ is done by
+$|x| \leq |y|$.
+Comparing $2$ and $-2$ we get $2 \leq -2$ and $-2 \leq 2$ but not that $2 = -2$.
+
+\begin{definition}
+	A \textit{map of POSets} is a function $f : (P_1,\leq_1) \rightarrow (Q_1,\leq_2)$ where
+	$$\forall\ x,y \in P_1\ \textrm{iff}\ x \leq_1 y\ \textrm{then}\ f(x) \leq_2 f(y)$$
+\end{definition}
+
+\begin{definition}
+	A \textit{$\omega$ complete partial order} is a POSet where for every ascending chain
+	$$x_1 \leq x_2 \dots \leq x_n$$
+	there is a least upper bound $x_\omega$ such that $\forall\ n\ x_n \leq x_omega$.
+\end{definition}
+
+\begin{definition}
+	A map of $\omega$-cpo's is called \textit{$\omega$-continuous}
+	if it preserves $x_\omega$.
+\end{definition}
+
+\section{TODO}
+
+\begin{definition}
+	A category $\mathcal{C}$ has a \textit{terminal object} $T$ if
+	$$\forall\ X \in Ob\,\mathcal{C}\ \exists\ !t : X \rightarrow T$$
+\end{definition}
+
+The following all have terminal objects $1$
+POSets
+Pre-Orders
+Monoids
+
+\begin{itemize}
+\item natural transformations
+\item equalisers and coequalisers
+\item pullbacks and pushouts
+\end{itemize}
 
 \end{document}

@@ -4,11 +4,15 @@
 
 \usepackage{amsfonts}
 \usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsmath}
 \usepackage{tikz}
+\usepackage{dutchcal}
 \usetikzlibrary{shapes.arrows,chains}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
 \newtheorem{example}{Example}[section]
 
 \begin{document}
@@ -21,7 +25,7 @@ Consider a finite set $N$ of cities; $\{1, 2 \dots n\}$. The distance, or cost,
 of traveling between cities $i$ and $j$ is given by $D(i,j)$ where $D$
 is a symmetric matrix.
 
-$$\forall i, j\quad D(i,J) \in \mathbb{N}\quad D(i,j) = D(j,i)$$
+$$\forall\ i, j\quad D(i,J) \in \mathbb{N}\quad D(i,j) = D(j,i)$$
 
 The problem is to find a path, or permutation, of
 cities where each city appears exactly once in the path and the total
@@ -41,6 +45,9 @@ $$(x_1 \land x_2) \land \neg x_3$$
 $$(x_1 \land x_2) \land \neg x_1$$
 
 A brute force solution would be to consider all $2^{|X|}$ possible assignments.
+
+The link between these two problems is the na\"ive brute force solution is not
+tractable for large values of $n$.
 
 \section{Turing Machines}
 What do Turing machines do? Why are we looking at them?
@@ -67,7 +74,6 @@ a transition function until it reaches a terminal state which produces a yes or 
 	\end{tikzpicture}
 \end{center}
 
-
 \begin{definition}
 	Formally a Turing machine consists of
 	\begin{itemize}
@@ -89,7 +95,13 @@ a transition function until it reaches a terminal state which produces a yes or 
 	\end{itemize}
 \end{definition}
 
-\subsection{An example}
+\begin{definition}
+	Given an input $n$ and a Turing machine,
+	$T(n)$ is the amount of times the transition function 
+	$\delta$ must be applied to reach a terminal state.
+\end{definition}
+
+\subsection{Even or odd}
 \begin{example}
 	In this example we will present a turing machine to decide if a number is even.
 	\begin{itemize}
@@ -108,12 +120,149 @@ a transition function until it reaches a terminal state which produces a yes or 
 			\end{tabular}
 		\end{center}
 	\end{itemize}
+	For this Turing machine $T(n) = n + 1$.
 \end{example}
 
-Now the important thing about the above example is how many times the transition function is applied
+\subsection{Recognising Palindromes}
 
+A palindrome is any word such that the reversed word is equal to the word itself,
+consider the alphabet $\Gamma = \{a,b\}$, examples of palindromes would be $a, aa, aba$ etc.
+Can we construct a Turing machine which recognises palindromes for the alphabet $\Gamma$?
+
+We can, we simply move forward and backward checking each letter at opposite ends is the same,
+until the entire word has been checked.
+This means for palindromes $T(n)$ is equal to $n + (n - 1) \dots + 1$. Thus
+$$T(n) = \frac{n^2 + n}{2}$$
+
+However in non palindrome cases, say $aaa \dots ab$, then $T(n)$ is very small.
+
+\section{$O, \Omega, \Theta$ Notation}
+
+\begin{definition}
+	$O(n)$
+\end{definition}
+
+\begin{definition}
+	$\Omega(n)$
+\end{definition}
+
+\begin{definition}
+	$\Theta(n)$
+\end{definition}
 Bit on worst case vs average vs best case
 
-\subsection{Recognising Palindromes}
+Note that for some $n$ $T(n)$ will be very small and for others it will be much larger,
+usually this leads us to consider the complexity of the Turing machine to be 
+
+
+\section{Complexity class P}
+
+\section{Complexity class NP}
+
+\section{NP-Complete Problems}
+
+\subsection{Polynomial transformations}
+\begin{definition}
+	Consider two languages $\mathcal{L_1} \subset A_1$ and $\mathcal{L_2} \subset A_2$,
+	$\mathcal{L_1}$ is said to be \textit{polynomially transformable} to $\mathcal{L_2}$ if
+	$$\exists\ f : A_1 \rightarrow A_2$$
+	such that $f$ can be computed with polynomially complexity and $f$ preserves the language. I.e.
+	$$\forall\ x \in A_1\ x \in \mathcal{L_1}\ \mathrm{iff}\ f(x)\in \mathcal{L_2}$$
+\end{definition}
+
+Practically $\mathcal{L_1} \propto \mathcal{L_2}$ means that
+$\mathcal{L_2}$ is not harder than $\mathcal{L_1}$;
+i.e. if $\mathcal{L_2} \in P$ then $\mathcal{L_1} \in P$.
+Furthermore this relation is transitive.
+$$
+  \mathcal{L_1} \propto \mathcal{L_2},\ 
+  \mathcal{L_2} \propto \mathcal{L_3},\Rightarrow
+  \mathcal{L_1} \propto \mathcal{L_3}
+$$
+
+\subsection{Polynomial equivalence}
+\begin{definition}
+	If we have two languages such $\mathcal{L_1} \propto \mathcal{L_2}$ and
+	$\mathcal{L_2} \propto \mathcal{L_1}$, then they are said to be \textit{polynomially equivalent}.
+	Thus we have $\mathcal{L_1} \approx \mathcal{L_2}$.
+\end{definition}
+
+This is an equivalence as such it is transitive, symmetric, and reflexive;
+as such $\forall\ \mathcal{R},\ \mathcal{S},\ \mathcal{T}$:
+\begin{center}
+	$\mathcal{R} \approx \mathcal{R}$\\
+	if $\mathcal{R} \approx \mathcal{S}$ then $\mathcal{S} \approx \mathcal{R}$.\\
+	$
+		\mathcal{R} \approx \mathcal{S},\ 
+		\mathcal{S} \approx \mathcal{T} \Rightarrow
+		\mathcal{R} \approx \mathcal{T}
+	$
+\end{center}
+
+%%TODO
+In practise what this means is that we can see what problem a class is in if we can
+polynomially translate it to another problem in a known class; for example:
+$$
+  \forall\ \mathcal{L_1} \in P\ 
+  \forall\ \mathcal{L_2} \in P\ 
+  \mathcal{L_1} \approx \mathcal{L_2}
+$$
+
+\subsection{NP-Complete problems}
+\begin{definition}
+	$\mathcal{L}$ is \textit{NP-Complete} if
+	\begin{itemize}
+		\item $\mathcal{L} \in NP$
+		\item $\forall\ \mathcal{L\prime} \in NP\ \mathcal{L\prime} \propto \mathcal{L}$
+	\end{itemize}
+\end{definition}
+
+What does this definition mean?
+Any two NP-complete languages are polynomially equivalent.
+Any NP-Complete problem is at least as hard as any other problem in NP.
+
+\begin{theorem}
+	Given two languages $\mathcal{S}, \mathcal{T} \in NP$,
+	if $\mathcal{S} \in NPC$ and $\mathcal{S} \propto \mathcal{T}$ then
+	$\mathcal{T} \in NPC$.
+\end{theorem}
+
+This theorem is rather useful for proving that a language is NP-Complete,
+however it leaves us with the issue of proving a first language is NP-Complete.
+
+\begin{definition}
+	A boolean formula $F$ is in \textit{conjunctive normal form} if it is in the form
+	\begin{equation}
+	\begin{split}
+		F &= f_1 \land f_2 \dots \land f_n \\
+		f_i &= y_1 \lor y_2 \dots \lor y_m \\
+		y_j &= x\ |\ \neg x
+	\end{split}
+	\end{equation}
+\end{definition}
+
+The following is in conjunctive normal form:
+$$(x_1 \lor x_2) \land \neg x_3$$
+The following is not in conjunctive normal form;
+however it is in \textit{disjunctive normal form}
+$$(x_1 \lor x_2) \lor \neg x_3$$
+This is because there is the negation on the left hand side of the logical or.
+
+\begin{definition}
+	Given an undirected graph $\mathcal{G}$ which is a pair of vertices and edges $(V,E)$,
+	a subset of vertices $S \subset V$ is a \textit{clique} iff
+	$$\forall\ x, y \in S\ \exists\ \textrm{an edge}\ (x,y) \in E$$
+\end{definition}
+
+\begin{definition}
+	If $S$ is a clique in $\mathcal{G}$ and $|S| = q$ then $S$ is called a \textit{$q$-clique}.
+\end{definition}
+
+An obvious consequence of this definition is that for any edge $(x,y)$ there is a 2-clique.
+
+\begin{definition}
+	The \textit{$q$-clique problem} is finding if there exists a $q$-clique in a given graph
+	$\mathcal{G}$ where $q \in \mathbb{N}$.
+\end{definition}
 
 \end{document}
