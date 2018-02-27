@@ -7,7 +7,6 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{tikz}
-\usepackage{dutchcal}
 \usetikzlibrary{shapes.arrows,chains}
 
 \theoremstyle{definition}
@@ -156,12 +155,28 @@ usually this leads us to consider the complexity of the Turing machine to be
 
 
 \section{Complexity class P}
+\begin{definition}
+	\textit{Class P} is the class of problems for which there exists a Turing machine
+	which can be computed in polynomial time.
+\end{definition}
+
+\section{Non-Deterministic Turing Machines}
 
 \section{Complexity class NP}
+\begin{definition}
+	\textit{Class NP} is the class of problems 
+\end{definition}
 
-\section{NP-Complete Problems}
+\begin{theorem}
+	$P \subset NP$
+\end{theorem}
 
-\subsection{Polynomial transformations}
+\begin{theorem}
+	Let $\mathcal{L} \in NP$ there exist a polynomial p(n) and TM
+	for solving $\mathcal{L}$ with complexity $O(2^{p(n)})$.
+\end{theorem}
+
+\section{Polynomial transformations}
 \begin{definition}
 	Consider two languages $\mathcal{L_1} \subset A_1$ and $\mathcal{L_2} \subset A_2$,
 	$\mathcal{L_1}$ is said to be \textit{polynomially transformable} to $\mathcal{L_2}$ if
@@ -180,7 +195,7 @@ $$
   \mathcal{L_1} \propto \mathcal{L_3}
 $$
 
-\subsection{Polynomial equivalence}
+\section{Polynomial equivalence}
 \begin{definition}
 	If we have two languages such $\mathcal{L_1} \propto \mathcal{L_2}$ and
 	$\mathcal{L_2} \propto \mathcal{L_1}$, then they are said to be \textit{polynomially equivalent}.
@@ -208,7 +223,7 @@ $$
   \mathcal{L_1} \approx \mathcal{L_2}
 $$
 
-\subsection{NP-Complete problems}
+\section{NP-Complete problems}
 \begin{definition}
 	$\mathcal{L}$ is \textit{NP-Complete} if
 	\begin{itemize}

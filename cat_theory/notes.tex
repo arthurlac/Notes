@@ -5,11 +5,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{amsmath}
 \usepackage{mathtools}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{example}{Example}[section]
+\newtheorem{theorem}{Thereom}[section]
 
 \usepackage{tikz-cd}
 \usetikzlibrary{arrows}
@@ -22,10 +24,12 @@
 	arrow style=tikz,
 	diagrams={>={Straight Barb[scale=0.8]}}
 }
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\D}{\mathcal{D}}
 
 \begin{document}
 
-\section{The most important definition}
+\section{The Most Important Definition}
 \begin{definition}
 	A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ has a \textit{left adjoint} if
 		$$
@@ -40,14 +44,13 @@
 		\ !g : FX \rightarrow A
 		$$
 		such that the following diagram commutes
-\end{definition}
-
-\begin{center}
-	\begin{tikzcd}
-		X \drar[swap]{f} \rar{\eta_X} & UFX \dar{Ug} \\
-		& UA
-	\end{tikzcd}
-\end{center}
+	\begin{center}
+		\begin{tikzcd}[sep=large]
+			X \drar[swap]{f} \rar{\eta_X} & UFX \dar{Ug} \\
+			& UA
+		\end{tikzcd}
+	\end{center}
+	\end{definition}
 
 \section{Categories and Functors}
 
@@ -79,7 +82,7 @@
 \end{definition}
 
 \par
-An element $f$ of $\mathcal{C}(X,Y)$ is called an \textit{arrow}, or a \textit{function}
+An element $f$ of $\mathcal{C}(X,Y)$ is called an \textit{arrow},
 or a \textit{morphism}. The object $X$ is called the \textit{domain} of $f$ and $Y$ is
 the \textit{codomain}.
 
@@ -102,6 +105,25 @@ the \textit{codomain}.
 			$$U_{X,Y} : \mathcal{C}(X,Y) \rightarrow \mathcal{D}(UX, UY)$$
 			such that $U$ respects both composition and identity.
 	\end{itemize}
+\end{definition}
+
+\begin{definition}
+	A \textit{natural transformation} $\alpha : U \rightarrow V$
+	given categories $\mathcal{C}$ and $\mathcal{D}$,
+	with functors $U, V : \mathcal{C} \rightarrow \mathcal{D}$
+	consists of
+	$$
+	\forall\ X \in Ob\,\mathcal{C}\ \textrm{a map}
+	\ \alpha_X : UX \rightarrow VX
+	$$
+	such that $\forall\ f : X \rightarrow Y \in \mathcal{C}$ the following commutes
+	\begin{center}
+		\begin{tikzcd}[sep=large]
+			UX \rar{\alpha_X} \dar[swap]{Uf} & VX \dar{Vf} \\
+			UY \rar{\alpha_Y}                & VY
+		\end{tikzcd}
+	\end{center}
+	A natural transformation can be considered a morphism of functors.
 \end{definition}
 
 \section{Monoids and Groups}
@@ -181,7 +203,7 @@ $(M,+,0)$ rather than $(M,\cdot,e)$.
 \end{definition}
 
 \begin{definition}
-	A \textit{Abelian group} is a commutative group, i.e.
+	An \textit{Abelian group} is a commutative group, i.e.
 	$$\forall\ x, y \in M\ x \cdot y = y \cdot x$$
 \end{definition}
 
@@ -192,8 +214,16 @@ $(M,+,0)$ rather than $(M,\cdot,e)$.
 \section{Left adjoints}
 
 \begin{definition}
-	An \textit{isomorphism}
+	An \textit{isomorphism} consists of maps
+	$f : X \rightarrow Y$ and $g : Y \rightarrow X$
+	such that $gf = \iota_X$ and $fg = \iota_Y$.
 \end{definition}
+
+%TODO
+%Often one refers to a given map f : X −→ Y as an isomorphism. The reason one can do that is because any inverse of f is unique, i.e., if g and g′ are both inverses of f, it must be the case that g = g′.
+%Often one refers to a given map f : X −→ Y as an isomorphism. The reason one can do that is because any inverse of f is unique, i.e., if g and g′ are both inverses of f, it must be the case that g = g′.
+%All functors preserve isomorphisms, i.e., given any functor H : C −→ D and any isomorphism f in C, the map Hf must be an isomorphism in D.
+%One needs to be careful here: people often say “X and Y are isomorphic,” and they typically think they mean that there exists an isomorphism between the objects X and Y . But in fact, they almost always have a specific isomorphism in mind. This has led to an enormity of mistakes in both papers and books in the area. For instance, any two countably infinite sets are isomorphic in the category Set, but there are uncountably many isomorphisms between any two countably infinite sets.
 
 \begin{definition}
 	A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ has a \textit{left adjoint} if
@@ -212,7 +242,7 @@ $(M,+,0)$ rather than $(M,\cdot,e)$.
 \end{definition}
 
 \begin{center}
-	\begin{tikzcd}
+	\begin{tikzcd}[sep=large]
 		X \drar[swap]{f} \rar{\eta_X} & UFX \dar{Ug} \\
 		& UA
 	\end{tikzcd}
@@ -231,27 +261,73 @@ i.e. $P_f(X)$ is the set of all finite subsets of $X$.
 	to the category of sets,
 	has a left adjoint.
 
-
 	Given an arbitrary set $X \in \mathcal{D}$,
 	let $\eta_X : X \rightarrow UFX$,
 	$FX$ will be $P_f(X)$
 
-
 	The unit $\eta_X : X \rightarrow P_f(X)$ sends an elemenxt $x$ of $X$ to the singleton $\{x\}$.
-
 
 	Consider $FX$ to be $P_f(X)$, the finite power sets
 
 
 
 %%TODO
-%%Given any idempotent commutative monoid M and any function f : X −→ M, define g : Pf (X) −→ M by g(A) =  x∈A f(x). It follows from idempotence and commutativity of M that g is a map of monoids, hence necessarily a map of idempotent commutative monoids. It is routine to check gηX = f.
-%%Unicity of g is routine.
-
 
 \end{proof}
 
-\section{Name me pls}
+
+The forgetful functor U : ICMonoid $\rightarrow$ Set
+from the category of idempotent commmutative monoids and maps of idempotent commutative monoids
+to Set has a left adjoint given by putting $FX = P_f(X)$,
+the set of finite subsets of X.
+\vspace{5mm}
+
+The multiplication of FX = Pf(X) is given by union,
+with the unit given by the empty set.
+One can readily check that these satisfy the axioms for an idempotent commutative monoid.
+\vspace{5mm}
+
+The unit $\eta_X : X \rightarrow P_f(X)$ sends an elemenxt $x$ of $X$ to the singleton $\{x\}$.
+Given any idempotent commutative monoid $M$ and any function $f : X \rightarrow M$,
+define $g : P_f (X) \rightarrow M$ by $g(A) = \Pi_{x \in A} f(x)$.
+\vspace{5mm}
+
+It follows from idempotence and commutativity of $M$ that $g$ is a map of monoids,
+hence necessarily a map of idempotent commutative monoids.
+\vspace{5mm}
+
+It is routine to check $g\eta_X = f$.
+Unicity of g is routine.
+
+\vspace{5mm}
+LINE BREAK
+\vspace{5mm}
+
+Given category of commutative monoids $\mathcal{C}$
+and the category of (small) sets $\mathcal{D}$
+and a functor $U : \mathcal{C} \rightarrow \mathcal{D}$
+$U$ has a left adjoint.
+Given an arbitrary set $X \in \mathcal{D}$,
+we define $\eta_X : X \rightarrow UFX$ to be $X \rightarrow \{X\}$
+
+\vspace{5mm}
+LINE BREAK
+\vspace{5mm}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Pre-Orders, Partially Ordered Sets, and $\omega$-cpos}
 
 \begin{definition}
 	A \textit{Pre-Order} is a set $S$ with a binary relation $\leq$ such that
@@ -303,7 +379,12 @@ Comparing $2$ and $-2$ we get $2 \leq -2$ and $-2 \leq 2$ but not that $2 = -2$.
 	if it preserves $x_\omega$.
 \end{definition}
 
-\section{TODO}
+\section{Initial and Terminal Objects}
+
+\begin{definition}
+	A category $\mathcal{C}$ has a \textit{initial object} $O$ if
+	$$\forall\ X \in Ob\,\mathcal{C}\ \exists\ !o : O \rightarrow X$$
+\end{definition}
 
 \begin{definition}
 	A category $\mathcal{C}$ has a \textit{terminal object} $T$ if
@@ -315,7 +396,85 @@ POSets
 Pre-Orders
 Monoids
 
+\begin{theorem}
+	Given categories $\C$ and $\D$,
+	if $\C$ has a terminal object $T$
+	and $U : \C \rightarrow \D$ has a left adjoint
+	then $\D$ has a terminal object $UT$.
+\end{theorem}
+
+\begin{proof}
+	Let $T$ be a terminal object of $\C$, given an arbitrary
+	$X \in \D\ \exists\ !t : FX \rightarrow UT$.
+	We can obtain a map $X \rightarrow UT$ through $Ut \circ \eta_X$.
+
+	To prove this is unique take $h$ and $h\prime : X \rightarrow UT$
+\end{proof}
+
+\begin{definition}
+	A \textit{monomorhpism}
+\end{definition}
+
+\begin{definition}
+	An \textit{epimorphism}
+\end{definition}
+
+\section{Binary Products}
+\begin{definition}
+	A category $\C$ has \textit{binary products} if
+	$$
+	\forall\ X,Y \in \C
+	$$ $$
+	\ \exists\ \Pi_X : X \times Y \rightarrow X
+	\quad
+	\ \exists\ \Pi_Y : X \times Y \rightarrow Y
+	$$
+	such that
+	$$
+	\forall\ A \in \C
+	$$ $$
+	\ \exists\ f : A \rightarrow X
+	\quad
+	\ \exists\  g : A \rightarrow Y
+	$$ $$
+	\ \exists\ !h : A \rightarrow X \times Y
+	$$
+	such that the following diagram commutes
+	\begin{center}
+		\begin{tikzcd}[sep=large]
+			  & A \drar{f} \dlar[swap]{g} \dar{h}        &   \\
+			X & \rar{\Pi_X} X \times Y \lar{\Pi_Y} & Y
+		\end{tikzcd}
+	\end{center}
+\end{definition}
+
+\begin{proof}
+	The category POSet of partially ordered sets has binary products.
+\end{proof}
+
+\begin{definition}
+	A category $\C$ has \textit{finite products} if
+	it has binary products
+	and it has a terminal object.
+\end{definition}
+
+\begin{definition}
+	Given categories $\C$ and $\D$,
+	the product of $\C$ and $\D$ is the category $\C \times \D$
+	given as follows $Ob\,(\C \times \D) = Ob\,\C \times Ob\,\D$
+	%%• (C×D)((X,Y),(X′,Y′))=C(X,X′)×D(Y,Y′)
+	%%with composition and identities in C × D determined by those in C and D.
+\end{definition}
+
+\begin{definition}
+	The \textit{diagonal functor} denoted $\Delta : \C \rightarrow \C$.
+	%%Given any category C we denote by ∆ : C −→ C × C, the functor that sends an object X of C to (X,X) and does likewise to maps. This is called the diagonal functor.
+\end{definition}
+
+
+\section{TODO}
 \begin{itemize}
+\item Semi-groups
 \item natural transformations
 \item equalisers and coequalisers
 \item pullbacks and pushouts
