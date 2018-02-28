@@ -1,11 +1,25 @@
 \documentclass{article}
+
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-
+\usepackage{amsfonts}
+\usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{mathtools}
 
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
+\addtolength{\evensidemargin}{-.5in}
+\addtolength{\oddsidemargin}{-.5in}
+\addtolength{\textwidth}{0.8in}
+\addtolength{\textheight}{0.8in}
+\addtolength{\topmargin}{-.4in}
+
+\newtheoremstyle{quest}{\topsep}{\topsep}{}{}{\bfseries}{}{ }{\thmname{#1}\thmnote{ #3}.}
+\theoremstyle{quest}
+\newtheorem*{definition}{Definition}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{question}{Question}
+
+\newcommand{\Z}{\mathbb{Z}}
 
 \begin{document}
 
@@ -27,14 +41,127 @@ We will focus on encryption.
 \subsection{Goals}
 
 \begin{itemize}
-  \item Confidentiality
-  \item Data integrity
-  \item Authentication
-  \item Message Authentication
-  \item Signature
-  \item Certification
-  \item Non-repudiation
-  \item Revocation
+	\item Confidentiality: Keeping information a secret from those not authorised to have it.
+	\item Data integrity: Ensuring information has not been altered by those not authorised to do so.
+	\item Authentication: Confirmation of the identity of an entity.
+	\item Message authentication: Confirmation of the source of information.
+	\item Signature: A way of binding information to an entity.
+	\item Certification: Endorsement of information by a trusted entity.
+	\item Non-repudiation: Preventing an entity from denying previous actions or commitments.
+	\item Revocation: Retracting certification or authorisation.
 \end{itemize}
+
+\subsection{Cryptosystem}
+\begin{definition}
+	A \textit{cryptosystem} (or encryption system) is a five-tuple $(P,C,K,E,D)$, where
+	\begin{enumerate}
+		\item $P$ is a finite set of possible plaintexts
+		\item $C$ is a finite set of possible ciphertexts
+		\item $K$ is a finite set of possible keys called the keyspace
+		\item For each key $k \in K$
+			there is an encryption rule $e_k \in E$ where $e_k : P \rightarrow C$
+			and a corresponding decryption rule where $d_k \in D$, $d_k : C \rightarrow P$
+			such that
+			$$\forall\ x \in P\ d_k(e_k(x)) = x$$
+		\end{enumerate}
+\end{definition}
+
+For a cryptosystem to be useful in practice, we need:
+1. to be able to efficiently compute the encryption and the decryption functions
+2. that an unauthorised party should not be able to determine the key or the plaintext
+We also need each encryption function ek to be injective or one to one. Why?
+
+\section{Classical Cryptography}
+\begin{definition}
+	The \textit{subsitution cipher} has
+	\begin{itemize}
+		\item $P = C = \Z_{26}$
+		\item $K$ is the set of all permutations of $\Z_{26}$
+		\item
+			$
+			\forall\ \pi \in K
+			\ e_\pi(x) = \pi(x) = y
+			\ d_\pi(y) = \pi^{-1}(y) = x
+			$
+	\end{itemize}
+\end{definition}
+
+Consider
+
+\begin{definition}
+	The \textit{shift cipher}, also called the Caesar cipher,
+\end{definition}
+
+\begin{definition}
+	The \textit{Vigen\'ere cipher cipher}
+\end{definition}
+
+\begin{definition}
+	The \textit{permutation cipher}
+\end{definition}
+
+\subsection{What do we mean by secure?}
+
+\subsection{Kerckhoff's desiderata (1883)}
+
+\subsection{Attack Models}
+\subsubsection{Ciphertext only attack}
+\subsubsection{Known plaintext attack}
+\subsubsection{Chosen plaintext attack}
+\subsubsection{Adaptive chosen plaintext attack}
+\subsubsection{Chosen ciphertext attack}
+\subsubsection{Non-cryptograph attacks}
+
+\subsection{Security}
+\subsubsection{Computational security}
+A cryptosystem is computationally secure if the best algorithm for breaking it requires a com- putational effort which is greater than the computational resources of the assumed attacker.
+• We need a measure of the computational effort to break the cryptosystem. • We can’t prove a system is computationally secure against all attacks.
+
+\subsubsection{Provable security}
+For some cryptosystems that provide confidentiality we can provide evidence that the system is secure by proving a theorem of the form:
+If the cryptosystem can be broken then we can efficiently solve problem A, where problem A is
+ Well studied
+ Thought to be “difficult”
+This is not an absolute proof of security but a proof of the security relative to another problem.
+
+\subsubsection{Unconditional security}
+A cryptosystem is said to be unconditionally secure if an attacker with infinite computational resources cannot break the system.
+
+\begin{definition}
+	\textit{Vernam cipher}
+\end{definition}
+
+\begin{definition}
+	\textit{One time pad}
+\end{definition}
+
+\subsubsection{An unconditionally secure cryptosystem}
+In 1949 Shannon proved that the one-time pad is unconditionally secure.
+Theorem 1.
+%%Suppose (P, C, K, E, D) is a cryptosystem where |K| = |C| = |P|. Then the cryptosystem provides perfect secrecy if and only if every key is used with equal probability 1/|K|, and for everyx∈P andeveryy∈C,thereisauniquekeysuchthatek(x)=y.
+(as stated in Cryptography Theory and Practice)
+
+\subsubsection{Unconditional security is not practical}
+
+Instead of aiming for unconditional security researchers have tried to develop cryptosystems where one shared key can be used to send many messages between to entities while still main- taining computational security.
+
+\section{Private Key Cryptography}
+
+\subsection{Combining basic components}
+\subsection{Substitution-permutation networks}
+\subsection{Attacks on substitution-permutation networks}
+\subsection{The Data Encryption Standard (DES)}
+\subsection{Modes of operation}
+\subsection{After DES: 3DES and the Advanced Encryption Standard (AES)}
+
+\section{Cryptographic Hashes}
+
+\section{Key Distribution Problem}
+
+\section{Public-Key Cryptography}
+
+\section{Signature Schemes}
+
+\section{Public Key Infrastructures}
 
 \end{document}
