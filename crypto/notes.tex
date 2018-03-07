@@ -19,6 +19,12 @@
 \newtheorem*{theorem}{Theorem}
 \newtheorem*{question}{Question}
 
+\setcounter{secnumdepth}{4}
+
+\newcommand{\Hsh}{\mathcal{H}}
+\newcommand{\K}{\mathcal{K}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
 \newcommand{\Z}{\mathbb{Z}}
 
 \begin{document}
@@ -155,6 +161,82 @@ Instead of aiming for unconditional security researchers have tried to develop c
 \subsection{After DES: 3DES and the Advanced Encryption Standard (AES)}
 
 \section{Cryptographic Hashes}
+
+We will consider the use of cryptographic hashes for
+firstly \textit{message digest codes (MDC)}.
+MDC allows us to
+Here we use \textit{un-keyed hashes}.
+Secondly we will use CHF for \textit{message authentication codes (MAC)}
+Here we use \textit{keyed hashes}.
+
+\textit{Hash functions} are functions which
+map data of arbitrary size to a bit string of a fixed size,
+the output being called a hash.
+To qualify as hash functions these functions must have several qualities;
+firstly that the function \textit{compresses} the input,
+the output must always be the same size.
+Secondly the function must be "easy" to compute;
+i.e. computable algorithmically in polynomial time
+with no massive hidden constants.
+
+\textit{Cryptographic hash functions} are a subset of hash functions
+for which given $h(x) = y$ it is easy to verify that $h(x)$ is $y$
+but given just $y$ it is not easy to find $x$.
+
+More formally we have
+\begin{itemize}
+	\item $\X$ is the set of messages.
+	\item $\Y$ is the finite set of hashes,
+		where each hash is of fixed size $n$ such that
+		$\forall\ y \in \Y\ |y| = n$.
+	\item $h : \X \rightarrow \Y$ is the hash function.
+\end{itemize}
+
+\begin{definition}
+	A \textit{un-keyed hash function}
+\end{definition}
+
+\begin{definition}
+	A \textit{keyed hash function} is the tuple $(\X,\Y,\K,\Hsh)$ where
+\end{definition}
+
+A hash function is considered to be secure if three problems are difficult to solve.
+\begin{itemize}
+	\item \textit{Preimage 1}
+		Given $h : \X \rightarrow \Y$
+		and $y \in Y$
+		find $x \in X$
+		such that $h(x) = y$.
+	\item \textit{Preimage 2}
+		Given $h : \X \rightarrow \Y$
+		and $x \in \X$
+		find $x\prime \in \X\ x \neq x\prime$
+		such that $h(x) = h(x\prime)$.
+	\item \textit{Collision}
+		Given only $h : \X \rightarrow \Y$
+		find $x, x\prime \in \X$
+		such that $x \neq x\prime, h(x) = h(x\prime)$.
+\end{itemize}
+
+Birthday attack problem
+
+Summarily, a hash function is secure if
+a preimage attack requires $2^n$ operations and
+a collision attack requires attack $2^{n/2}$ operations.
+
+\textit{Birthday paradox}
+
+\subsection{Merkle-Damgard Construction}
+
+\subsection{A Family of Hash Functions}
+
+\subsubsection{MD Hash functions}
+
+\subsubsection{SHA Hash functions}
+
+\paragraph{SHA-1}
+
+\paragraph{SHA-2 Family}
 
 \section{Key Distribution Problem}
 
