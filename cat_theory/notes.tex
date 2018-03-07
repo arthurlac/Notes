@@ -411,39 +411,31 @@ Monoids
 	To prove this is unique take $h$ and $h\prime : X \rightarrow UT$
 \end{proof}
 
-\begin{definition}
-	A \textit{monomorhpism}
-\end{definition}
-
-\begin{definition}
-	An \textit{epimorphism}
-\end{definition}
+%%Given categories C and D with terminal objects TC and TD respectively, and given a functor H : C −→ D, there is necessarily a unique map !H(TC ) from H(TC) to TD. The functor H is said to preserve the terminal object if the map
+%%!H(TC) : H(TC) −→ TD
+%%is an isomorphism.
 
 \section{Binary Products}
 \begin{definition}
 	A category $\C$ has \textit{binary products} if
 	$$
-	\forall\ X,Y \in \C
-	$$ $$
+	\forall\ X,\,Y \in \C
 	\ \exists\ \Pi_X : X \times Y \rightarrow X
-	\quad
 	\ \exists\ \Pi_Y : X \times Y \rightarrow Y
 	$$
-	such that
-	$$
-	\forall\ A \in \C
-	$$ $$
-	\ \exists\ f : A \rightarrow X
-	\quad
-	\ \exists\  g : A \rightarrow Y
-	$$ $$
-	\ \exists\ !h : A \rightarrow X \times Y
-	$$
+	such that for all diagrams of the form
+	\begin{center}
+		\begin{tikzcd}[sep=large]
+			& A \drar{f} \dlar[swap]{g} & \\
+			X & & Y
+		\end{tikzcd}
+	\end{center}
+	there exists a unique map $h : A \rightarrow X \times Y$
 	such that the following diagram commutes
 	\begin{center}
 		\begin{tikzcd}[sep=large]
-			  & A \drar{f} \dlar[swap]{g} \dar{h}        &   \\
-			X & \rar{\Pi_X} X \times Y \lar{\Pi_Y} & Y
+			& A \drar{f} \dlar[swap]{g} \dar[dashed]{h} &   \\
+			X & \rar{\Pi_X} X \times Y \lar{\Pi_Y}      & Y
 		\end{tikzcd}
 	\end{center}
 \end{definition}
@@ -471,9 +463,23 @@ Monoids
 	%%Given any category C we denote by ∆ : C −→ C × C, the functor that sends an object X of C to (X,X) and does likewise to maps. This is called the diagonal functor.
 \end{definition}
 
+%%TODO Theorem 5.10 If a functor U : C −→ D has a left adjoint, U preserves any finite products that exist in C.
+
+\section{Right Adjoint}
+
+\section{Cartesian closed category}
+
+\begin{definition}
+	A category $\C$ is called \textit{cartesian closed}
+	if it has finite products
+	and the functor %%TODO
+	blank cross x c to c has a right adjoint.
+\end{definition}
+
 
 \section{TODO}
 \begin{itemize}
+\item Exponential object
 \item Semi-groups
 \item natural transformations
 \item equalisers and coequalisers
