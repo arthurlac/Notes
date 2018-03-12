@@ -16,13 +16,13 @@
 \usepackage{tikz-cd}
 \usetikzlibrary{arrows}
 \tikzset{
-	commutative diagrams/.cd,
-	arrow style=tikz,
-	diagrams={>=space}
- }
+    commutative diagrams/.cd,
+    arrow style=tikz,
+    diagrams={>=space}
+}
 \tikzcdset{
-	arrow style=tikz,
-	diagrams={>={Straight Barb[scale=0.8]}}
+    arrow style=tikz,
+    diagrams={>={Straight Barb[scale=0.8]}}
 }
 \newcommand{\C}{\mathcal{C}}
 \newcommand{\D}{\mathcal{D}}
@@ -31,54 +31,54 @@
 
 \section{The Most Important Definition}
 \begin{definition}
-	A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ has a \textit{left adjoint} if
-		$$
-		\forall\ X \in \mathcal{D}
-		\ \exists
-		\ FX \in \mathcal{C} \ \textrm{and}\ \eta_X : X \rightarrow UFX \in \mathcal{D}
-		$$
-		such that
-		$$
-		\forall\ A \in \mathcal{C}\ \textrm{and}\ \forall\ f : X \rightarrow UA
-		\ \exists
-		\ !g : FX \rightarrow A
-		$$
-		such that the following diagram commutes
-	\begin{center}
-		\begin{tikzcd}[sep=large]
-			X \drar[swap]{f} \rar{\eta_X} & UFX \dar{Ug} \\
-			& UA
-		\end{tikzcd}
-	\end{center}
-	\end{definition}
+    A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ has a \textit{left adjoint} if
+        $$
+        \forall\ X \in \mathcal{D}
+        \ \exists
+        \ FX \in \mathcal{C} \ \textrm{and}\ \eta_X : X \rightarrow UFX \in \mathcal{D}
+        $$
+        such that
+        $$
+        \forall\ A \in \mathcal{C}\ \textrm{and}\ \forall\ f : X \rightarrow UA
+        \ \exists
+        \ !g : FX \rightarrow A
+        $$
+        such that the following diagram commutes
+    \begin{center}
+        \begin{tikzcd}[sep=large]
+            X \drar[swap]{f} \rar{\eta_X} & UFX \dar{Ug} \\
+            & UA
+        \end{tikzcd}
+    \end{center}
+\end{definition}
 
 \section{Categories and Functors}
 
 \begin{definition}
-	A \textit{category} $\mathcal{C}$ consists of
-	\begin{itemize}
-		\item A set $Ob\,\mathcal{C}$, elements of which are called \textit{objects} of $\mathcal{C}$.
-		\item For each $X, Y \in Ob\,\mathcal{C}$
-			a set $\mathcal{C}(X,Y)$ called the \textit{homset} from $X$ to $Y$.
-		\item For each $X, Y, Z \in Ob\,\mathcal{C}$ a \textit{composition function} $\circ$
-			$$\mathcal{C}(X,Y) \circ \mathcal{C}(Y,Z) \rightarrow \mathcal{C}(X,Z)$$
-		\item For all $X \in Ob\,\mathcal{C}$ an element $\iota_X$ of $\mathcal{C}(X,\ X)$,
-			or equivalently a function $\iota_X : 1 \rightarrow \mathcal(X,\ X)$.
-			Such that
-			$$\forall f \in \mathcal{C}(X,Y)\ f \circ \iota_X = \iota_Y \circ f = f$$
-		\item Composition is associative.
-			$$\forall
-			  f \in \mathcal{C}(X,Y),
-			\ g \in \mathcal{C}(Y,Z),
-			\ h \in \mathcal{C}(X,Z)
-			\ f \circ (g \circ h) = (f \circ g) \circ h
-			$$
-			%%\begin{center}
-				%%\begin{tikzcd}
-					%%X\ar[r,"f"]\ar[rr,out=-30,in=210,swap,"h"] & Y\ar[r,"g"] & Z
-				%%\end{tikzcd}
-			%%\end{center}
-	\end{itemize}
+    A \textit{category} $\mathcal{C}$ consists of
+    \begin{itemize}
+        \item A set $Ob\,\mathcal{C}$, elements of which are called \textit{objects} of $\mathcal{C}$.
+        \item For each $X, Y \in Ob\,\mathcal{C}$
+            a set $\mathcal{C}(X,Y)$ called the \textit{homset} from $X$ to $Y$.
+        \item For each $X, Y, Z \in Ob\,\mathcal{C}$ a \textit{composition function} $\circ$
+            $$\mathcal{C}(X,Y) \circ \mathcal{C}(Y,Z) \rightarrow \mathcal{C}(X,Z)$$
+        \item For all $X \in Ob\,\mathcal{C}$ an element $\iota_X$ of $\mathcal{C}(X,\ X)$,
+            or equivalently a function $\iota_X : 1 \rightarrow \mathcal(X,\ X)$.
+            Such that
+            $$\forall f \in \mathcal{C}(X,Y)\ f \circ \iota_X = \iota_Y \circ f = f$$
+        \item Composition is associative.
+            $$\forall
+              f \in \mathcal{C}(X,Y),
+            \ g \in \mathcal{C}(Y,Z),
+            \ h \in \mathcal{C}(X,Z)
+            \ f \circ (g \circ h) = (f \circ g) \circ h
+            $$
+            %%\begin{center}
+            %%\begin{tikzcd}
+            %%X\ar[r,"f"]\ar[rr,out=-30,in=210,swap,"h"] & Y\ar[r,"g"] & Z
+            %%\end{tikzcd}
+            %%\end{center}
+    \end{itemize}
 \end{definition}
 
 \par
@@ -87,53 +87,53 @@ or a \textit{morphism}. The object $X$ is called the \textit{domain} of $f$ and 
 the \textit{codomain}.
 
 \begin{example}
-	The foremost example of a category is the category of \textit{small sets}.
-	We say small sets due to Russel's paradox, conversely phrased a category is small
-	if its objects and arrow consitute sets; otherwise it is large.
+    The foremost example of a category is the category of \textit{small sets}.
+    We say small sets due to Russel's paradox, conversely phrased a category is small
+    if its objects and arrow consitute sets; otherwise it is large.
 
-	The objects in $Ob\,\mathcal{C}$ are sets,
-	a morphism from $X$ to $Y$ is a function $f : X \rightarrow Y$.
-	The composition of Set is given by composition of functions,
-	and the identity maps are given by the identity functions.
+    The objects in $Ob\,\mathcal{C}$ are sets,
+    a morphism from $X$ to $Y$ is a function $f : X \rightarrow Y$.
+    The composition of Set is given by composition of functions,
+    and the identity maps are given by the identity functions.
 \end{example}
 
 \begin{definition}
-	A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ consists of
-	\begin{itemize}
-		\item a function $Ob\,U : Ob\,\mathcal{C} \rightarrow Ob\,\mathcal{D}$.
-		\item For each $X, Y \in Ob\,\mathcal{C}$ a function
-			$$U_{X,Y} : \mathcal{C}(X,Y) \rightarrow \mathcal{D}(UX, UY)$$
-			such that $U$ respects both composition and identity.
-	\end{itemize}
+    A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ consists of
+    \begin{itemize}
+        \item a function $Ob\,U : Ob\,\mathcal{C} \rightarrow Ob\,\mathcal{D}$.
+        \item For each $X, Y \in Ob\,\mathcal{C}$ a function
+            $$U_{X,Y} : \mathcal{C}(X,Y) \rightarrow \mathcal{D}(UX, UY)$$
+            such that $U$ respects both composition and identity.
+    \end{itemize}
 \end{definition}
 
 \begin{definition}
-	A \textit{natural transformation} $\alpha : U \rightarrow V$
-	given categories $\mathcal{C}$ and $\mathcal{D}$,
-	with functors $U, V : \mathcal{C} \rightarrow \mathcal{D}$
-	consists of
-	$$
-	\forall\ X \in Ob\,\mathcal{C}\ \textrm{a map}
-	\ \alpha_X : UX \rightarrow VX
-	$$
-	such that $\forall\ f : X \rightarrow Y \in \mathcal{C}$ the following commutes
-	\begin{center}
-		\begin{tikzcd}[sep=large]
-			UX \rar{\alpha_X} \dar[swap]{Uf} & VX \dar{Vf} \\
-			UY \rar{\alpha_Y}                & VY
-		\end{tikzcd}
-	\end{center}
-	A natural transformation can be considered a morphism of functors.
+    A \textit{natural transformation} $\alpha : U \rightarrow V$
+    given categories $\mathcal{C}$ and $\mathcal{D}$,
+    with functors $U, V : \mathcal{C} \rightarrow \mathcal{D}$
+    consists of
+    $$
+    \forall\ X \in Ob\,\mathcal{C}\ \textrm{a map}
+    \ \alpha_X : UX \rightarrow VX
+    $$
+    such that $\forall\ f : X \rightarrow Y \in \mathcal{C}$ the following commutes
+    \begin{center}
+        \begin{tikzcd}[sep=large]
+            UX \rar{\alpha_X} \dar[swap]{Uf} & VX \dar{Vf} \\
+            UY \rar{\alpha_Y}                & VY
+        \end{tikzcd}
+    \end{center}
+    A natural transformation can be considered a morphism of functors.
 \end{definition}
 
 \section{Monoids and Groups}
 
 \begin{definition}
-	A \textit{monoid} is a set $M$ together with an associative binary operation $\cdot$ such that
-	$$\forall\ x, y, z \in M\ (x \cdot y) \cdot z = x \cdot (y \cdot z)$$
-	and a unit element $e \in M$ where
-	$$\forall\ m \in M\ m \cdot e = e \cdot m = m$$
-	Thus a monoid could be a considered a triple $(M,\ \cdot,\ e)$.
+    A \textit{monoid} is a set $M$ together with an associative binary operation $\cdot$ such that
+    $$\forall\ x, y, z \in M\ (x \cdot y) \cdot z = x \cdot (y \cdot z)$$
+    and a unit element $e \in M$ where
+    $$\forall\ m \in M\ m \cdot e = e \cdot m = m$$
+    Thus a monoid could be a considered a triple $(M,\ \cdot,\ e)$.
 \end{definition}
 
 At this point we can define the "forgetful functor", consider a functor from the
@@ -143,22 +143,22 @@ the unit $e$. It is called the forgetful functor because it forgets some of the 
 the domain category.
 
 \begin{definition}
-	Given two monoids $M$ and $N$, a \textit{monoid map} is a function $f : M \rightarrow N$
-	which preserves multiplication and the unit where
-	$$f(e_M) = e_N\ \textrm{and}\ \forall x, y \in M f(x \cdot y) = z, z \in N$$
+    Given two monoids $M$ and $N$, a \textit{monoid map} is a function $f : M \rightarrow N$
+    which preserves multiplication and the unit where
+    $$f(e_M) = e_N\ \textrm{and}\ \forall x, y \in M f(x \cdot y) = z, z \in N$$
 \end{definition}
 
 \begin{example}
-	Perhaps the simplest example of a monoid is taking the natural numbers $\mathbb{N}$
-	(including zero), addition, and zero.
-	Thus the monoid is $(\mathbb{N}, +, 0)$. We can see that axioms
-	are obeyed. Addition is associative and $\forall x \in \mathbb{N}\ x + 0 = x$.
-	A further example is multiplication with unit element being 1.
+    Perhaps the simplest example of a monoid is taking the natural numbers $\mathbb{N}$
+    (including zero), addition, and zero.
+    Thus the monoid is $(\mathbb{N}, +, 0)$. We can see that axioms
+    are obeyed. Addition is associative and $\forall x \in \mathbb{N}\ x + 0 = x$.
+    A further example is multiplication with unit element being 1.
 \end{example}
 
 \begin{definition}
-	A \textit{commutative monoid} is a monoid $(M,\ \cdot,\ e)$ where
-	$$\forall x, y \in M\ x \cdot y = y \cdot x$$
+    A \textit{commutative monoid} is a monoid $(M,\ \cdot,\ e)$ where
+    $$\forall x, y \in M\ x \cdot y = y \cdot x$$
 \end{definition}
 
 Because both addition and multiplication are commutative, the monoids $(\mathbb{N},\ +,\ 0)$
@@ -168,22 +168,22 @@ $$x + y = y + x$$
 $$x \times y = y \times x$$
 
 \begin{example}
-	An example of a monoid which is not commutative is that of strings and concatenation.
-	Consider the alphabet $\Sigma = \{a,\ b,\ \epsilon\}$ where $\epsilon$ is the empty string.
-	Strings in this alphabet include $\epsilon,\ aa,\ ab,\ bbb$ and so on.
-	Our binary associative operation is concatenation ($+$).
-	The unit element is $\epsilon$.
-	From this we can see that
-	$$aa + (bb + ab) = (aa + bb) + aa = aabbaa$$
-	$$aa + \epsilon = aa = \epsilon + aa$$
-	Furthermore that
-	$$aa + bb \ne bb + aa$$
+    An example of a monoid which is not commutative is that of strings and concatenation.
+    Consider the alphabet $\Sigma = \{a,\ b,\ \epsilon\}$ where $\epsilon$ is the empty string.
+    Strings in this alphabet include $\epsilon,\ aa,\ ab,\ bbb$ and so on.
+    Our binary associative operation is concatenation ($+$).
+    The unit element is $\epsilon$.
+    From this we can see that
+    $$aa + (bb + ab) = (aa + bb) + aa = aabbaa$$
+    $$aa + \epsilon = aa = \epsilon + aa$$
+    Furthermore that
+    $$aa + bb \ne bb + aa$$
 \end{example}
 
 A further example of a non-commutative monoid is that of matrix multiplication.
 
 \begin{definition}
-	A \textit{idempotent monoid} is one where $\forall\ x \in M\ x \cdot x = x$.
+    A \textit{idempotent monoid} is one where $\forall\ x \in M\ x \cdot x = x$.
 \end{definition}
 
 To understand this definition consider the monoid of sets and union, $(P_f(X), \cup, \varnothing)$.
@@ -198,25 +198,25 @@ Note that is is convention for commutative monoids to use the notation
 $(M,+,0)$ rather than $(M,\cdot,e)$.
 
 \begin{definition}
-	A \textit{group} is a monoid where there exists an inverse element such that
-	$$\forall\ m \in M\ \exists\ n \in M\ s.t.\ m \cdot n = e$$
+    A \textit{group} is a monoid where there exists an inverse element such that
+    $$\forall\ m \in M\ \exists\ n \in M\ s.t.\ m \cdot n = e$$
 \end{definition}
 
 \begin{definition}
-	An \textit{Abelian group} is a commutative group, i.e.
-	$$\forall\ x, y \in M\ x \cdot y = y \cdot x$$
+    An \textit{Abelian group} is a commutative group, i.e.
+    $$\forall\ x, y \in M\ x \cdot y = y \cdot x$$
 \end{definition}
 
 \begin{example}
-	An exmaple of an Abelian group is the integers $\mathbb{Z}$ and addition.
+    An exmaple of an Abelian group is the integers $\mathbb{Z}$ and addition.
 \end{example}
 
 \section{Left adjoints}
 
 \begin{definition}
-	An \textit{isomorphism} consists of maps
-	$f : X \rightarrow Y$ and $g : Y \rightarrow X$
-	such that $gf = \iota_X$ and $fg = \iota_Y$.
+    An \textit{isomorphism} consists of maps
+    $f : X \rightarrow Y$ and $g : Y \rightarrow X$
+    such that $gf = \iota_X$ and $fg = \iota_Y$.
 \end{definition}
 
 %TODO
@@ -226,26 +226,26 @@ $(M,+,0)$ rather than $(M,\cdot,e)$.
 %One needs to be careful here: people often say “X and Y are isomorphic,” and they typically think they mean that there exists an isomorphism between the objects X and Y . But in fact, they almost always have a specific isomorphism in mind. This has led to an enormity of mistakes in both papers and books in the area. For instance, any two countably infinite sets are isomorphic in the category Set, but there are uncountably many isomorphisms between any two countably infinite sets.
 
 \begin{definition}
-	A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ has a \textit{left adjoint} if
-		$$
-		\forall\ X \in \mathcal{D}
-		\ \exists
-		\ FX \in \mathcal{C} \ \textrm{and}\ \eta_X : X \rightarrow UFX \in \mathcal{D}
-		$$
-		such that
-		$$
-		\forall\ A \in \mathcal{C}\ \textrm{and}\ \forall\ f : X \rightarrow UA
-		\ \exists
-		\ !g : FX \rightarrow A
-		$$
-		such that the following diagram commutes
+    A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ has a \textit{left adjoint} if
+        $$
+        \forall\ X \in \mathcal{D}
+        \ \exists
+        \ FX \in \mathcal{C} \ \textrm{and}\ \eta_X : X \rightarrow UFX \in \mathcal{D}
+        $$
+        such that
+        $$
+        \forall\ A \in \mathcal{C}\ \textrm{and}\ \forall\ f : X \rightarrow UA
+        \ \exists
+        \ !g : FX \rightarrow A
+        $$
+        such that the following diagram commutes
 \end{definition}
 
 \begin{center}
-	\begin{tikzcd}[sep=large]
-		X \drar[swap]{f} \rar{\eta_X} & UFX \dar{Ug} \\
-		& UA
-	\end{tikzcd}
+    \begin{tikzcd}[sep=large]
+        X \drar[swap]{f} \rar{\eta_X} & UFX \dar{Ug} \\
+        & UA
+    \end{tikzcd}
 \end{center}
 
 We will now go through a proof that a functor has a left adjoint.
@@ -256,22 +256,22 @@ where $P_f(X)$ is the finite power set of $X$;
 i.e. $P_f(X)$ is the set of all finite subsets of $X$.
 
 \begin{proof}
-	The forgetful functor $U : ICMonoid \rightarrow Set$,
-	from the category of idempotent commutative monoids
-	to the category of sets,
-	has a left adjoint.
+    The forgetful functor $U : ICMonoid \rightarrow Set$,
+    from the category of idempotent commutative monoids
+    to the category of sets,
+    has a left adjoint.
 
-	Given an arbitrary set $X \in \mathcal{D}$,
-	let $\eta_X : X \rightarrow UFX$,
-	$FX$ will be $P_f(X)$
+    Given an arbitrary set $X \in \mathcal{D}$,
+    let $\eta_X : X \rightarrow UFX$,
+    $FX$ will be $P_f(X)$
 
-	The unit $\eta_X : X \rightarrow P_f(X)$ sends an elemenxt $x$ of $X$ to the singleton $\{x\}$.
+    The unit $\eta_X : X \rightarrow P_f(X)$ sends an elemenxt $x$ of $X$ to the singleton $\{x\}$.
 
-	Consider $FX$ to be $P_f(X)$, the finite power sets
+    Consider $FX$ to be $P_f(X)$, the finite power sets
 
 
 
-%%TODO
+    %%TODO
 
 \end{proof}
 
@@ -330,22 +330,22 @@ LINE BREAK
 \section{Pre-Orders, Partially Ordered Sets, and $\omega$-cpos}
 
 \begin{definition}
-	A \textit{Pre-Order} is a set $S$ with a binary relation $\leq$ such that
-	$\forall\ x,\  y,\  z \in S$
-	\begin{enumerate}
-		\item Reflexivity - $x \leq x$
-		\item Transitivity - $x \leq y$ and $y \leq z$ means that $x \leq z$
-	\end{enumerate}
+    A \textit{Pre-Order} is a set $S$ with a binary relation $\leq$ such that
+    $\forall\ x,\  y,\  z \in S$
+    \begin{enumerate}
+        \item Reflexivity - $x \leq x$
+        \item Transitivity - $x \leq y$ and $y \leq z$ means that $x \leq z$
+    \end{enumerate}
 \end{definition}
 
 \begin{definition}
-	A \textit{Partially Ordered Set} or a \textit{POSet} is a set $S$ and a binary relation $\leq$ such that
-	$\forall\ x,\  y,\  z \in S$
-	\begin{enumerate}
-		\item Reflexivity - $x \leq x$
-		\item Anti-symmetry - $x \leq y$ and $y \leq x$ means that $x = y$
-		\item Transitivity - $x \leq y$ and $y \leq z$ means that $x \leq z$
-	\end{enumerate}
+    A \textit{Partially Ordered Set} or a \textit{POSet} is a set $S$ and a binary relation $\leq$ such that
+    $\forall\ x,\  y,\  z \in S$
+    \begin{enumerate}
+        \item Reflexivity - $x \leq x$
+        \item Anti-symmetry - $x \leq y$ and $y \leq x$ means that $x = y$
+        \item Transitivity - $x \leq y$ and $y \leq z$ means that $x \leq z$
+    \end{enumerate}
 \end{definition}
 
 Immediate examples of POSets include $(\mathbb{N},\leq)$ and $(\mathbb{N},\geq)$.
@@ -364,31 +364,31 @@ $|x| \leq |y|$.
 Comparing $2$ and $-2$ we get $2 \leq -2$ and $-2 \leq 2$ but not that $2 = -2$.
 
 \begin{definition}
-	A \textit{map of POSets} is a function $f : (P_1,\leq_1) \rightarrow (Q_1,\leq_2)$ where
-	$$\forall\ x,y \in P_1\ \textrm{iff}\ x \leq_1 y\ \textrm{then}\ f(x) \leq_2 f(y)$$
+    A \textit{map of POSets} is a function $f : (P_1,\leq_1) \rightarrow (Q_1,\leq_2)$ where
+    $$\forall\ x,y \in P_1\ \textrm{iff}\ x \leq_1 y\ \textrm{then}\ f(x) \leq_2 f(y)$$
 \end{definition}
 
 \begin{definition}
-	A \textit{$\omega$ complete partial order} is a POSet where for every ascending chain
-	$$x_1 \leq x_2 \dots \leq x_n$$
-	there is a least upper bound $x_\omega$ such that $\forall\ n\ x_n \leq x_omega$.
+    A \textit{$\omega$ complete partial order} is a POSet where for every ascending chain
+    $$x_1 \leq x_2 \dots \leq x_n$$
+    there is a least upper bound $x_\omega$ such that $\forall\ n\ x_n \leq x_omega$.
 \end{definition}
 
 \begin{definition}
-	A map of $\omega$-cpo's is called \textit{$\omega$-continuous}
-	if it preserves $x_\omega$.
+    A map of $\omega$-cpo's is called \textit{$\omega$-continuous}
+    if it preserves $x_\omega$.
 \end{definition}
 
 \section{Initial and Terminal Objects}
 
 \begin{definition}
-	A category $\mathcal{C}$ has a \textit{initial object} $O$ if
-	$$\forall\ X \in Ob\,\mathcal{C}\ \exists\ !o : O \rightarrow X$$
+    A category $\mathcal{C}$ has a \textit{initial object} $I$ if
+    $$\forall\ X \in Ob\,\mathcal{C}\ \exists\ !i : I \rightarrow X$$
 \end{definition}
 
 \begin{definition}
-	A category $\mathcal{C}$ has a \textit{terminal object} $T$ if
-	$$\forall\ X \in Ob\,\mathcal{C}\ \exists\ !t : X \rightarrow T$$
+    A category $\mathcal{C}$ has a \textit{terminal object} $T$ if
+    $$\forall\ X \in Ob\,\mathcal{C}\ \exists\ !t : X \rightarrow T$$
 \end{definition}
 
 The following all have terminal objects $1$
@@ -397,18 +397,18 @@ Pre-Orders
 Monoids
 
 \begin{theorem}
-	Given categories $\C$ and $\D$,
-	if $\C$ has a terminal object $T$
-	and $U : \C \rightarrow \D$ has a left adjoint
-	then $\D$ has a terminal object $UT$.
+    Given categories $\C$ and $\D$,
+    if $\C$ has a terminal object $T$
+    and $U : \C \rightarrow \D$ has a left adjoint
+    then $\D$ has a terminal object $UT$.
 \end{theorem}
 
 \begin{proof}
-	Let $T$ be a terminal object of $\C$, given an arbitrary
-	$X \in \D\ \exists\ !t : FX \rightarrow UT$.
-	We can obtain a map $X \rightarrow UT$ through $Ut \circ \eta_X$.
+    Let $T$ be a terminal object of $\C$, given an arbitrary
+    $X \in \D\ \exists\ !t : FX \rightarrow UT$.
+    We can obtain a map $X \rightarrow UT$ through $Ut \circ \eta_X$.
 
-	To prove this is unique take $h$ and $h\prime : X \rightarrow UT$
+    To prove this is unique take $h$ and $h\prime : X \rightarrow UT$
 \end{proof}
 
 %%Given categories C and D with terminal objects TC and TD respectively, and given a functor H : C −→ D, there is necessarily a unique map !H(TC ) from H(TC) to TD. The functor H is said to preserve the terminal object if the map
@@ -417,73 +417,135 @@ Monoids
 
 \section{Binary Products}
 \begin{definition}
-	A category $\C$ has \textit{binary products} if
-	$$
-	\forall\ X,\,Y \in \C
-	\ \exists\ \Pi_X : X \times Y \rightarrow X
-	\ \exists\ \Pi_Y : X \times Y \rightarrow Y
-	$$
-	such that for all diagrams of the form
-	\begin{center}
-		\begin{tikzcd}[sep=large]
-			& A \drar{f} \dlar[swap]{g} & \\
-			X & & Y
-		\end{tikzcd}
-	\end{center}
-	there exists a unique map $h : A \rightarrow X \times Y$
-	such that the following diagram commutes
-	\begin{center}
-		\begin{tikzcd}[sep=large]
-			& A \drar{f} \dlar[swap]{g} \dar[dashed]{h} &   \\
-			X & \rar{\Pi_X} X \times Y \lar{\Pi_Y}      & Y
-		\end{tikzcd}
-	\end{center}
+    A category $\C$ has \textit{binary products} if
+    $$
+    \forall\ X,\,Y \in \C
+    \ \exists\ \Pi_X : X \times Y \rightarrow X
+    \ \exists\ \Pi_Y : X \times Y \rightarrow Y
+    $$
+    such that for all diagrams of the form
+    \begin{center}
+        \begin{tikzcd}[sep=large]
+            & A \drar{f} \dlar[swap]{g} & \\
+            X & & Y
+        \end{tikzcd}
+    \end{center}
+    there exists a unique map $h : A \rightarrow X \times Y$
+    such that the following diagram commutes
+    \begin{center}
+        \begin{tikzcd}[sep=large]
+            & A \drar{f} \dlar[swap]{g} \dar[dashed]{h} &   \\
+            X & \rar{\Pi_X} X \times Y \lar{\Pi_Y}      & Y
+        \end{tikzcd}
+    \end{center}
 \end{definition}
 
 \begin{proof}
-	The category POSet of partially ordered sets has binary products.
+    The category POSet of partially ordered sets has binary products.
 \end{proof}
 
 \begin{definition}
-	A category $\C$ has \textit{finite products} if
-	it has binary products
-	and it has a terminal object.
+    A category $\C$ has \textit{finite products} if
+    it has binary products
+    and it has a terminal object.
 \end{definition}
 
 \begin{definition}
-	Given categories $\C$ and $\D$,
-	the product of $\C$ and $\D$ is the category $\C \times \D$
-	given as follows $Ob\,(\C \times \D) = Ob\,\C \times Ob\,\D$
-	%%• (C×D)((X,Y),(X′,Y′))=C(X,X′)×D(Y,Y′)
-	%%with composition and identities in C × D determined by those in C and D.
+    Given categories $\C$ and $\D$,
+    the product of $\C$ and $\D$ is the category $\C \times \D$
+    given as follows $Ob\,(\C \times \D) = Ob\,\C \times Ob\,\D$
+    %%• (C×D)((X,Y),(X′,Y′))=C(X,X′)×D(Y,Y′)
+    %%with composition and identities in C × D determined by those in C and D.
 \end{definition}
 
 \begin{definition}
-	The \textit{diagonal functor} denoted $\Delta : \C \rightarrow \C$.
-	%%Given any category C we denote by ∆ : C −→ C × C, the functor that sends an object X of C to (X,X) and does likewise to maps. This is called the diagonal functor.
+    The \textit{diagonal functor} denoted $\Delta : \C \rightarrow \C$.
+    %%Given any category C we denote by ∆ : C −→ C × C, the functor that sends an object X of C to (X,X) and does likewise to maps. This is called the diagonal functor.
 \end{definition}
 
 %%TODO Theorem 5.10 If a functor U : C −→ D has a left adjoint, U preserves any finite products that exist in C.
+
+\section{Coproducts}
 
 \section{Right Adjoint}
 
 \section{Cartesian closed category}
 
 \begin{definition}
-	A category $\C$ is called \textit{cartesian closed}
-	if it has finite products
-	and the functor %%TODO
-	blank cross x c to c has a right adjoint.
+    A category $\C$ is called \textit{cartesian closed}
+    if it has finite products
+    and the functor %%TODO
+    blank cross x c to c has a right adjoint.
 \end{definition}
 
 
 \section{TODO}
 \begin{itemize}
-\item Exponential object
-\item Semi-groups
-\item natural transformations
-\item equalisers and coequalisers
-\item pullbacks and pushouts
+    \item Exponential object
+    \item Semi-groups
+    \item natural transformations
+    \item equalisers and coequalisers
+    \item pullbacks and pushouts
 \end{itemize}
+
+\section{Lambda Calculus}
+
+\begin{itemize}
+    \item Types
+        $T ::= B 
+        \ | \ 1
+        \ | \ T_1 \times T_2
+        \ | \ T \Rightarrow T \prime$
+    \item Terms
+        $t ::=  x
+        \ |\ \star
+        \ |\ f(t_1,\dots t_n)
+        \ |\ \langle t_1, t_2 \rangle
+        \ |\ \pi_i(t)
+        \ |\ \lambda x.t
+        \ |\ t_1 t_2$
+\end{itemize}
+
+\subsection{Well-Formedness Judgements}
+
+Variable
+$$
+\frac{}{t_1 : T_1, \dots t_n : T_n \vdash t_i : T_i}
+$$
+
+Unit
+$$
+\frac{}{\Gamma \vdash \star : 1}
+$$
+
+Function
+$$
+\frac{\Gamma \vdash t_1 : T_1 \dots t_n : T_n}{\Gamma \vdash f(t_1,\dots t_n) : T}
+$$
+
+Binary Product
+$$
+\frac{\Gamma \vdash t_1 : T_1 \dots t_n : T_n}{\Gamma \vdash f(t_1,\dots t_n) : T}
+$$
+
+$\lambda$ Abstraction
+$$
+\frac{\Gamma \vdash t_1 : T_1 \dots t_n : T_n}{\Gamma \vdash f(t_1,\dots t_n) : T}
+$$
+
+Application
+$$
+\frac{\Gamma \vdash t_1 : T_1 \dots t_n : T_n}{\Gamma \vdash f(t_1,\dots t_n) : T}
+$$
+
+\subsection{Equality}
+$\alpha$-equality
+$\beta$-equality
+$\eta$-equality
+
+\subsection{Stuff}
+Exchange
+Weakening
+Contraction
 
 \end{document}
