@@ -14,7 +14,11 @@
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{example}{Example}[section]
 
+\setlength{\parindent}{0pt}
+
 \begin{document}
+
+\tableofcontents
 
 \section{Two problems}
 Firstly we shall look at two problems which belong to the complexity class NP.
@@ -279,5 +283,110 @@ An obvious consequence of this definition is that for any edge $(x,y)$ there is 
 	The \textit{$q$-clique problem} is finding if there exists a $q$-clique in a given graph
 	$\mathcal{G}$ where $q \in \mathbb{N}$.
 \end{definition}
+
+\section{Cook’s Theorem}
+
+
+\section{Structure of the class NP}
+\subsection{Structure of the class NP}
+\subsection{Complements to languages}
+\subsection{Class co-NP}
+\subsection{Some famous candidates for problems in NPI}
+\subsubsection{Graph Isomorphism}
+\subsubsection{Linear Programming}
+\subsection{Search problems}
+\subsection{Turing transformation}
+\subsubsection{Turing transformation: informal definition}
+\subsubsection{Oracle Turing Machine}
+\subsubsection{Turing transformation: definition}
+\subsection{NP-hard problems}
+\subsection{NP-hard problems}
+\subsection{NP-hard problems}
+
+
+
+\section{Approximate Algorithms}
+Many problems in NP-hard are problems for which we need a polynomial algorithm;
+thus we are left with few, but not none, options.
+It may be the case that we can find an algorithm for our relevant cases.
+Alternatively we may need to solve the problem for the input
+data of a relatively small size, so that even an exponential-time algorithm is acceptable.
+Finally, we can try to solve the problem approximately;
+i.e. solve the problem as close to optimally as possible but accept some degree of error
+or incorrectness.
+This last approach is suitable for optimization search problems.
+
+Examples of optimization search problems.
+\begin{itemize}
+    \item Travelling Salesperson (find the smallest tour)
+    \item Find the largest clique in a graph
+    \item Vertex Covering (find the smallest covering)
+\end{itemize}
+
+\subsection{Ratio bound and relative error}
+For approximation algorithms we need an \textit{objective function}
+which will allow us to measure the difference of the approximate and optimal algorithms.
+For example in the traveling sales person problem,
+the objective function is the length of the tour produced by the algorithm.
+We want to determine how "close" our approximate algorithm is to the
+optimal one.  We define "closeness" as \textit{ratio bound and relative error bound}.
+
+We will assume that the objective function is always positive.
+
+Let $C$ denote the value of the objective function at our approximate solution,
+and $C\prime$ at an optimal solution.
+
+\subsubsection{Ratio Bound}
+\begin{definition}
+    An approximation algorithm has \textit{ratio bound $\rho(n)$}
+    if for any input of the size $n$ the value $C$ of the objective function
+    at the approximate solution satisfies the inequality
+    $$
+    max(C/C\prime, C\prime/C) \leq \rho(n)
+    $$
+\end{definition}
+
+Observe that
+$$ 0 < C \leq C\prime $$
+thus for maximization problems
+$$ max(C/C\prime, C\prime/C) = C\prime/C $$
+and for minimization problems
+$$ max(C/C\prime, C\prime/C) = C/C\prime $$
+
+Firstly observe that $\rho(n) \geq 1$,
+and secondly that when $\rho(n) = 1$ we have an optimal solution.
+By definition a large ratio bound (might) means that the approximate
+solution is much worse than an optimal one.
+This is an issue of trading speed for correctness.
+
+\subsubsection{Relative Error Bound}
+\begin{definition}
+    For $C, C\prime$ and $n$  the \textit{relative error bound $\epsilon(n)$} is defined as
+    $$\frac{abs(C - C\prime)}{C\prime} \leq \epsilon(n)$$
+\end{definition}
+
+Observe that $\rho(n) - 1 \leq abs(C\prime - C)/C\prime$,
+i.e., $\rho(n) - 1$ is a relative error bound.
+
+\subsection{Approximation algorithm for Vertex Covering}
+
+
+\subsection{Approximation algorithm for Travelling Salesman with triangle inequality}
+Given a connected graph $\mathcal{G}\ (V,E)$,
+\begin{enumerate}
+    \item
+        Choose a vertex $v \in V$, to serve as the root of a tree.
+        Build a spanning tree $T$ beginning at $v$;
+        note that this can be done in polynomial time using Prim's or Kruskal's algorithm.
+    \item
+        Perform a pre-order walk on the tree $T$ returning the list of nodes as a tour.
+\end{enumerate}
+
+We can now propose three properties of this algorithm
+\begin{enumerate}
+    \item It is correct
+    \item It has polynomial complexity
+    \item It has a ratio bound $\rho(n) = 2$
+\end{enumerate}
 
 \end{document}

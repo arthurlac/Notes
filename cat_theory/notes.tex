@@ -6,6 +6,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{amsmath}
+\usepackage{parskip}
 \usepackage{mathtools}
 
 \theoremstyle{definition}
@@ -26,6 +27,8 @@
 }
 \newcommand{\C}{\mathcal{C}}
 \newcommand{\D}{\mathcal{D}}
+
+\setlength{\parindent}{0pt}
 
 \begin{document}
 
@@ -521,27 +524,59 @@ $$
 Function
 $$
 \frac{\Gamma \vdash t_1 : T_1 \dots t_n : T_n}{\Gamma \vdash f(t_1,\dots t_n) : T}
+\quad\textrm{where}\ f : T_1 \times T_2 \times \dots T_n \rightarrow T
 $$
 
 Binary Product
 $$
-\frac{\Gamma \vdash t_1 : T_1 \dots t_n : T_n}{\Gamma \vdash f(t_1,\dots t_n) : T}
+\frac
+{\Gamma \vdash t_2 : T_1 \quad \Gamma \vdash t_2 : T_2}
+{\Gamma \vdash \langle t_1, t_2 \rangle : T_1 \times T_2}
+\quad
+\frac
+{\Gamma \vdash t : T_1 \times T_2}
+{\Gamma \vdash \pi_1(t) : T_1 \quad \Gamma \vdash \pi_2(t) : T_2}
 $$
 
-$\lambda$ Abstraction
+$\lambda$-Abstraction
 $$
-\frac{\Gamma \vdash t_1 : T_1 \dots t_n : T_n}{\Gamma \vdash f(t_1,\dots t_n) : T}
+\frac
+{\Gamma, x : T \vdash t : T\prime}
+{\Gamma, x : T \vdash \lambda x.t : T \Rightarrow T\prime}
 $$
 
 Application
 $$
-\frac{\Gamma \vdash t_1 : T_1 \dots t_n : T_n}{\Gamma \vdash f(t_1,\dots t_n) : T}
+\frac
+{\Gamma \vdash t_1 : T \Rightarrow T\prime \quad \Gamma \vdash t_2 : T}
+{\Gamma \vdash t_1 t_2 : T\prime}
 $$
 
 \subsection{Equality}
 $\alpha$-equality
+$$
+\frac
+{\Gamma, x : T \vdash t : T\prime}
+{\Gamma \vdash \lambda x.t = \lambda x\prime.t[x/x\prime] : T \Rightarrow T\prime}
+\quad
+\textrm{if $x\prime$ does not appear in $t$}
+$$
+
 $\beta$-equality
+$$
+\frac
+{\Gamma, x : T \vdash t\prime : T\prime \quad \Gamma \vdash t : T}
+{\Gamma \vdash (\lambda x.t\prime)t = t\prime[t/x]: T\prime }
+$$
+
 $\eta$-equality
+$$
+\frac
+{\Gamma \vdash t : T \Rightarrow T\prime}
+{\Gamma \vdash \lambda x.(tx) = t : T \Rightarrow T\prime}
+\quad
+\textrm{if $x$ does not appear in $t$}
+$$
 
 \subsection{Stuff}
 Exchange
