@@ -27,6 +27,7 @@
 }
 \newcommand{\C}{\mathcal{C}}
 \newcommand{\D}{\mathcal{D}}
+\newcommand{\N}{\mathbb{N}}
 
 \setlength{\parindent}{0pt}
 
@@ -501,6 +502,8 @@ Monoids
     given by evaluation i.e. $\epsilon_X(h,x) = h(x)$.
 \end{proof}
 
+\subsection{Proof $\omega$-CPOs is Cartesian Closed}
+
 \subsection{Proof Monoid is not Cartesian Closed}
 \begin{proof}
     Consider that if a functor has a right adjoint it must preserve finite coproducts,
@@ -514,6 +517,25 @@ Monoids
     thus is it not possible for it to be isomorphic to 1.
     Hence Monoid is not cartesian closed.
 \end{proof}
+An alternate proof is
+\begin{proof}
+    Monoid is not cartesian closed because there exists a monoid $M$ such that
+    the functor $- \times M$ does not have a right adjoint.
+    It does not have a right adjoint because right adjoints preserve finite coproducts.
+    To preserve finite coproducts a functor must preserve the initial object and coproducts.
+    The initial object of Monoid is the one element monoid 1.
+    Consider then that $1 \times M$ is not isomorphic to the initial object 1,
+    when we have $M$ be any non-trivial monoid, for example $\N$.
+    Thus because $M \times 1$ is not isomorphic to the initial object
+    the functor $- \times M$ does not preserve initial objects,
+    thus not finite coproducts,
+    thus it does not have a right adjoint
+    thus Monoid is not cartesian closed.
+    $$1 \times M \ncong 1$$
+\end{proof}
+We can also consider that in a cartesian closed category,
+for example Set where the initial object is the empty set $\varnothing$,
+we have $\varnothing \times X = \varnothing$ thus preserving the initial object.
 
 \section{Simply Typed Lambda Calculus}
 \begin{definition}
