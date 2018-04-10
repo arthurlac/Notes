@@ -14,6 +14,8 @@
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{example}{Example}[section]
 
+\newcommand{\G}{\mathcal{G}}
+
 \setlength{\parindent}{0pt}
 
 \begin{document}
@@ -369,9 +371,73 @@ Observe that $\rho(n) - 1 \leq abs(C\prime - C)/C\prime$,
 i.e., $\rho(n) - 1$ is a relative error bound.
 
 \subsection{Approximation algorithm for Vertex Covering}
+\subsubsection{Vertex Covering Problem}
+Recall that the vertex covering problem is defined as such
+\begin{itemize}
+    \item \textbf{Input}:
+        a graph $\G,\ (V,E)$
+    \item \textbf{Output}:
+        a set $S \subset V$ such that $\forall\ (v,w) \in E$
+        either $v$ or $w$ are in $S$.
+        I.e. every vertex is reachable,
+        and the fewest possible vertices are in $S$.
+\end{itemize}
+
+\subsubsection{Algorithm}
+\begin{enumerate}
+    \item Let $S$ be $\varnothing$
+    \item Let $E\prime$ be the set of edges $E$
+    \item While $E\prime$ is non-empty
+        \begin{enumerate}
+            \item
+                Let $(v,w)$ be an arbitrary edge of $E\prime$
+            \item
+                Let $S$ be $S \cup \{v,w\}$
+            \item
+                Let $E\prime$ be $E\prime \setminus (v,w)$
+        \end{enumerate}
+    \item Return the set $S$ as the vertex covering
+
+\end{enumerate}
+
+\subsubsection{Properties of the Algorithm}
+\begin{enumerate}
+    \item The algorithm is correct
+    \item The algorithm has polynomial complexity
+    \item The algorithm $\rho(n) = 2$
+\end{enumerate}
+\textbf{Proof}
+\begin{enumerate}
+    \item
+        The correctness is trivial
+        as the algorithm simply loops until each edge has been covered.
+    \item
+        Polynomial time complexity is also trivial for same reason.
+    \item
+        Let $A$ denote the set of all edges that are chosen during the execution of the item (3) of the algorithm.
+        No two edges of A have a common vertex, since once the edge (v, w) is chosen, all edges having either v or w as vertices are deleted.
+        Thus, each execution of (3) adds exactly two new vertices to S and |S| = 2|A|.
+        Any covering, in particular optimal $S\prime$, must cover every edge in $A$, thus any covering has at least $|A|$ vertices.
+        So because we have $S\prime \supset A$ we also have
+        $$|S\prime| \geq |A| = \frac{|S|}{2}$$
+        $$\frac{S}{|S\prime|} \leq 2$$
+\end{enumerate}
+
+\subsection{Approximation algorithm for Travelling Salesperson with triangle inequality}
+\subsubsection{$\Delta$Travelling Salesperson Problem}
+The problem is formulated as such
+\begin{itemize}
+    \item \textbf{Input}:
+        A matrix $d_{ij}$ such that $\forall\ i,j\, d(i,j) > 0$
+        $$
+        i,j,k d(i,j) \leq d(i,k) + d(k,j)
+        $$
+    \item \textbf{Output}:
+        A tour such that every 
+\end{itemize}
 
 
-\subsection{Approximation algorithm for Travelling Salesman with triangle inequality}
+\subsubsection{Algorithm for $\Delta$ Traveling Salesperson}
 Given a connected graph $\mathcal{G}\ (V,E)$,
 \begin{enumerate}
     \item
@@ -388,5 +454,16 @@ We can now propose three properties of this algorithm
     \item It has polynomial complexity
     \item It has a ratio bound $\rho(n) = 2$
 \end{enumerate}
+\textbf{Proof}
+\begin{enumerate}
+    \item
+        The correctness is trivial
+    \item
+        Proof of polynomial complexity is trivial.
+    \item
+        The ratio bound
+\end{enumerate}
+
+
 
 \end{document}

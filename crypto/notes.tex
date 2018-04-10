@@ -28,6 +28,8 @@
 \newcommand{\Z}{\mathbb{Z}}
 
 \begin{document}
+\tableofcontents
+\pagebreak
 
 \section{What is the problem}
 Cryptography allows for the secure exchange of information.
@@ -266,6 +268,85 @@ With these conditions in place, we find a collision in the MD hash function exac
 \section{Key Distribution Problem}
 
 \section{Public-Key Cryptography}
+\textit{Public key cryptography}, or asymmetrical cryptography,
+is any cryptographic system that uses pairs of keys: public keys which may be disseminated widely,
+and private keys which are known only to the owner.
+The essential advantage of public key cryptography is that it provides secure communication between two people who had not met or exchanged securely a secret key.
+This accomplishes two functions: authentication, where the public key verifies that a holder of the paired private key sent the message,
+and encryption, where only the paired private key holder can decrypt the message encrypted with the public key.
+
+\begin{definition}
+    The essence of a \textit{public key cryptosystem} is defined as the tuple
+    $(P,C,K,E,D)$
+    \begin{itemize}
+        \item For every key $k \in K$, $e_k$ is the inverse of $d_k$
+        \item For every key $k \in K$,
+            and for every $x \in P$ and $y \in C$
+            $e_k(x)$ and $d_k(y)$ are easy to compute
+        \item It is computationally infeasible for almost all $k \in K$
+            to derive $d_k$ from $e_k$.
+        \item For every $k \in K$ it is feasible to derive $e_K$ and $d_k$
+    \end{itemize}
+    We have $e_k$ as the public key which allows \textbf{anyone} to encrypt a message
+    which only the holder of $d_k$ will be able to decrypt.
+\end{definition}
+
+Clearly a public-key cryptosystem can never be unconditionally secure.
+\begin{itemize}
+    \item Alice looks up Bob’s public key function $e_k$ and encrypts $x : y = e_k(x)$.
+    \item Oscar encrypts each possible message in turn until he finds the unique $x$ such that $y = e_k(x)$.
+\end{itemize}
+Note that Oscar can always launch a chosen-plaintext attack.
+
+\subsection{Trap-door one-way function}
+\begin{definition}
+    A \textit{one-way function} is a function $f : X \rightarrow Y$ such that 
+    for all $x \in X$ it is easy to compute $f(x)$ but for (almost) all $y \in Y$ it is computationally
+    infeasible to find an $x$ where $f(x) = y$.
+\end{definition}
+\begin{definition}
+    A \textit{trap-door one-way function} is a one way function $f$ such that
+    given some additional trap-door information it becomes feasible, 
+    for all $y \in Y$ to find $x \in X$ such that $y = f(x)$.
+\end{definition}
+
+\subsection{A signature scheme}
+Given a public-key cryptosystem...
+Given a public-key cryptosystem in which P = C we might define a mechanism to allow secure digital signatures:
+• Alice wishes to sign a message x before sending it to Bob. She “decrypts” x using her private decryption function: y = dAlice(x) and sends y to Bob.
+• Bob can then “encrypt” y with Alice’s public encryption function: eAlice(y) = x. k
+• Only Alice could have computed y such that eAlice(y) = x hence Bob is convinced that
+Alice signed the message.
+• Anyone could have checked Alice’s signature, not just Bob.
+
+\subsection{RSA Cryptosystem}
+The Rivest-Shamir-Adleman cryptosystem,
+named after its authors, was one of the first public key cryptosystems.
+RSA is a relatively slow algorithm, and because of this,
+it is less commonly used to directly encrypt user data.
+More often, RSA passes encrypted shared keys for symmetric key cryptography
+which in turn can perform bulk encryption-decryption operations at much higher speed.
+
+\subsubsection{The Euler function}
+\begin{definition}
+    The \textit{Euler function} $\phi(x)$ is
+\end{definition}
+It has the following properties
+\begin{itemize}
+    \item If $p$ is prime then $\phi(p)$ is $p - 1$
+    \item $\phi$ is multiplicative; that is,
+        if $gcd(m,n) = 1$ then $\phi(m \cdot n) = \phi(m) \cdot \phi(n)$
+    \item If $\phi(n) \geq 2$ then $\phi(n)$ is even.
+\end{itemize}
+
+\subsubsection{Fermat's little theorem}
+\begin{definition}
+    \textit{Fermat's little theorem} states that if $p$ is a prime number,
+    then for any integer $a$ the number $a^p - a$ is an integer multiple of $p$.
+    In the notation of modular arithmetic this is expressed as
+    $$ a^p \equiv a \pmod p $$
+\end{definition}
+For example, if $a = 2$ and $p = 7$, then $2^7 = 128$, and $128 − 2 = 126 = 7 × 18$.
 
 \section{Signature Schemes}
 
