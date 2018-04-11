@@ -25,7 +25,12 @@
 \newcommand{\K}{\mathcal{K}}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\Y}{\mathcal{Y}}
+\newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
+\newcommand{\mns}{\textrm{ -  }}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\setlength{\parindent}{0pt}
 
 \begin{document}
 \tableofcontents
@@ -311,7 +316,6 @@ Note that Oscar can always launch a chosen-plaintext attack.
 \end{definition}
 
 \subsection{A signature scheme}
-Given a public-key cryptosystem...
 Given a public-key cryptosystem in which P = C we might define a mechanism to allow secure digital signatures:
 • Alice wishes to sign a message x before sending it to Bob. She “decrypts” x using her private decryption function: y = dAlice(x) and sends y to Bob.
 • Bob can then “encrypt” y with Alice’s public encryption function: eAlice(y) = x. k
@@ -319,15 +323,7 @@ Given a public-key cryptosystem in which P = C we might define a mechanism to al
 Alice signed the message.
 • Anyone could have checked Alice’s signature, not just Bob.
 
-\subsection{RSA Cryptosystem}
-The Rivest-Shamir-Adleman cryptosystem,
-named after its authors, was one of the first public key cryptosystems.
-RSA is a relatively slow algorithm, and because of this,
-it is less commonly used to directly encrypt user data.
-More often, RSA passes encrypted shared keys for symmetric key cryptography
-which in turn can perform bulk encryption-decryption operations at much higher speed.
-
-\subsubsection{The Euler function}
+\subsection{The Euler function}
 \begin{definition}
     The \textit{Euler function} $\phi(x)$ is
 \end{definition}
@@ -339,17 +335,119 @@ It has the following properties
     \item If $\phi(n) \geq 2$ then $\phi(n)$ is even.
 \end{itemize}
 
-\subsubsection{Fermat's little theorem}
+\subsection{Fermat's Little Theorem}
 \begin{definition}
     \textit{Fermat's little theorem} states that if $p$ is a prime number,
     then for any integer $a$ the number $a^p - a$ is an integer multiple of $p$.
     In the notation of modular arithmetic this is expressed as
-    $$ a^p \equiv a \pmod p $$
+    $$ a^p \equiv a \Mod p $$
 \end{definition}
-For example, if $a = 2$ and $p = 7$, then $2^7 = 128$, and $128 − 2 = 126 = 7 × 18$.
+For example, if $a = 2$ and $p = 7$, then $2^7 = 128$, and 128 - 2 = 126 = 7 $\times$ 18.
+
+\subsection{Chinese Remainder Theorem}
+\begin{definition}
+    \textit{Chinese Remainder Theorem} is a way of solving certain systems of congruences.
+    %%Letm1,m2,...,mr bepairwiserelativelyprimepositiveintegers. Supposea1,a2,...,ar ∈Zandconsider:
+    $$
+    x \equiv a_1 (\Mod m_1) \\
+    x \equiv a_2 (\Mod m_2) \\
+    x \equiv a_r (\Mod m_r)
+    $$
+    %%The Chinese remainder theorem states that this system has a unique solution modulo M = m1m2 ···mr
+\end{definition}
+
+\subsection{RSA Cryptosystem}
+The Rivest-Shamir-Adleman cryptosystem,
+named after its authors, was one of the first public key cryptosystems.
+RSA is a relatively slow algorithm, and because of this,
+it is less commonly used to directly encrypt user data.
+More often, RSA passes encrypted shared keys for symmetric key cryptography
+which in turn can perform bulk encryption-decryption operations at much higher speed.
+
+\begin{definition}
+    The \textit{RSA cryptosystem} is defined as such
+    \begin{itemize}
+        \item Let $p$ and $q$ be large primes, (in some implementations 1024 bits each)
+        \item Let $n = p \cdot q$
+        \item Let $P = C = \Z_n$
+        \item $K = \{(n,p,q,a,b) | ba \equiv 1 \Mod{\phi(n)}\}$
+        \item $(n,a)$ is the public key
+        \item $(n,b)$ is the public key
+        \item For $K = (n,p,q,a,b)$ we have
+            $$e_k(x) = x^b \Mod n = y$$
+            $$d_k(y) = y^a \Mod n = x$$
+    \end{itemize}
+\end{definition}
+
+\subsection{RSA Toy Example}
+Firstly Bob chooses $p = 127$ and $q = 131$ and calculates $n$ and $\phi(n)$
+\begin{align*}
+    n &= 127  \times 131  &\phi(n) &= (p \mns 1) \times (q \mns 1)\\
+      &= 16637            &        &= 126        \times 130       \\
+      &                   &        &= 16380
+\end{align*}
+Bob selects some $b$ such that $gcd(b, \phi(n)) = 1$;
+we shall use $b = 4057$ and calculate $a$
+\begin{align*}
+    1      &= ab \Mod{\phi(n)}\\
+    b^{-1} &= a \Mod{\phi(n)}\\
+           &= 10453 \Mod{\phi(n)}\\
+         a &= 10453
+\end{align*}
+Thus Bob has the public key $(n,b) = (16637,4057)$ and the private key $(p,q,a) = (127, 131, 10453)$.
+Alice has Bob’s public key and she wishes to encrypt the plaintext $x = 9031$.
+She computes:
+\begin{align*}
+   y &= x^b \Mod{n} \\
+     &= 90314057 \Mod{16637} \\
+     &= 1870
+\end{align*}
+So Alice sends $y = 1870$ over the insecure channel. Bob now uses his decryption exponent a to compute:
+\begin{align*}
+   x &= y^a \Mod{n} \\
+     &= 187010453 \Mod{16637} \\
+     &= 9031
+\end{align*}
+
+\subsection{RSA Implementation Concerns}
+To be ready to use RSA we have to
+\begin{enumerate}
+    \item Generate two large primes $p, q$ such that $p \neq q$
+    \item Calculate $n = p \cdot q$ and $\phi(n) = (p \mns 1) (q \mns 1)$
+    \item Choose a random $1 < b < \phi(n)$ such that $gcd(b, \phi(n)) = 1$
+    \item Calculate $a = b^{-1} \Mod{\phi(n)}$
+    \item Set the public key to $(n, b)$ and the private key to $(p, q, a)$
+\end{enumerate}
+For RSA to be a practical algorithm we need these steps to be computationally feasible.
+Firstly the issue of generating large primes
+\begin{itemize}
+    \item Basic method: generate a large random number, test for primality.
+    \item PRIMES is in P: In 2002 Agrawal, Kayal and Saxena proved that
+        there is a polynomial time deterministic algorithm for primality testing; but we don’t use this.
+    \item Instead we use one of a variety of randomised polynomial time algorithms. The Miller-Rabin algorithm is the most prominent.
+\end{itemize}
+
+The other large cost involved in the parameter generation is the calculation of
+$a = b^{-1} \Mod{\phi(n)}$
+We use extended Euclidean algorithm.
+Can be calculated in time $O((log k)^2)$
+What about the modular exponentiation in RSA?
+To calculate $x^b \Mod{n}$ we can
+\begin{itemize}
+    \item Very slow: $b \mns 1$ modular multiplications
+    \item Faster: use the square and multiply algorithm
+    \item Faster again: use Chinese remainder theorem (if you are Bob)
+\end{itemize}
+
+\subsection{RSA and factoring}
+The security of RSA rests on the fact that given $n$
+it is hard to find primes $p,q$ such that $n = p \cdot q$.
+
+NOTE bEcause $1 = ab \Mod{\phi(n)}$ we need $\phi(n)$ to be hard!
+Otherwise we can use the public key $(b,n)$ to easily find the private key $a$.
+
+
 
 \section{Signature Schemes}
-
 \section{Public Key Infrastructures}
-
 \end{document}
