@@ -1,0 +1,139 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{parskip}
+\usepackage{mathtools}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{theorem}{Thereom}[section]
+
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows}
+\tikzset{
+    commutative diagrams/.cd,
+    arrow style=tikz,
+    diagrams={>=space}
+}
+\tikzcdset{
+    arrow style=tikz,
+    diagrams={>={Straight Barb[scale=0.8]}}
+}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\N}{\mathbb{N}}
+
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\section{Categories}
+
+\begin{definition}
+    A \textit{category} $\mathcal{C}$ consists of
+    \begin{itemize}
+        \item A set $Ob\,\mathcal{C}$, elements of which are called \textit{objects} of $\mathcal{C}$.
+        \item For each $X, Y \in Ob\,\mathcal{C}$
+            a set $\mathcal{C}(X,Y)$ called the \textit{homset} from $X$ to $Y$.
+        \item For each $X, Y, Z \in Ob\,\mathcal{C}$ a \textit{composition function} $\circ$
+            $$\mathcal{C}(X,Y) \circ \mathcal{C}(Y,Z) \rightarrow \mathcal{C}(X,Z)$$
+        \item For all $X \in Ob\,\mathcal{C}$ an element $\iota_X$ of $\mathcal{C}(X,\ X)$,
+            or equivalently a function $\iota_X : 1 \rightarrow \mathcal(X,\ X)$.
+            Such that
+            $$\forall f \in \mathcal{C}(X,Y)\ f \circ \iota_X = \iota_Y \circ f = f$$
+        \item Composition is associative.
+            $$\forall
+              f \in \mathcal{C}(X,Y),
+            \ g \in \mathcal{C}(Y,Z),
+            \ h \in \mathcal{C}(X,Z)
+            \ f \circ (g \circ h) = (f \circ g) \circ h
+            $$
+    \end{itemize}
+\end{definition}
+
+\par
+An element $f$ of $\mathcal{C}(X,Y)$ is called an \textit{arrow},
+or a \textit{morphism}. The object $X$ is called the \textit{domain} of $f$ and $Y$ is
+the \textit{codomain}.\\
+
+\begin{example}
+    The foremost example of a category is the category of \textit{small sets}.
+    We say small sets due to Russel's paradox, conversely phrased a category is small
+    if its objects and arrow constitute sets; otherwise it is large. \textit{Cite BarrsWells?}
+
+    The objects in $Ob\,\mathcal{C}$ are sets,
+    a morphism from $X$ to $Y$ is a function $f : X \rightarrow Y$.
+    The composition of Set is given by composition of functions,
+    and the identity maps are given by the identity functions.
+\end{example}
+
+\section{Functors}
+\begin{definition}
+    A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ consists of
+    \begin{itemize}
+        \item A function $Ob\,U : Ob\,\C \rightarrow Ob\,\mathcal{D}$.
+        \item For each $X, Y \in Ob\,\C$ a function
+            $U_{X,Y} : \mathcal{C}(X,Y) \rightarrow \mathcal{D}(UX, UY)$
+            such that $U$ respects both composition and identity.
+            I.e.
+            $$Uf \circ Ug \equiv U(f \circ g) \quad Uf \circ U1 \equiv U(f \circ 1)$$
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    An \textit{endofunctor} is a functor $U : \C \rightarrow \C$;
+    i.e. the domain and codomain of the functor are the same category $\C$.
+\end{definition}
+
+\section{Natural transformations}
+\begin{definition}
+    Given categories $\mathcal{C}$ and $\mathcal{D}$,
+    with functors $U, V : \mathcal{C} \rightarrow \mathcal{D}$
+    a \textit{natural transformation} $\alpha : U \rightarrow V$
+    consists of
+    $
+    \forall\ X \in Ob\,\mathcal{C}\ \textrm{a map}
+    \ \alpha_X : UX \rightarrow VX
+    $
+    such that $\forall\ f : X \rightarrow Y$ the following commutes
+    \begin{center}
+        \begin{tikzcd}[sep=large]
+            UX \rar{\alpha_X} \dar[swap]{Uf} & VX \dar{Vf} \\
+            UY \rar{\alpha_Y}                & VY
+        \end{tikzcd}
+    \end{center}
+    A natural transformation can be considered a morphism of functors.
+\end{definition}
+
+\section{Monads}
+\begin{definition}
+    A \textit{monad} is defined as the triple
+    \begin{itemize}
+        \item An endofunctor $T : \C \rightarrow \C$
+        \item A natural transformation $\eta : 1_{\C} \rightarrow T$
+        \item A natural transformation $\mu : T^2 \rightarrow T$
+    \end{itemize}
+    Such that the following diagrams commute
+    \begin{center}
+        \begin{tikzcd}[sep=large]
+            T \rar{\eta_T} \drar[swap]{1_{\C}} & T^2 \dar{\mu} \rar{\mu} & T \dlar{1_{\C}} \\
+                                               & T                       &
+        \end{tikzcd}
+        \quad
+        \begin{tikzcd}[sep=large]
+            T^3 \rar{T\mu} \dar[swap]{\mu_T} & T^2 \dar{\mu} \\
+            T^2 \rar[swap]{\mu}                    & T
+        \end{tikzcd}
+    \end{center}
+\end{definition}
+
+\section{Programming Monads}
+In this section I will explain how the theory corresponds to in practice;
+i.e. List Monad, Maybe/Option monad. And how programmers think of monads.
+\end{document}
