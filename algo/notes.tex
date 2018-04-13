@@ -21,6 +21,7 @@
 \begin{document}
 
 \tableofcontents
+\pagebreak
 
 \section{Two problems}
 Firstly we shall look at two problems which belong to the complexity class NP.
@@ -182,7 +183,8 @@ usually this leads us to consider the complexity of the Turing machine to be
 	for solving $\mathcal{L}$ with complexity $O(2^{p(n)})$.
 \end{theorem}
 
-\section{Polynomial transformations}
+\section{Polynomial Transformations and Equivalence}
+\subsection{Polynomial Transformations}
 \begin{definition}
 	Consider two languages $\mathcal{L_1} \subset A_1$ and $\mathcal{L_2} \subset A_2$,
 	$\mathcal{L_1}$ is said to be \textit{polynomially transformable} to $\mathcal{L_2}$ if
@@ -201,24 +203,23 @@ $$
   \mathcal{L_1} \propto \mathcal{L_3}
 $$
 
-\section{Polynomial equivalence}
+\subsection{Polynomial Equivalence}
 \begin{definition}
 	If we have two languages such $\mathcal{L_1} \propto \mathcal{L_2}$ and
 	$\mathcal{L_2} \propto \mathcal{L_1}$, then they are said to be \textit{polynomially equivalent}.
 	Thus we have $\mathcal{L_1} \approx \mathcal{L_2}$.
 \end{definition}
-
-This is an equivalence as such it is transitive, symmetric, and reflexive;
-as such $\forall\ \mathcal{R},\ \mathcal{S},\ \mathcal{T}$:
-\begin{center}
-	$\mathcal{R} \approx \mathcal{R}$\\
-	if $\mathcal{R} \approx \mathcal{S}$ then $\mathcal{S} \approx \mathcal{R}$.\\
+This is an equivalence as such it is reflexive, symmetric, and transitive;
+as such $\forall\ R,\ S,\ T$:
+\begin{itemize}
+    \item $R \approx R$
+    \item if $R \approx S$ then $S \approx R$.
+    \item $
+		R \approx S,\ 
+		S \approx T \Rightarrow
+		R \approx T
 	$
-		\mathcal{R} \approx \mathcal{S},\ 
-		\mathcal{S} \approx \mathcal{T} \Rightarrow
-		\mathcal{R} \approx \mathcal{T}
-	$
-\end{center}
+\end{itemize}
 
 %%TODO
 In practise what this means is that we can see what problem a class is in if we can
@@ -288,9 +289,18 @@ An obvious consequence of this definition is that for any edge $(x,y)$ there is 
 
 \section{Cook’s Theorem}
 
+\subsection{Formulation}
+\begin{theorem}
+    Boolean Satisfiability problem is NP-complete.
+\end{theorem}
+Actually we will prove that CNF-satisfiability problem is NP-complete.
+
+\subsection{Proof}
+\subsection{Formulation}
+\subsection{Formulation}
+
 
 \section{Structure of the class NP}
-\subsection{Structure of the class NP}
 \subsection{Complements to languages}
 \subsection{Class co-NP}
 \subsection{Some famous candidates for problems in NPI}
@@ -298,14 +308,9 @@ An obvious consequence of this definition is that for any edge $(x,y)$ there is 
 \subsubsection{Linear Programming}
 \subsection{Search problems}
 \subsection{Turing transformation}
-\subsubsection{Turing transformation: informal definition}
+\subsubsection{Informal definition}
 \subsubsection{Oracle Turing Machine}
-\subsubsection{Turing transformation: definition}
-\subsection{NP-hard problems}
-\subsection{NP-hard problems}
-\subsection{NP-hard problems}
-
-
+\subsubsection{Definition}
 
 \section{Approximate Algorithms}
 Many problems in NP-hard are problems for which we need a polynomial algorithm;
@@ -436,8 +441,7 @@ The problem is formulated as such
         A tour such that every 
 \end{itemize}
 
-
-\subsubsection{Algorithm for $\Delta$ Traveling Salesperson}
+\subsubsection{Algorithm for $\Delta$Traveling Salesperson}
 Given a connected graph $\mathcal{G}\ (V,E)$,
 \begin{enumerate}
     \item
@@ -463,6 +467,21 @@ We can now propose three properties of this algorithm
     \item
         The ratio bound
 \end{enumerate}
+
+\section{Complexity Lower Bounds}
+\section{Algebraic computation trees: examples}
+\section{Distinctness problem: upper bound}
+\section{Connected components of semialgebraic sets}
+\section{Lower bound for membership to a semialgebraic set: decision computation trees}
+\section{Thom-Milnor’s bound}
+\section{Lower bound for membership to a semialgebraic set: algebraic computation trees}
+\section{Distinctness problem: lower bound}
+
+\section{Complexity and Quantum Computing}
+\subsection{Complex Numbers}
+\subsection{Vectors and matrices}
+\subsection{Qubits}
+\subsection{Bloch sphere}
 
 
 
