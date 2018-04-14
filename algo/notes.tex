@@ -7,7 +7,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{tikz}
-\usetikzlibrary{shapes.arrows,chains}
+\usetikzlibrary{shapes.arrows,chains,trees}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
@@ -55,6 +55,7 @@ A brute force solution would be to consider all $2^{|X|}$ possible assignments.
 The link between these two problems is the na\"ive brute force solution is not
 tractable for large values of $n$.
 
+\pagebreak
 \section{Turing Machines}
 What do Turing machines do? Why are we looking at them?
 
@@ -142,6 +143,9 @@ $$T(n) = \frac{n^2 + n}{2}$$
 
 However in non palindrome cases, say $aaa \dots ab$, then $T(n)$ is very small.
 
+\subsection{Non-Deterministic Turing Machines}
+
+\pagebreak
 \section{$O, \Omega, \Theta$ Notation}
 
 \begin{definition}
@@ -161,14 +165,14 @@ Note that for some $n$ $T(n)$ will be very small and for others it will be much 
 usually this leads us to consider the complexity of the Turing machine to be 
 
 
+\pagebreak
 \section{Complexity class P}
 \begin{definition}
 	\textit{Class P} is the class of problems for which there exists a Turing machine
 	which can be computed in polynomial time.
 \end{definition}
 
-\section{Non-Deterministic Turing Machines}
-
+\pagebreak
 \section{Complexity class NP}
 \begin{definition}
 	\textit{Class NP} is the class of problems 
@@ -183,6 +187,7 @@ usually this leads us to consider the complexity of the Turing machine to be
 	for solving $\mathcal{L}$ with complexity $O(2^{p(n)})$.
 \end{theorem}
 
+\pagebreak
 \section{Polynomial Transformations and Equivalence}
 \subsection{Polynomial Transformations}
 \begin{definition}
@@ -287,6 +292,7 @@ An obvious consequence of this definition is that for any edge $(x,y)$ there is 
 	$\mathcal{G}$ where $q \in \mathbb{N}$.
 \end{definition}
 
+\pagebreak
 \section{Cook’s Theorem}
 
 \subsection{Formulation}
@@ -300,6 +306,7 @@ Actually we will prove that CNF-satisfiability problem is NP-complete.
 \subsection{Formulation}
 
 
+\pagebreak
 \section{Structure of the class NP}
 \subsection{Complements to languages}
 \subsection{Class co-NP}
@@ -312,6 +319,7 @@ Actually we will prove that CNF-satisfiability problem is NP-complete.
 \subsubsection{Oracle Turing Machine}
 \subsubsection{Definition}
 
+\pagebreak
 \section{Approximate Algorithms}
 Many problems in NP-hard are problems for which we need a polynomial algorithm;
 thus we are left with few, but not none, options.
@@ -468,15 +476,106 @@ We can now propose three properties of this algorithm
         The ratio bound
 \end{enumerate}
 
+\pagebreak
 \section{Complexity Lower Bounds}
-\section{Algebraic computation trees: examples}
-\section{Distinctness problem: upper bound}
-\section{Connected components of semialgebraic sets}
-\section{Lower bound for membership to a semialgebraic set: decision computation trees}
-\section{Thom-Milnor’s bound}
-\section{Lower bound for membership to a semialgebraic set: algebraic computation trees}
-\section{Distinctness problem: lower bound}
+\begin{definition}
+    A function $L(n)$ is called a \textit{complexity lower bound}
+    for a computational problem $L$
+    in a given class $M$ of models of computation
+    if for any algorithm from $M$ which solves $L$ with complexity $T(n)$ the following relation holds:
+    $$T(n) = \Omega(L(n))$$
+\end{definition}
 
+Finding non-trivial lower bounds is an important part of a comprehensive analysis of an algorithm,
+which might save time spent on trying to construct a better algorithm.
+Very few natural problems have proven lower bounds in the class of all Turing machines because these models are powerful.
+An example of the quadratic lower bound for the problem of recognizing palindromes in the class of one-tape,
+one-head Turing machines was mentioned earlier in this unit.
+If we assume $P \neq NP$ hypothesis, then any polynomial serves as a lower bound for any NP-complete problem in the class of all Turing machines.
+Clearly it should be easier to prove lower bounds for narrower classes $M$ of algorithms.
+On the other hand such a class should be “natural enough” for the lower bound to be of some practical use.
+This part of Lecture Notes describes a general method for proving complexity lower bounds for algebraic computation trees.
+
+\subsection{A Lower Bound for Comparison Sorting}
+We can arrive at a lower bound for comparison based for sorting using decision trees.
+First we must recall the definition of an binary relation
+\begin{definition}
+    A \textit{binary relation} is relation which we shall denote $\leq$
+    (a relation is an operation between two elements of a set $a,b \in S$ returning either true or false)
+    where we have three axioms where $\forall a,b,c \in S$
+    \begin{itemize}
+        \item Reflexivity: $a \leq a$
+        \item Anti-Symmetry: if $a \leq b$ and $b \leq a$ then $a = b$
+        \item Transitivity: if $a \leq b$ and $b \leq c$ then $a \leq c$
+    \end{itemize}
+    Consider as an example less than equal on the integers
+    $$1 \leq 1 \leq 2 \leq 74782$$
+    $$1 \leq 74782$$
+\end{definition}
+
+We will use any given binary relation as the basis of our decision tree,
+at each node of the tree we compute one binary relation
+the left child will represent the result of the computation being true
+conversely the right child will mean the computation result was false.
+
+Given a binary relation $\leq$
+Consider sorting three items $(a,b,c)$ we can derive a decision tree showing that
+there exists a lower bound complexity for comparison sorting.
+
+We can prune some branches because of the transitive property of $\leq$,
+given $a \leq b$ and $b \leq c$ we also know that $a \leq c$ is true.
+Conversely given $a \leq b$ and $c \leq b$ we \textbf{do not know} that $a \leq c$ is true.
+This is another question we have to ask separately.
+
+\begin{center}
+    \begin{tikzpicture}[level distance=1.5cm,
+  level 1/.style={sibling distance=5cm},
+  level 2/.style={sibling distance=1.5cm},
+  level 3/.style={sibling distance=1.5cm}]
+  \node {$a \leq b$}
+    child {node {$b \leq c$}
+        child {node {\textbf{\textit{a,b,c}}}}
+        child {node {$a \leq c$} {
+          child {node {\textbf{\textit{a,c,b}}}}
+          child {node {\textbf{\textit{c,a,b}}}}
+      }}
+    }
+    child {node {$b \leq c$}
+        child {node {$a \leq c$} {
+          child {node {\textbf{\textit{b,a,c}}}}
+          child {node {\textbf{\textit{b,c,a}}}}
+      }}
+          child {node {\textbf{\textit{c,b,a}}}}
+    };
+\end{tikzpicture}
+\end{center}
+
+
+For a three item set $(a,b,c)$ there exists precisely $!3 = 6$ orderings,
+or more generally there exists for an $n$ item set $!n$ orderings.
+\begin{enumerate}
+    \item $a,b,c$
+    \item $a,c,b$
+    \item $b,a,c$
+    \item $b,c,a$
+    \item $c,b,a$
+    \item $c,a,b$
+\end{enumerate}
+
+\begin{proof}
+    Suppose there does exist
+\end{proof}
+
+\subsection{Algebraic computation trees: examples}
+We can expand the decision tree model to something more powerful
+\subsection{Distinctness problem: upper bound}
+\subsection{Connected components of semialgebraic sets}
+\subsection{Lower bound for membership to a semialgebraic set: decision computation trees}
+\subsection{Thom-Milnor’s bound}
+\subsection{Lower bound for membership to a semialgebraic set: algebraic computation trees}
+\subsection{Distinctness problem: lower bound}
+
+\pagebreak
 \section{Complexity and Quantum Computing}
 \subsection{Complex Numbers}
 \subsection{Vectors and matrices}
