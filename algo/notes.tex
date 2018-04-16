@@ -498,34 +498,28 @@ This part of Lecture Notes describes a general method for proving complexity low
 
 \subsection{A Lower Bound for Comparison Sorting}
 We can arrive at a lower bound for comparison based for sorting using decision trees.
-First we must recall the definition of an binary relation
-\begin{definition}
-    A \textit{binary relation} is relation which we shall denote $\leq$
-    (a relation is an operation between two elements of a set $a,b \in S$ returning either true or false)
-    where we have three axioms where $\forall a,b,c \in S$
-    \begin{itemize}
-        \item Reflexivity: $a \leq a$
-        \item Anti-Symmetry: if $a \leq b$ and $b \leq a$ then $a = b$
-        \item Transitivity: if $a \leq b$ and $b \leq c$ then $a \leq c$
-    \end{itemize}
-    Consider as an example less than equal on the integers
-    $$1 \leq 1 \leq 2 \leq 74782$$
-    $$1 \leq 74782$$
-\end{definition}
+
+As input we have a finite set of items to sort
+and a binary relation $\leq$ where we have $\forall\ a,b,c:$
+\begin{itemize}
+    \item Reflexivity: $a \leq a$
+    \item Anti-Symmetry: if $a \leq b$ and $b \leq a$ then $a = b$
+    \item Transitivity: if $a \leq b$ and $b \leq c$ then $a \leq c$
+\end{itemize}
+
+\begin{example}
+The most obvious example is less than equal on the integers
+$$1 \leq 1 \leq 2 \leq 74782$$
+$$1 \leq 74782$$
+\end{example}
 
 We will use any given binary relation as the basis of our decision tree,
 at each node of the tree we compute one binary relation
 the left child will represent the result of the computation being true
 conversely the right child will mean the computation result was false.
-
-Given a binary relation $\leq$
+$$$$
 Consider sorting three items $(a,b,c)$ we can derive a decision tree showing that
 there exists a lower bound complexity for comparison sorting.
-
-We can prune some branches because of the transitive property of $\leq$,
-given $a \leq b$ and $b \leq c$ we also know that $a \leq c$ is true.
-Conversely given $a \leq b$ and $c \leq b$ we \textbf{do not know} that $a \leq c$ is true.
-This is another question we have to ask separately.
 
 \begin{center}
     \begin{tikzpicture}[level distance=1.5cm,
@@ -550,24 +544,116 @@ This is another question we have to ask separately.
 \end{tikzpicture}
 \end{center}
 
+Observe that the height or depth of the tree represents the amount of computations which must be performed.
+Furthermore observe that the height of the tree is not the same for every root,
+for the ordering \textbf{\textit{b,a,c}} we have height three
+and for \textbf{\textit{a,b,c}} we have height two.
+This is because we can prune some branches due to the transitive property of $\leq$,
+given $a \leq b$ and $b \leq c$ we also know that $a \leq c$ is true.
+Thus we do not need to compute $a \leq c$.
+Conversely given $a \leq b$ and $c \leq b$ we \textbf{do not know} that $a \leq c$ is true.
+This is another computation we need to perform to have a correct ordering.
+Obviously this tree is correct for $n = 3$, so we can say
+the complexity lower bound for $n = 3$ is 3 computational steps.
+This is because equipped with only comparison we can only go in one
+of two directions after each computation (true or false),
+and we must be able to produce all six possible orderings.
 
-For a three item set $(a,b,c)$ there exists precisely $!3 = 6$ orderings,
+How do
+How many branches can we prune?
+
+Well for a three item set $(a,b,c)$ there exists precisely $!3 = 6$ orderings;
+thus our decision tree 
 or more generally there exists for an $n$ item set $!n$ orderings.
-\begin{enumerate}
-    \item $a,b,c$
-    \item $a,c,b$
-    \item $b,a,c$
-    \item $b,c,a$
-    \item $c,b,a$
-    \item $c,a,b$
-\end{enumerate}
+Because
+$$\Omega(n log n)$$
 
-\begin{proof}
-    Suppose there does exist
-\end{proof}
 
 \subsection{Algebraic computation trees: examples}
 We can expand the decision tree model to something more powerful
+
+Consider the problem of finding if a point is inside the unit circle
+\begin{itemize}
+    \item Input: a point $(x,y) \in \mathbb{R}^2$
+    \item Output: yes iff $x^2 + y^2 \leq 1$
+\end{itemize}
+The complexity of this algorithm (the height of the tree) is 4, i.e., a constant.
+This is quite natural since we assume that the size of the input is a constant.
+\begin{center}
+    \begin{tikzpicture}[level distance=1cm,
+  level 1/.style={sibling distance=2cm},
+  level 2/.style={sibling distance=1.5cm},
+  level 3/.style={sibling distance=1.5cm},
+  level 4/.style={sibling distance=1.5cm},
+  level 5/.style={sibling distance=1.5cm}]
+  \node {$x^2$}
+        child {node {$y^2$}
+        child {node {$x^2 + y^2$}
+        child {node {$x^2 + y^2 \leq 1$}
+            child {node {Yes}}
+            child {node {No}}
+            }}
+        };
+\end{tikzpicture}
+\end{center}
+
+In our further considerations we wish to consider only the trees
+in which all vertices except leaves have exactly three children.
+To satisfy this requirement we redraw the tree for membership to a
+circle as shown on Fig. 2 on a separate sheet.
+In the new tree at each vertex (except leaves) an arithmetic operation is conducted and the branching corresponds
+to the sign of the expression obtained. Observe that the complexity (height) of the new tree is still 5.
+
+\begin{center}
+    \begin{tikzpicture}[level distance=1.5cm,
+  level 1/.style={sibling distance=3cm},
+  level 2/.style={sibling distance=1.5cm},
+  level 3/.style={sibling distance=2.5cm},
+  level 4/.style={sibling distance=2.5cm}]
+    \node {$x^2$}
+            child {node {$y^2$} edge from parent node[left,above=3pt] {$< 0$}
+            }
+            child {node {$y^2$} edge from parent node[left] {$= 0$}
+            }
+            child {node {$y^2$}
+                child { node {$x^2 + y^2$} 
+                    child { node {$x^2 + y^2 - 1$} 
+                        child { node {Yes} edge from parent node[left=2pt] {$< 0$}}
+                        child { node {Yes} edge from parent node[left=2pt] {$= 0$}}
+                        child { node {No}  edge from parent node[left=2pt] {$> 0$}}
+                    }
+                    child { node {$x^2 + y^2 - 1$} }
+                    child { node {$x^2 + y^2 - 1$} }
+                }
+                child { node {$x^2 + y^2$} }
+                child { node {$x^2 + y^2$} }
+            edge from parent node[left,above=3pt] {$> 0$} }
+       ;
+\end{tikzpicture}
+\end{center}
+
+%Exercise. Prove that recognizing membership to an n-dimensional ball defined by the inequalityX12+···+Xn2 ≤1
+%canbedoneonalgebraiccomputationtreemodelwith complexity 2n + 1.
+
+\subsection{Algebraic computation trees: definition}
+\begin{definition}
+    A subset $S \subset R^n$ is called \textit{(basic) semi-algebraic} if it defined by
+    $$\{P_1(x_1,\dots x_n) = 0,\dots P_n\}
+    \cup
+    \{Q_1(x_1,\dots x_n) > 0,\dots Q_m\}$$
+    where $P_i$ and $Q_j$ are polynomials in $n$ variables
+    i.e., S is a set of all solutions of a system of equations and strict inequalities.
+\end{definition}
+
+Algebraic computation tree $T$ in variables $x_1,\dots x_n$
+is a tree with the root $v_0$ such that to every vertex $v$ (except leaves) 
+is an arithmetic operation (addition, subtraction or multiplication) 
+and a polynomial $fv$ are attached. 
+At the root v0 the corresponding arithmetic operation, say $+$,
+is performed on a pair of variables, say $Xi, Xj$ , and fv0 = Xi +Xj is the result of this operation.
+Let v0, v1, . . . , vl be the sequence of vertices along the (unique) branch leading from the root v0 to vl.
+An arithmetic operation at vl is performed on a pair from
+
 \subsection{Distinctness problem: upper bound}
 \subsection{Connected components of semialgebraic sets}
 \subsection{Lower bound for membership to a semialgebraic set: decision computation trees}

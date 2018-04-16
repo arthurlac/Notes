@@ -8,6 +8,7 @@
 \usepackage{amsmath}
 \usepackage{parskip}
 \usepackage{mathtools}
+\usepackage{ebproof}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
@@ -731,5 +732,19 @@ $$
 \subsection{natural transformations}
 \subsection{equalisers and coequalisers}
 \subsection{pullbacks and pushouts}
+\pagebreak
+
+We can derive a tree for the term $\lambda x. \lambda y.(xy)(xy)$
+showing that there exists a contradiction thus it has no type.
+
+\begin{prooftree}
+    \hypo{ \Gamma &\vdash xy : R \Rightarrow T\prime\prime }
+    \hypo{ \Gamma &\vdash xy : T\prime\prime }
+    \infer2[(App)]{ \Gamma &\vdash (xy)(xy) : T\prime\prime }
+    \infer0[(Var)]{ \Gamma &\vdash y : T\prime }
+    \infer2[($\lambda$)]{ \Gamma &\vdash \lambda y.(xy)(xy) : T\prime \Rightarrow T\prime\prime }
+    \infer0[(Var)]{ \Gamma &\vdash x : T }
+    \infer2[($\lambda$)]{ \Gamma \vdash \lambda x. \lambda y.(xy)(xy) : T \Rightarrow T\prime \Rightarrow T\prime\prime }
+\end{prooftree}
 
 \end{document}

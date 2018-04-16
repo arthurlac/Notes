@@ -8,6 +8,7 @@
 \usepackage{amsmath}
 \usepackage{parskip}
 \usepackage{mathtools}
+\usepackage{stackrel}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
@@ -25,9 +26,6 @@
     arrow style=tikz,
     diagrams={>={Straight Barb[scale=0.8]}}
 }
-\newcommand{\C}{\mathcal{C}}
-\newcommand{\D}{\mathcal{D}}
-\newcommand{\N}{\mathbb{N}}
 
 \setlength{\parindent}{0pt}
 
@@ -36,38 +34,39 @@
 \section{Categories}
 
 \begin{definition}
-    A \textit{category} $\mathcal{C}$ consists of
+    A \textit{category} $C$ consists of
     \begin{itemize}
-        \item A set $Ob\,\mathcal{C}$, elements of which are called \textit{objects} of $\mathcal{C}$.
-        \item For each $X, Y \in Ob\,\mathcal{C}$
-            a set $\mathcal{C}(X,Y)$ called the \textit{homset} from $X$ to $Y$.
-        \item For each $X, Y, Z \in Ob\,\mathcal{C}$ a \textit{composition function} $\circ$
-            $$\mathcal{C}(X,Y) \circ \mathcal{C}(Y,Z) \rightarrow \mathcal{C}(X,Z)$$
-        \item For all $X \in Ob\,\mathcal{C}$ an element $\iota_X$ of $\mathcal{C}(X,\ X)$,
-            or equivalently a function $\iota_X : 1 \rightarrow \mathcal(X,\ X)$.
+        \item A set $Ob\,C$, elements of which are called \textit{objects} of $C$.
+        \item For each $X, Y \in Ob\,C$
+            a set $Hom(X,Y)$ called the \textit{homset} from $X$ to $Y$.
+        \item For each $X, Y, Z \in Ob\,C$ a \textit{composition function} $\circ$
+            $$Hom(X,Y) \circ Hom(Y,Z) \rightarrow Hom(X,Z)$$
+        \item For all $X \in Ob\,C$ an element $\iota_X$ of $Hom(X,\ X)$,
+            or equivalently a function $\iota_X : 1 \rightarrow X\ X)$.
             Such that
-            $$\forall f \in \mathcal{C}(X,Y)\ f \circ \iota_X = \iota_Y \circ f = f$$
+            $$\forall f \in Hom(X,Y)\ f \circ \iota_X = \iota_Y \circ f = f$$
         \item Composition is associative.
             $$\forall
-              f \in \mathcal{C}(X,Y),
-            \ g \in \mathcal{C}(Y,Z),
-            \ h \in \mathcal{C}(X,Z)
+              f \in Hom(X,Y),
+            \ g \in Hom(Y,Z),
+            \ h \in Hom(X,Z)
             \ f \circ (g \circ h) = (f \circ g) \circ h
             $$
     \end{itemize}
 \end{definition}
 
 \par
-An element $f$ of $\mathcal{C}(X,Y)$ is called an \textit{arrow},
+An element $f$ of $Hom(X,Y)$ is called an \textit{arrow},
 or a \textit{morphism}. The object $X$ is called the \textit{domain} of $f$ and $Y$ is
 the \textit{codomain}.\\
 
 \begin{example}
-    The foremost example of a category is the category of \textit{small sets}.
-    We say small sets due to Russel's paradox, conversely phrased a category is small
+    The immediate example of a category is the category of \textit{small sets}.
+    We say small sets due to Russel's paradox.
+    Conversely phrased a category is small
     if its objects and arrow constitute sets; otherwise it is large. \textit{Cite BarrsWells?}
 
-    The objects in $Ob\,\mathcal{C}$ are sets,
+    The objects in $Ob\,C$ are sets,
     a morphism from $X$ to $Y$ is a function $f : X \rightarrow Y$.
     The composition of Set is given by composition of functions,
     and the identity maps are given by the identity functions.
@@ -75,11 +74,10 @@ the \textit{codomain}.\\
 
 \section{Functors}
 \begin{definition}
-    A \textit{functor} $U : \mathcal{C} \rightarrow \mathcal{D}$ consists of
+    A \textit{functor} $U : C \rightarrow D$ consists of
     \begin{itemize}
-        \item A function $Ob\,U : Ob\,\C \rightarrow Ob\,\mathcal{D}$.
-        \item For each $X, Y \in Ob\,\C$ a function
-            $U_{X,Y} : \mathcal{C}(X,Y) \rightarrow \mathcal{D}(UX, UY)$
+        \item A function $Ob\,U : Ob\,C \rightarrow Ob\,D$.
+        \item A function $U : Hom_C(X,Y) \rightarrow Hom_D(UX, UY)$
             such that $U$ respects both composition and identity.
             I.e.
             $$Uf \circ Ug \equiv U(f \circ g) \quad Uf \circ U1 \equiv U(f \circ 1)$$
@@ -87,18 +85,18 @@ the \textit{codomain}.\\
 \end{definition}
 
 \begin{definition}
-    An \textit{endofunctor} is a functor $U : \C \rightarrow \C$;
-    i.e. the domain and codomain of the functor are the same category $\C$.
+    An \textit{endofunctor} is a functor $U : C \rightarrow C$;
+    i.e. the domain and codomain of the functor are the same category $C$.
 \end{definition}
 
 \section{Natural transformations}
 \begin{definition}
-    Given categories $\mathcal{C}$ and $\mathcal{D}$,
-    with functors $U, V : \mathcal{C} \rightarrow \mathcal{D}$
+    Given categories $C$ and $D$,
+    with functors $U, V : C \rightarrow D$
     a \textit{natural transformation} $\alpha : U \rightarrow V$
     consists of
     $
-    \forall\ X \in Ob\,\mathcal{C}\ \textrm{a map}
+    \forall\ X \in Ob\,C\ \textrm{a map}
     \ \alpha_X : UX \rightarrow VX
     $
     such that $\forall\ f : X \rightarrow Y$ the following commutes
@@ -115,14 +113,14 @@ the \textit{codomain}.\\
 \begin{definition}
     A \textit{monad} is defined as the triple
     \begin{itemize}
-        \item An endofunctor $T : \C \rightarrow \C$
-        \item A natural transformation $\eta : 1_{\C} \rightarrow T$
+        \item An endofunctor $T : C \rightarrow C$
+        \item A natural transformation $\eta : 1_{C} \rightarrow T$
         \item A natural transformation $\mu : T^2 \rightarrow T$
     \end{itemize}
     Such that the following diagrams commute
     \begin{center}
         \begin{tikzcd}[sep=large]
-            T \rar{\eta_T} \drar[swap]{1_{\C}} & T^2 \dar{\mu} \rar{\mu} & T \dlar{1_{\C}} \\
+            T \rar{\eta_T} \drar[swap]{1_{C}} & T^2 \dar{\mu} \rar{\mu} & T \dlar{1_{C}} \\
                                                & T                       &
         \end{tikzcd}
         \quad
@@ -133,7 +131,41 @@ the \textit{codomain}.\\
     \end{center}
 \end{definition}
 
-\section{Programming Monads}
-In this section I will explain how the theory corresponds to in practice;
-i.e. List Monad, Maybe/Option monad. And how programmers think of monads.
+\section{Kleisli Category}
+\begin{definition}
+    Given a monad $(T,\eta,\mu)$ over a category $C$,
+    the \textit{Kleisli category} $C_T$ consists of
+    \begin{itemize}
+        \item Objects of $C_T$ are objects from the underlying category $C$.
+        \item $Hom_{C_T}(X,Y) = Hom_C (X,TY)$
+        \item Identity morphisms in $C_T$ are $\eta$ in $C$
+        \item Composition $f \circ g$ is $\mu(Tf)g$
+    \end{itemize}
+\end{definition}
+
+\textit{This is the part I am struggling with}
+
+Composition in $C_T$ can be described in more detail via the operator
+$$(-)^{*} : Hom(X, TY) \rightarrow Hom(TX, TY)$$
+where given a morphism $f: X \rightarrow TY$ we have
+$$f^{*} = \mu_{Y} \circ Tf$$
+note that
+$\eta_{X}^{*} = Id_{X}$
+and
+$f^{*} \circ \eta _{X} = f$.
+Then we can define the \textit{Kleisli operator} $\gg$ where
+$$g \gg f = g^{*} \circ f$$
+\begin{displaymath}
+    x
+    \stackrel{f}{\rightarrow}     T y
+    \stackrel{T g}{\rightarrow}   T T z
+    \stackrel{\mu z}{\rightarrow} T z
+\end{displaymath}
+where $\gg$ has the same axioms as a monoid operation
+\begin{itemize}
+    \item $(f \gg g) \gg h = f \gg (g \gg h)$
+    \item $Id_{TY} \gg f \equiv f \equiv f \gg Id_{X}$
+\end{itemize}
+
+
 \end{document}
