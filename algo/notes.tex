@@ -602,7 +602,7 @@ in which all vertices except leaves have exactly three children.
 To satisfy this requirement we redraw the tree for membership to a
 circle as shown on Fig. 2 on a separate sheet.
 In the new tree at each vertex (except leaves) an arithmetic operation is conducted and the branching corresponds
-to the sign of the expression obtained. Observe that the complexity (height) of the new tree is still 5.
+to the sign of the expression obtained. Observe that the complexity (height) of the new tree is still four.
 
 \begin{center}
     \begin{tikzpicture}[level distance=1.5cm,
@@ -632,8 +632,13 @@ to the sign of the expression obtained. Observe that the complexity (height) of 
 \end{tikzpicture}
 \end{center}
 
-%Exercise. Prove that recognizing membership to an n-dimensional ball defined by the inequalityX12+···+Xn2 ≤1
-%canbedoneonalgebraiccomputationtreemodelwith complexity 2n + 1.
+\begin{example}
+    One can generalise this example from membership of the unit circle to membership
+    of the $n$ dimensional unit ball.
+    Simply calculate
+    $$1 \leq \sum_{i=1}^{n} x_i^2$$
+    which takes $2n$ steps. In case $n = 2$ we get complexity four as our computation tree showed.
+\end{example}
 
 \subsection{Algebraic computation trees: definition}
 \begin{definition}
@@ -646,15 +651,52 @@ to the sign of the expression obtained. Observe that the complexity (height) of 
 \end{definition}
 
 Algebraic computation tree $T$ in variables $x_1,\dots x_n$
-is a tree with the root $v_0$ such that to every vertex $v$ (except leaves) 
+is a tree with the root $v_0$ such that to every vertex $v$ (except leaves)
 is an arithmetic operation (addition, subtraction or multiplication) 
-and a polynomial $fv$ are attached. 
-At the root v0 the corresponding arithmetic operation, say $+$,
-is performed on a pair of variables, say $Xi, Xj$ , and fv0 = Xi +Xj is the result of this operation.
-Let v0, v1, . . . , vl be the sequence of vertices along the (unique) branch leading from the root v0 to vl.
-An arithmetic operation at vl is performed on a pair from
+and a polynomial $f_v$ is attached.
+
+For example $f_3 = f_1 + f_2$ where $f_3$ is the new polynomial;
+more precisely in our previous example membership of the unit circle
+we have
+$$f_1 = x^2 \quad f_2 = y^2 \quad f_3 = x^2 + y^2$$
+$$f_4 = f_3 - 1 = x^2 + y^2 - 1$$
+
+Let $v_0, v_1,\dots, v_\omega$ be the sequence of vertices
+along the (unique) branch leading from the root $v_0$ to $v_\omega$.
+An arithmetic operation at $v_i$ is performed on a pair from
+$$\{x_1,\dots x_n\} \cup \{f_0\dots f_{i - 1}\}$$
+and the result is at $f_i$.
+Note that every $v$ has exactly three children
+$$(> 0, = 0, < 0)$$
+
+Let $*_i \in \{>0,=0,<0\}$ for $0 \leq i < \omega$ be the sign of $f_{v_i}$,
+One can assign the semi-algebraic set $U_\omega$ to $v_\omega$
+$$U_\omega = \{f_0*_00,f_1*_10\dots f_{\omega - 1} *_{\omega - 1}0\}$$
+
+To each leaf $\omega$ of $T$ an output Yes or No is assigned.
+We call $U_\omega$ an accepting set if the leaf $\omega$ has the output Yes assigned.
+We say that T tests the membership to the union of all accepting sets.
+
+The computation process works as follows.
+A specific point $x \in \mathbb{R}^n$ is taken as an input.
+Then the value $f_{v_0}(x)$ is computed and the sign of this value is determined.
+According to the sign, the algorithm goes to the corresponding child $v_1$ of $v_0$.
+If the process eventually arrives to a Yes-vertex, then $x$ belongs to an accepting set,
+and, therefore, to the union of all accepting sets.
 
 \subsection{Distinctness problem: upper bound}
+\begin{itemize}
+    \item \textbf{Input:} $(x_0, x_1,\dots x_n) \in \mathbb{R}^n$
+    \item \textbf{Output:} Yes iff $\forall\ i,j$ where $0 \leq i,j \leq n, i \neq j$ we have $x_i \neq x_j$
+\end{itemize}
+An algorithm for this problem having complexity O(nlogn) first sorts the numbers x1, . . . , xn,
+then checks all pairs of neighbours in the sorted sequence.
+It’s clear that this algorithm can be represented in a form of algebraic computation tree of the height O(n log n) (compare with sorting).
+In the remaining part of these notes we are going to develop a general method for prov- ing lower complexity bounds for algebraic computation trees,
+and will apply this method to prove the $\Omega(nlogn)$ lower bound for Distinctness.
+Unlike a very elementary proof of (n log n)-lower bound for sorting,
+the proof for Distinctness employs some modern mathe- matics and apparently no elementary proof is known.
+
 \subsection{Connected components of semialgebraic sets}
 \subsection{Lower bound for membership to a semialgebraic set: decision computation trees}
 \subsection{Thom-Milnor’s bound}

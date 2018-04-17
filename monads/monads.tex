@@ -40,18 +40,10 @@
         \item For each $X, Y \in Ob\,C$
             a set $Hom(X,Y)$ called the \textit{homset} from $X$ to $Y$.
         \item For each $X, Y, Z \in Ob\,C$ a \textit{composition function} $\circ$
-            $$Hom(X,Y) \circ Hom(Y,Z) \rightarrow Hom(X,Z)$$
-        \item For all $X \in Ob\,C$ an element $\iota_X$ of $Hom(X,\ X)$,
-            or equivalently a function $\iota_X : 1 \rightarrow X\ X)$.
-            Such that
-            $$\forall f \in Hom(X,Y)\ f \circ \iota_X = \iota_Y \circ f = f$$
-        \item Composition is associative.
-            $$\forall
-              f \in Hom(X,Y),
-            \ g \in Hom(Y,Z),
-            \ h \in Hom(X,Z)
-            \ f \circ (g \circ h) = (f \circ g) \circ h
-            $$
+            $$Hom(X,Y) \times Hom(Y,Z) \rightarrow Hom(X,Z)$$
+        \item For all $X \in Ob\,C$ an element $Id_X$ of $Hom(X,\ X)$
+            such that $f \circ Id_X = Id_Y \circ f = f$
+        \item Composition is associative.  $f \circ (g \circ h) = (f \circ g) \circ h$
     \end{itemize}
 \end{definition}
 
@@ -61,12 +53,8 @@ or a \textit{morphism}. The object $X$ is called the \textit{domain} of $f$ and 
 the \textit{codomain}.\\
 
 \begin{example}
-    The immediate example of a category is the category of \textit{small sets}.
-    We say small sets due to Russel's paradox.
-    Conversely phrased a category is small
-    if its objects and arrow constitute sets; otherwise it is large. \textit{Cite BarrsWells?}
-
-    The objects in $Ob\,C$ are sets,
+    The immediate example of a category is the category of sets.
+    The objects in $C$ are (small) sets,
     a morphism from $X$ to $Y$ is a function $f : X \rightarrow Y$.
     The composition of Set is given by composition of functions,
     and the identity maps are given by the identity functions.
@@ -80,7 +68,7 @@ the \textit{codomain}.\\
         \item A function $U : Hom_C(X,Y) \rightarrow Hom_D(UX, UY)$
             such that $U$ respects both composition and identity.
             I.e.
-            $$Uf \circ Ug \equiv U(f \circ g) \quad Uf \circ U1 \equiv U(f \circ 1)$$
+            $$Uf \circ Ug = U(f \circ g) \quad U\,Id_X = Id_{UX}$$
     \end{itemize}
 \end{definition}
 
@@ -120,8 +108,8 @@ the \textit{codomain}.\\
     Such that the following diagrams commute
     \begin{center}
         \begin{tikzcd}[sep=large]
-            T \rar{\eta_T} \drar[swap]{1_{C}} & T^2 \dar{\mu} \rar{\mu} & T \dlar{1_{C}} \\
-                                               & T                       &
+            T \rar{\eta_T} \drar[swap]{1_{C}} & T^2 \dar{\mu} & \lar[swap]{T\eta} \dlar{1_{C}} T \\
+                                               & T            &
         \end{tikzcd}
         \quad
         \begin{tikzcd}[sep=large]
@@ -143,14 +131,12 @@ the \textit{codomain}.\\
     \end{itemize}
 \end{definition}
 
-\textit{This is the part I am struggling with}
-
 Composition in $C_T$ can be described in more detail via the operator
 $$(-)^{*} : Hom(X, TY) \rightarrow Hom(TX, TY)$$
 where given a morphism $f: X \rightarrow TY$ we have
 $$f^{*} = \mu_{Y} \circ Tf$$
 note that
-$\eta_{X}^{*} = Id_{X}$
+$\eta_{X}^{*} = Id_{TX}$
 and
 $f^{*} \circ \eta _{X} = f$.
 Then we can define the \textit{Kleisli operator} $\gg$ where
@@ -163,9 +149,8 @@ $$g \gg f = g^{*} \circ f$$
 \end{displaymath}
 where $\gg$ has the same axioms as a monoid operation
 \begin{itemize}
-    \item $(f \gg g) \gg h = f \gg (g \gg h)$
-    \item $Id_{TY} \gg f \equiv f \equiv f \gg Id_{X}$
+    \item $(f \gg g) \gg h \equiv f \gg (g \gg h)$
+    \item $\eta_Y \gg f \equiv f \equiv f \gg \eta_X$
 \end{itemize}
-
 
 \end{document}
