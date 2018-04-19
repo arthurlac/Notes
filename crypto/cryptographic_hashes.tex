@@ -1,0 +1,102 @@
+\section{Cryptographic Hashes}
+
+\textit{Hash functions} are functions which
+map data of arbitrary size to a bit string of a fixed size,
+the output being called a hash.
+To qualify as hash functions these functions must have several qualities;
+firstly that the function \textit{compresses} the input,
+the output must always be the same size.
+Secondly the function must be "easy" to compute;
+i.e. computable algorithmically in polynomial time
+with no massive hidden constants.
+
+More formally we have
+\begin{itemize}
+	\item $\X$ is the set of messages.
+	\item $\Y$ is the finite set of hashes,
+		where each hash is of fixed size $n$ such that
+		$\forall\ y \in \Y\ |y| = n$.
+	\item $h : \X \rightarrow \Y$ is the hash function.
+	\item A pair $(x,y) \in (\X,\Y)$ is valid iff $h(x) = y$.
+\end{itemize}
+
+\begin{definition}
+	A \textit{keyed hash function} is the tuple $(\X,\Y,\K,\Hsh)$ where
+	\begin{enumerate}
+		\item $\X$ is the set of messages
+		\item $\Y$ is the finite set of hashes.
+		\item $\forall\ k \in \K$ there exists $h_k : \X \rightarrow \Y \in \Hsh$
+			such that a pair $(x,y) \in (\X, \Y)$ is considered valid iff $h_k(x) = y$.
+	\end{enumerate}
+\end{definition}
+
+\textit{Cryptographic hash functions} are a subset of hash functions
+for which given $h(x) = y$ it is easy to verify that $h(x)$ is $y$
+but given just $y$ it is not easy to find $x$.
+The ideal cryptographic hash function has five main properties:
+\begin{enumerate}
+	\item it is deterministic so the same message always results in the same hash
+	\item it is quick to compute the hash value for any given message
+	\item it is infeasible to generate a message from its hash value except by trying all possible messages
+	\item a small change to a message should change the hash value so extensively that the new hash value appears uncorrelated with the old hash value
+	\item it is infeasible to find two different messages with the same hash value
+\end{enumerate}
+A hash function is considered to be secure if three problems are difficult to solve.
+\begin{itemize}
+	\item \textit{Preimage 1}
+		Given $h : \X \rightarrow \Y$
+		and $y \in Y$
+		find $x \in X$
+		such that $h(x) = y$.
+	\item \textit{Preimage 2}
+		Given $h : \X \rightarrow \Y$
+		and $x \in \X$
+		find $x\prime \in \X\ x \neq x\prime$
+		such that $h(x) = h(x\prime)$.
+	\item \textit{Collision}
+		Given only $h : \X \rightarrow \Y$
+		find $x, x\prime \in \X$
+		such that $x \neq x\prime, h(x) = h(x\prime)$.
+\end{itemize}
+
+Na\"ive attack
+
+Birthday attack problem
+
+Summarily, a hash function is secure if
+a preimage attack requires $2^n$ operations and
+a collision attack requires attack $2^{n/2}$ operations.
+
+\textit{Birthday paradox}
+
+\subsection{Merkle-Damg\aa rd Construction}
+The Merkle-Damg\aa rd construction is 
+a method of building collision-resistant cryptographic hash functions 
+from collision-resistant one-way compression functions.
+A one-way compression function is a function
+that transforms two fixed-length inputs into a fixed-length output
+A hash function must be able to process an arbitrary-length message into a fixed-length output.
+This can be achieved by breaking the input up into a series of equal-sized blocks,
+and operating on them in sequence using a one-way compression function.
+The Merkle–Damgård hash function first applies an MD-compliant padding function to create an input whose size is a multiple of a fixed number (e.g. 512 or 1024) — this is because compression functions cannot handle inputs of arbitrary size. The hash function then breaks the result into blocks of fixed size, and processes them one at a time with the compression function, each time combining a block of the input with the output of the previous round.
+
+In order to make the construction secure, Merkle and Damgård proposed that messages be padded with a padding that encodes the length of the original message. This is called length padding or Merkle–Damgård strengthening.
+The algorithm starts with an initial value, the initialization vector (IV). The IV is a fixed value (algorithm or implementation specific). For each message block, the compression (or compacting) function f takes the result so far, combines it with the message block, and produces an intermediate result. The last block is padded with zeros as needed and bits representing the length of the entire message are appended.
+
+the padding scheme used in the Merkle–Damgård construction must be chosen carefully to ensure the security of the scheme
+With these conditions in place, we find a collision in the MD hash function exactly when we find a collision in the underlying compression function. Therefore, the Merkle–Damgård construction is provably secure when the underlying compression function is secure
+
+
+\subsection{Message Digest (MD) Hash functions}
+
+\subsubsection{MD4}
+
+\subsubsection{MD5}
+
+\subsection{Secure Hash Algorithm (SHA)}
+
+\subsubsection{SHA-1}
+
+\subsubsection{SHA-2 Family}
+
+\subsubsection{SHA-3}

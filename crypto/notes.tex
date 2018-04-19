@@ -7,6 +7,8 @@
 \usepackage{amsthm}
 \usepackage{mathtools}
 
+\DeclareUnicodeCharacter{2212}{-}
+
 \addtolength{\evensidemargin}{-.5in}
 \addtolength{\oddsidemargin}{-.5in}
 \addtolength{\textwidth}{0.8in}
@@ -18,6 +20,7 @@
 \newtheorem*{definition}{Definition}
 \newtheorem*{theorem}{Theorem}
 \newtheorem*{question}{Question}
+\newtheorem*{example}{Example}
 
 \setcounter{secnumdepth}{4}
 
@@ -27,15 +30,16 @@
 \newcommand{\Y}{\mathcal{Y}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
-\newcommand{\mns}{\textrm{ -  }}
+\newcommand{\mns}{ - }
 \newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+\newcommand{\Modpn}{\Mod{\phi(n)}}
 
 \setlength{\parindent}{0pt}
 
 \begin{document}
 \tableofcontents
-\pagebreak
 
+\pagebreak
 \section{What is the problem}
 Cryptography allows for the secure exchange of information.
 It is important to begin by noting that cryptography does not mean security.
@@ -84,6 +88,7 @@ For a cryptosystem to be useful in practice, we need:
 2. that an unauthorised party should not be able to determine the key or the plaintext
 We also need each encryption function ek to be injective or one to one. Why?
 
+\pagebreak
 \section{Classical Cryptography}
 \begin{definition}
 	The \textit{subsitution cipher} has
@@ -158,379 +163,44 @@ Theorem 1.
 
 Instead of aiming for unconditional security researchers have tried to develop cryptosystems where one shared key can be used to send many messages between to entities while still main- taining computational security.
 
-\section{Private Key Cryptography}
+\pagebreak
+\include{private_key_crypto}
 
-\subsection{Combining basic components}
-\subsection{Substitution-permutation networks}
-\subsection{Attacks on substitution-permutation networks}
-\subsection{The Data Encryption Standard (DES)}
-\subsection{Modes of operation}
-\subsection{After DES: 3DES and the Advanced Encryption Standard (AES)}
+\pagebreak
+\include{cryptographic_hashes}
 
-\section{Cryptographic Hashes}
-
-\textit{Hash functions} are functions which
-map data of arbitrary size to a bit string of a fixed size,
-the output being called a hash.
-To qualify as hash functions these functions must have several qualities;
-firstly that the function \textit{compresses} the input,
-the output must always be the same size.
-Secondly the function must be "easy" to compute;
-i.e. computable algorithmically in polynomial time
-with no massive hidden constants.
-
-More formally we have
-\begin{itemize}
-	\item $\X$ is the set of messages.
-	\item $\Y$ is the finite set of hashes,
-		where each hash is of fixed size $n$ such that
-		$\forall\ y \in \Y\ |y| = n$.
-	\item $h : \X \rightarrow \Y$ is the hash function.
-	\item A pair $(x,y) \in (\X,\Y)$ is valid iff $h(x) = y$.
-\end{itemize}
-
-\begin{definition}
-	A \textit{keyed hash function} is the tuple $(\X,\Y,\K,\Hsh)$ where
-	\begin{enumerate}
-		\item $\X$ is the set of messages
-		\item $\Y$ is the finite set of hashes.
-		\item $\forall\ k \in \K$ there exists $h_k : \X \rightarrow \Y \in \Hsh$
-			such that a pair $(x,y) \in (\X, \Y)$ is considered valid iff $h_k(x) = y$.
-	\end{enumerate}
-\end{definition}
-
-\textit{Cryptographic hash functions} are a subset of hash functions
-for which given $h(x) = y$ it is easy to verify that $h(x)$ is $y$
-but given just $y$ it is not easy to find $x$.
-The ideal cryptographic hash function has five main properties:
-\begin{enumerate}
-	\item it is deterministic so the same message always results in the same hash
-	\item it is quick to compute the hash value for any given message
-	\item it is infeasible to generate a message from its hash value except by trying all possible messages
-	\item a small change to a message should change the hash value so extensively that the new hash value appears uncorrelated with the old hash value
-	\item it is infeasible to find two different messages with the same hash value
-\end{enumerate}
-A hash function is considered to be secure if three problems are difficult to solve.
-\begin{itemize}
-	\item \textit{Preimage 1}
-		Given $h : \X \rightarrow \Y$
-		and $y \in Y$
-		find $x \in X$
-		such that $h(x) = y$.
-	\item \textit{Preimage 2}
-		Given $h : \X \rightarrow \Y$
-		and $x \in \X$
-		find $x\prime \in \X\ x \neq x\prime$
-		such that $h(x) = h(x\prime)$.
-	\item \textit{Collision}
-		Given only $h : \X \rightarrow \Y$
-		find $x, x\prime \in \X$
-		such that $x \neq x\prime, h(x) = h(x\prime)$.
-\end{itemize}
-
-Na\"ive attack
-
-Birthday attack problem
-
-Summarily, a hash function is secure if
-a preimage attack requires $2^n$ operations and
-a collision attack requires attack $2^{n/2}$ operations.
-
-\textit{Birthday paradox}
-
-\subsection{Merkle-Damg\aa rd Construction}
-The Merkle-Damg\aa rd construction is 
-a method of building collision-resistant cryptographic hash functions 
-from collision-resistant one-way compression functions.
-A one-way compression function is a function
-that transforms two fixed-length inputs into a fixed-length output
-A hash function must be able to process an arbitrary-length message into a fixed-length output.
-This can be achieved by breaking the input up into a series of equal-sized blocks,
-and operating on them in sequence using a one-way compression function.
-The Merkle–Damgård hash function first applies an MD-compliant padding function to create an input whose size is a multiple of a fixed number (e.g. 512 or 1024) — this is because compression functions cannot handle inputs of arbitrary size. The hash function then breaks the result into blocks of fixed size, and processes them one at a time with the compression function, each time combining a block of the input with the output of the previous round.
-
-In order to make the construction secure, Merkle and Damgård proposed that messages be padded with a padding that encodes the length of the original message. This is called length padding or Merkle–Damgård strengthening.
-The algorithm starts with an initial value, the initialization vector (IV). The IV is a fixed value (algorithm or implementation specific). For each message block, the compression (or compacting) function f takes the result so far, combines it with the message block, and produces an intermediate result. The last block is padded with zeros as needed and bits representing the length of the entire message are appended.
-
-the padding scheme used in the Merkle–Damgård construction must be chosen carefully to ensure the security of the scheme
-With these conditions in place, we find a collision in the MD hash function exactly when we find a collision in the underlying compression function. Therefore, the Merkle–Damgård construction is provably secure when the underlying compression function is secure
-
-
-\subsection{Message Digest (MD) Hash functions}
-
-\subsubsection{MD4}
-
-\subsubsection{MD5}
-
-\subsection{Secure Hash Algorithm (SHA)}
-
-\subsubsection{SHA-1}
-
-\subsubsection{SHA-2 Family}
-
-\subsubsection{SHA-3}
-
+\pagebreak
 \section{Key Distribution Problem}
-
-\section{Public-Key Cryptography}
-\textit{Public key cryptography}, or asymmetrical cryptography,
-is any cryptographic system that uses pairs of keys: public keys which may be disseminated widely,
-and private keys which are known only to the owner.
-The essential advantage of public key cryptography is that it provides secure communication between two people who had not met or exchanged securely a secret key.
-This accomplishes two functions: authentication, where the public key verifies that a holder of the paired private key sent the message,
-and encryption, where only the paired private key holder can decrypt the message encrypted with the public key.
-
+The problem: Distributing private keys
+We will consider two ways that an organisation might distribute keys:
+\begin{itemize}
+    \item. A key predistribution scheme
+    \item. A session key distribution scheme
+\end{itemize}
+25 A key predistribution scheme (PKS)
+Definition 18.
 \begin{definition}
-    The essence of a \textit{public key cryptosystem} is defined as the tuple
-    $(P,C,K,E,D)$
     \begin{itemize}
-        \item For every key $k \in K$, $e_k$ is the inverse of $d_k$
-        \item For every key $k \in K$,
-            and for every $x \in P$ and $y \in C$
-            $e_k(x)$ and $d_k(y)$ are easy to compute
-        \item It is computationally infeasible for almost all $k \in K$
-            to derive $d_k$ from $e_k$.
-        \item For every $k \in K$ it is feasible to derive $e_K$ and $d_k$
+        \item A trusted authority distributes keying information in advance
+        \item Keying information is distributed using secure channels
+        \item Keying information might be long lived keys or secret information that can later be used to produce keys
     \end{itemize}
-    We have $e_k$ as the public key which allows \textbf{anyone} to encrypt a message
-    which only the holder of $d_k$ will be able to decrypt.
 \end{definition}
-
-Clearly a public-key cryptosystem can never be unconditionally secure.
-\begin{itemize}
-    \item Alice looks up Bob’s public key function $e_k$ and encrypts $x : y = e_k(x)$.
-    \item Oscar encrypts each possible message in turn until he finds the unique $x$ such that $y = e_k(x)$.
-\end{itemize}
-Note that Oscar can always launch a chosen-plaintext attack.
-
-\subsection{Trap-door one-way function}
+26 A session key distribution scheme (SKDS) Definition 19.
 \begin{definition}
-    A \textit{one-way function} is a function $f : X \rightarrow Y$ such that 
-    for all $x \in X$ it is easy to compute $f(x)$ but for (almost) all $y \in Y$ it is computationally
-    infeasible to find an $x$ where $f(x) = y$.
-\end{definition}
-\begin{definition}
-    A \textit{trap-door one-way function} is a one way function $f$ such that
-    given some additional trap-door information it becomes feasible, 
-    for all $y \in Y$ to find $x \in X$ such that $y = f(x)$.
-\end{definition}
-
-\subsection{A signature scheme}
-Given a public-key cryptosystem in which $P = C$
-using the fact that $e_k$ and $d_k$ are inverses
-we can define a secure digital signature scheme as such
-we might define a mechanism to allow secure digital signatures:
-\begin{itemize}
-    \item
-        Alice wishes to sign message $x$.
-        Using her private decryption function she obtains $y$ where $y = d_k(x)$;
-        sending $y$ to Bob.
-    \item Bob can then encrypt $y$ with Alice’s public encryption function: $e_k(y) = x$
-    \item Only Alice could have computed $y$ such that $e_k(y) = x$ hence Bob is convinced that
-    Alice signed the message.
-    Furthermore anyone could have checked Alice’s signature, not just Bob.
-\end{itemize}
-
-\subsection{The Euler function}
-\begin{definition}
-    The \textit{Euler function} $\phi(x)$ is
-\end{definition}
-It has the following properties
-\begin{itemize}
-    \item If $p$ is prime then $\phi(p)$ is $p - 1$
-    \item $\phi$ is multiplicative; that is,
-        if $gcd(m,n) = 1$ then $\phi(m \cdot n) = \phi(m) \cdot \phi(n)$
-    \item If $\phi(n) \geq 2$ then $\phi(n)$ is even.
-\end{itemize}
-
-\subsection{Fermat's Little Theorem}
-\begin{definition}
-    \textit{Fermat's little theorem} states that if $p$ is a prime number,
-    then for any integer $a$ the number $a^p - a$ is an integer multiple of $p$.
-    In the notation of modular arithmetic this is expressed as
-    $$ a^p \equiv a \Mod p $$
-\end{definition}
-For example, if $a = 2$ and $p = 7$, then $2^7 = 128$, and 128 - 2 = 126 = 7 $\times$ 18.
-
-\subsection{Chinese Remainder Theorem}
-\begin{definition}
-    \textit{Chinese Remainder Theorem} is a way of solving certain systems of congruences.
-    %%Letm1,m2,...,mr bepairwiserelativelyprimepositiveintegers. Supposea1,a2,...,ar ∈Zandconsider:
-    $$
-    x \equiv a_1 (\Mod m_1) \\
-    x \equiv a_2 (\Mod m_2) \\
-    x \equiv a_r (\Mod m_r)
-    $$
-    %%The Chinese remainder theorem states that this system has a unique solution modulo M = m1m2 ···mr
-\end{definition}
-
-\subsection{RSA Cryptosystem}
-The Rivest-Shamir-Adleman cryptosystem,
-named after its authors, was one of the first public key cryptosystems.
-RSA is a relatively slow algorithm, and because of this,
-it is less commonly used to directly encrypt user data.
-More often, RSA passes encrypted shared keys for symmetric key cryptography
-which in turn can perform bulk encryption-decryption operations at much higher speed.
-
-\begin{definition}
-    The \textit{RSA cryptosystem} is defined as such
     \begin{itemize}
-        \item Let $p$ and $q$ be large primes, (in some implementations 1024 bits each)
-        \item Let $n = p \cdot q$
-        \item Let $P = C = \Z_n$
-        \item $K = \{(n,p,q,a,b) | ba \equiv 1 \Mod{\phi(n)}\}$
-        \item $(n,a)$ is the public key
-        \item $(n,b)$ is the public key
-        \item For $K = (n,p,q,a,b)$ we have
-            $$e_k(x) = x^b \Mod n = y$$
-            $$d_k(y) = y^a \Mod n = x$$
+        \item A session key scheme involves a trusted authority and two users, Alice and Bob, who wish to communicate.
+        \item The objective is the production of a session key known only to Alice and Bob (and possibly the TA).
+        \item Session keys are used to encrypt information for a specified, short period of time.
+        \item Often each network user will share a different long lived key with the TA.
     \end{itemize}
 \end{definition}
 
-\subsection{RSA Toy Example}
-Firstly Bob chooses $p = 127$ and $q = 131$ and calculates $n$ and $\phi(n)$
-\begin{align*}
-    n &= 127  \times 131  &\phi(n) &= (p \mns 1) \times (q \mns 1)\\
-      &= 16637            &        &= 126        \times 130       \\
-      &                   &        &= 16380
-\end{align*}
-Bob selects some $b$ such that $gcd(b, \phi(n)) = 1$;
-we shall use $b = 4057$ and calculate $a$
-\begin{align*}
-    1      &= ab \Mod{\phi(n)}\\
-    b^{-1} &= a \Mod{\phi(n)}\\
-           &= 10453 \Mod{\phi(n)}\\
-         a &= 10453
-\end{align*}
-Thus Bob has the public key $(n,b) = (16637,4057)$ and the private key $(p,q,a) = (127, 131, 10453)$.
-Alice has Bob’s public key and she wishes to encrypt the plaintext $x = 9031$.
-She computes:
-\begin{align*}
-   y &= x^b \Mod{n} \\
-     &= 90314057 \Mod{16637} \\
-     &= 1870
-\end{align*}
-So Alice sends $y = 1870$ over the insecure channel. Bob now uses his decryption exponent a to compute:
-\begin{align*}
-   x &= y^a \Mod{n} \\
-     &= 187010453 \Mod{16637} \\
-     &= 9031
-\end{align*}
+\pagebreak
+\include{public_key_crypto}
 
-\subsection{RSA Implementation Concerns}
-To be ready to use RSA we have to
-\begin{enumerate}
-    \item Generate two large primes $p, q$ such that $p \neq q$
-    \item Calculate $n = p \cdot q$ and $\phi(n) = (p \mns 1) (q \mns 1)$
-    \item Choose a random $1 < b < \phi(n)$ such that $gcd(b, \phi(n)) = 1$
-    \item Calculate $a = b^{-1} \Mod{\phi(n)}$
-    \item Set the public key to $(n, b)$ and the private key to $(p, q, a)$
-\end{enumerate}
-For RSA to be a practical algorithm we need these steps to be computationally feasible.
-Firstly the issue of generating large primes
-\begin{itemize}
-    \item Basic method: generate a large random number, test for primality.
-    \item PRIMES is in P: In 2002 Agrawal, Kayal and Saxena proved that
-        there is a polynomial time deterministic algorithm for primality testing; but we don’t use this.
-    \item Instead we use one of a variety of randomised polynomial time algorithms. The Miller-Rabin algorithm is the most prominent.
-\end{itemize}
-
-The other large cost involved in the parameter generation is the calculation of
-$a = b^{-1} \Mod{\phi(n)}$
-We use extended Euclidean algorithm.
-Can be calculated in time $O((log k)^2)$
-What about the modular exponentiation in RSA?
-To calculate $x^b \Mod{n}$ we can
-\begin{itemize}
-    \item Very slow: $b \mns 1$ modular multiplications
-    \item Faster: use the square and multiply algorithm
-    \item Faster again: use Chinese remainder theorem (if you are Bob)
-\end{itemize}
-
-\subsection{RSA and factoring}
-Oscar, listening to communications will try to recover $x$ given $x^b$ $\Mod{n}$, $n$ and $b$.
-This is called the RSA problem.
-There is no efficient algorithm known to solve this problem.
-The security of RSA rests on the fact that given $n$
-it is hard to find primes $p,q$ such that $n = p \cdot q$.
-If factoring is computationally feasible RSA is insecure
-as one can just find $p$ and $q$ and then recreate the private key $a$.
-A concern is that finding $\phi(n)$ is easier than factoring $n$;
-given that $$1 = ab \Mod{\phi(n)}$$
-Fortunately it is the case that calculating $\phi(n)$ is as computationally difficult as factoring $n$.
-
-\textbf{Factoring as an attack}
-\begin{definition}
-    \textit{Splitting}
-It suffices to study algorithms which split n, that is, 
-    find $1 < a < n, 1 < b < n$ such that $n = ab$.
-    b a and b are said to be non-trivial factors of n.
-\end{definition}
-
-Trial division
-
-Before using a more expensive method on n we would usually trial divide by “small” primes.
- “small” is considered as a function of the size of n
-In the extreme case we trial divide with all primes $p \leq abs(\sqrt{n})$
-In the worst case n is a product of two primes of roughly the same size
-Perfectly reasonable method if $n < 10^{12}$
-
-There are two categories of factoring algorithm:
-Special purpose factoring algorithms
-General purpose factoring algorithms
-
-General purpose algorithms include
-• The quadratic sieve
-• The general number field sieve
-
-Special purpose algorithms include
-• Pollard’s p − 1 method
-• William’s p + 1 method
-• The elliptic curve factoring method
-
-Special purpose factoring algorithms and RSA?
-Many authors have recommended that p, q be chosen to be strong primes.
-
-\begin{definition}
-    $p$ prime is strong if
-    \begin{itemize}
-        \item $p \mns 1$ has a large prime factor (denoted $r$)
-        \item $p + 1$ has a large prime factor
-        \item $r \mns 1$ has a large prime factor
-    \end{itemize}
-\end{definition}
-
-However, strong primes offer no protection against the Elliptic Curve Method
-Elliptic curve method (Lenstra 1980’s)
-The Elliptic curve method (ECM) is a generalisation of Pollard’s p − 1 method.
-• Depends on an integer “close to” p having only “small” prime factors.
-• This is more likely than the situation required by Pollard’s p − 1 method.
-• Pollard’s method depends on a relation which holds in the group Z∗p.
-• ECM depends on a relation which involves groups defined on elliptic curves modulo p.
-• Tends to find smaller factors first.
-
-Difference of two squares
-To factor n look for x,y ∈ Z such that
-x2 − y2 = n
-If such x, y can be found then d = gcd(x − y, n) is a non trivial factor of n.
-In the 1920’s Kraitchik modified the idea of difference of two squares:
-Congruent squares
-To factor n look for x,y ∈ Z such that
-x2 ≡ y2 (mod n)
-Proposition 4.
-If we also have x ̸≡ ±y (mod n) then gcd(x − y, n) and gcd(x + y, n) are non trivial factors of n.
-Proof
-x2≡y2 (modn) ⇒ ⇒ ⇒
-x̸≡±y (modn) ⇒ and
-⇒
-x2−y2≡0 (modn) n|(x2−y2) n|(x−y)(x+y)
-x−y̸≡0 (modn) x+y̸≡0 (modn) n̸|(x−y), n̸|(x+y)
-
-
-
-
-
-
+\pagebreak
 \section{Signature Schemes}
+\pagebreak
 \section{Public Key Infrastructures}
 \end{document}

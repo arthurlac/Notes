@@ -597,12 +597,21 @@ This is quite natural since we assume that the size of the input is a constant.
 \end{tikzpicture}
 \end{center}
 
-In our further considerations we wish to consider only the trees
-in which all vertices except leaves have exactly three children.
-To satisfy this requirement we redraw the tree for membership to a
-circle as shown on Fig. 2 on a separate sheet.
-In the new tree at each vertex (except leaves) an arithmetic operation is conducted and the branching corresponds
-to the sign of the expression obtained. Observe that the complexity (height) of the new tree is still four.
+To further generalise our algebraic computation trees,
+we will say that every node, except leaves, have three children.
+The children correspond to the computation being
+\begin{enumerate}
+    \item $(= 0)$
+    \item $(< 0)$
+    \item $(> 0)$
+\end{enumerate}
+In the example below for the sake of space and brevity we don't show all the different branches,
+simply because we never make any changes to our computation dependent on the result;
+that is until the very end where we use it for our yes or no result.
+This tree, were it completed, would have $3^4 = 81$ nodes,
+much more than our previous tree.
+However observe that the height remains unchanged at four,
+thus the complexity is the same.
 
 \begin{center}
     \begin{tikzpicture}[level distance=1.5cm,
@@ -637,12 +646,14 @@ to the sign of the expression obtained. Observe that the complexity (height) of 
     of the $n$ dimensional unit ball.
     Simply calculate
     $$1 \leq \sum_{i=1}^{n} x_i^2$$
-    which takes $2n$ steps. In case $n = 2$ we get complexity four as our computation tree showed.
+    You calculate $x_i^2$ for the $i$-th dimension and add it to the running total;
+    this takes $2n$ steps.
+    In case $n = 2$ we get complexity four as our computation tree showed.
 \end{example}
 
 \subsection{Algebraic computation trees: definition}
 \begin{definition}
-    A subset $S \subset R^n$ is called \textit{(basic) semi-algebraic} if it defined by
+    A subset $S \subset R^n$ is called \textit{(basic) semi-algebraic} if it is defined by
     $$\{P_1(x_1,\dots x_n) = 0,\dots P_n\}
     \cup
     \{Q_1(x_1,\dots x_n) > 0,\dots Q_m\}$$
@@ -689,15 +700,44 @@ and, therefore, to the union of all accepting sets.
     \item \textbf{Input:} $(x_0, x_1,\dots x_n) \in \mathbb{R}^n$
     \item \textbf{Output:} Yes iff $\forall\ i,j$ where $0 \leq i,j \leq n, i \neq j$ we have $x_i \neq x_j$
 \end{itemize}
-An algorithm for this problem having complexity O(nlogn) first sorts the numbers x1, . . . , xn,
-then checks all pairs of neighbours in the sorted sequence.
-It’s clear that this algorithm can be represented in a form of algebraic computation tree of the height O(n log n) (compare with sorting).
-In the remaining part of these notes we are going to develop a general method for prov- ing lower complexity bounds for algebraic computation trees,
+An immediate solution for this problem is to sort the numbers $(x_0, x_1,\dots x_n)$
+then compare pairwise neighbours for equivalence; this has complexity $O(nlogn)$.
+It is clear that this algorithm can be represented in a form of algebraic computation tree
+of the height $O(nlogn)$ (compare with sorting).
+We are going to develop a general method for proving lower complexity bounds for algebraic computation trees,
 and will apply this method to prove the $\Omega(nlogn)$ lower bound for Distinctness.
-Unlike a very elementary proof of (n log n)-lower bound for sorting,
-the proof for Distinctness employs some modern mathe- matics and apparently no elementary proof is known.
+Unlike the very elementary proof of $\Omega(nlogn)$ for sorting,
+for Distinctness no elementary proof is known.
 
 \subsection{Connected components of semialgebraic sets}
+Informally, a finite union $W$ of semialgebraic sets is called connected
+if for every $x, y \in W$ there is a “continuous” curve in $W$ containing both $x$ and $y$.
+A formal definition can be found in textbooks on topology.
+
+\begin{definition}
+    Any maximal (with respect to the set-theoretical inclusion) connected subset of W is called connected component of W.
+\end{definition}
+
+\begin{theorem}
+    Every finite union W of semialgebraic sets can be uniquely represented as a union of a finite number of its connected components:
+    $$W = \bigcup\limits_{1\leq i \leq k} W_i$$
+    which are finite unions of semialgebraic sets.
+\end{theorem}
+
+\begin{example}
+    Consider these examples of
+    \begin{enumerate}
+        \item The union %of open intervals W = (0, 1) ∪ (2, 3) ⊂ R is not connected. Intervals (0, 1) and (2, 3) are connected components of W .
+        \item The union %W = (0, 1) ∪ (1, 2) is not connected with (0, 1), (1, 2) being W ’s connected components.
+        \item The union %W = (0, 1) ∪ 1 ∪ (1, 2) = (0, 2) is connected and is its own unique connected component.
+        \item The semialgebraic set %W = {X ̸= Y } ⊂ R2 (which also can be written in the form W = {X2 − 2XY + Y 2 > 0}) is not connected and has two connected components: {X − Y > 0} and {Y − X > 0}.
+    \end{enumerate}
+\end{example}
+
+\begin{theorem}
+    Projection %of a connected set W ⊂ Rn+m on a coordinate subspace Rn is also connected.
+\end{theorem}
+
 \subsection{Lower bound for membership to a semialgebraic set: decision computation trees}
 \subsection{Thom-Milnor’s bound}
 \subsection{Lower bound for membership to a semialgebraic set: algebraic computation trees}

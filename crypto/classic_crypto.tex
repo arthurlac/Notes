@@ -1,0 +1,73 @@
+\section{Classical Cryptography}
+\begin{definition}
+	The \textit{subsitution cipher} has
+	\begin{itemize}
+		\item $P = C = \Z_{26}$
+		\item $K$ is the set of all permutations of $\Z_{26}$
+		\item
+			$
+			\forall\ \pi \in K
+			\ e_\pi(x) = \pi(x) = y
+			\ d_\pi(y) = \pi^{-1}(y) = x
+			$
+	\end{itemize}
+\end{definition}
+
+Consider
+
+\begin{definition}
+	The \textit{shift cipher}, also called the Caesar cipher,
+\end{definition}
+
+\begin{definition}
+	The \textit{Vigen\'ere cipher cipher}
+\end{definition}
+
+\begin{definition}
+	The \textit{permutation cipher}
+\end{definition}
+
+\subsection{What do we mean by secure?}
+
+\subsection{Kerckhoff's desiderata (1883)}
+
+\subsection{Attack Models}
+\subsubsection{Ciphertext only attack}
+\subsubsection{Known plaintext attack}
+\subsubsection{Chosen plaintext attack}
+\subsubsection{Adaptive chosen plaintext attack}
+\subsubsection{Chosen ciphertext attack}
+\subsubsection{Non-cryptograph attacks}
+
+\subsection{Security}
+\subsubsection{Computational security}
+A cryptosystem is computationally secure if the best algorithm for breaking it requires a com- putational effort which is greater than the computational resources of the assumed attacker.
+• We need a measure of the computational effort to break the cryptosystem. • We can’t prove a system is computationally secure against all attacks.
+
+\subsubsection{Provable security}
+For some cryptosystems that provide confidentiality we can provide evidence that the system is secure by proving a theorem of the form:
+If the cryptosystem can be broken then we can efficiently solve problem A, where problem A is
+ Well studied
+ Thought to be “difficult”
+This is not an absolute proof of security but a proof of the security relative to another problem.
+
+\subsubsection{Unconditional security}
+A cryptosystem is said to be unconditionally secure if an attacker with infinite computational resources cannot break the system.
+
+\begin{definition}
+	\textit{Vernam cipher}
+\end{definition}
+
+\begin{definition}
+	\textit{One time pad}
+\end{definition}
+
+\subsubsection{An unconditionally secure cryptosystem}
+In 1949 Shannon proved that the one-time pad is unconditionally secure.
+Theorem 1.
+%%Suppose (P, C, K, E, D) is a cryptosystem where |K| = |C| = |P|. Then the cryptosystem provides perfect secrecy if and only if every key is used with equal probability 1/|K|, and for everyx∈P andeveryy∈C,thereisauniquekeysuchthatek(x)=y.
+(as stated in Cryptography Theory and Practice)
+
+\subsubsection{Unconditional security is not practical}
+
+Instead of aiming for unconditional security researchers have tried to develop cryptosystems where one shared key can be used to send many messages between to entities while still main- taining computational security.
