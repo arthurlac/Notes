@@ -10,10 +10,13 @@
 \usepackage{mathtools}
 \usepackage{ebproof}
 
+\DeclareUnicodeCharacter{2212}{-}
+
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{example}{Example}[section]
 \newtheorem{theorem}{Thereom}[section]
+\newtheorem{lemma}{Lemma}[section]
 
 \usepackage{tikz-cd}
 \usetikzlibrary{arrows}
@@ -34,9 +37,6 @@
 
 \begin{document}
 
-\tableofcontents
-
-\pagebreak
 
 \section{The Most Important Definition}
 \begin{definition}
@@ -60,7 +60,9 @@
         \end{tikzcd}
     \end{center}
 \end{definition}
-
+\pagebreak
+\tableofcontents
+\pagebreak
 \section{Categories and Functors}
 
 \begin{definition}
@@ -135,6 +137,7 @@ the \textit{codomain}.
     A natural transformation can be considered a morphism of functors.
 \end{definition}
 
+\pagebreak
 \section{Monoids and Groups}
 
 \begin{definition}
@@ -220,6 +223,7 @@ $(M,+,0)$ rather than $(M,\cdot,e)$.
     An exmaple of an Abelian group is the integers $\mathbb{Z}$ and addition.
 \end{example}
 
+\pagebreak
 \section{Left adjoints}
 
 \begin{definition}
@@ -336,6 +340,7 @@ LINE BREAK
 
 
 
+\pagebreak
 \section{Pre-Orders, Partially Ordered Sets, and $\omega$-cpos}
 
 \begin{definition}
@@ -388,6 +393,7 @@ Comparing $2$ and $-2$ we get $2 \leq -2$ and $-2 \leq 2$ but not that $2 = -2$.
     if it preserves $x_\omega$.
 \end{definition}
 
+\pagebreak
 \section{Initial and Terminal Objects}
 
 \begin{definition}
@@ -424,6 +430,7 @@ Monoids
 %%!H(TC) : H(TC) −→ TD
 %%is an isomorphism.
 
+\pagebreak
 \section{Binary Products}
 \begin{definition}
     A category $\C$ has \textit{binary products} if
@@ -459,6 +466,12 @@ Monoids
     and it has a terminal object.
 \end{definition}
 
+Prove that the category CMonoid of commutative monoids has finite products.
+\begin{proof}
+    The category commutative monoids has a terminal object given by the one element monoid.
+    The category CMonoid has binary products.
+\end{proof}
+
 \begin{definition}
     Given categories $\C$ and $\D$,
     the product of $\C$ and $\D$ is the category $\C \times \D$
@@ -474,11 +487,35 @@ Monoids
 
 %%TODO Theorem 5.10 If a functor U : C −→ D has a left adjoint, U preserves any finite products that exist in C.
 
+\pagebreak
 \section{Coproducts}
 
+\pagebreak
 \section{Right Adjoints}
+\begin{definition}
+    A \textit{functor} $U : C \rightarrow D$ has a \textit{right adjoint} if
+        $$
+        \forall\ X \in D
+        \ \exists
+        \ RX \in \mathcal{C}\ \textrm{and}\ \epsilon_X : URX \rightarrow X \in D
+        $$
+        such that
+        $$
+        \forall\ A \in \mathcal{C}\ \textrm{and}\ \forall\ f : UA \rightarrow X
+        \ \exists
+        \ !k : A \rightarrow RX
+        $$
+        such that the following diagram commutes
+    \begin{center}
+        \begin{tikzcd}[sep=large]
+            X & URX \lar[swap]{\epsilon_X}\\
+              & UA \ular{h} \uar[swap]{k}
+        \end{tikzcd}
+    \end{center}
+\end{definition}
 \subsection{Exponential Object}
 
+\pagebreak
 \section{Cartesian closed category}
 
 \begin{definition}
@@ -503,7 +540,72 @@ Monoids
     given by evaluation i.e. $\epsilon_X(h,x) = h(x)$.
 \end{proof}
 
+\subsection{Proof PreOrd is Cartesian Closed}
+\begin{proof}
+    First observe that a terminal object given by the trivial one element pre-order.
+    Then observe it has binary products given by cartesian product $P \times Q$ with pointwise order,
+    together with the projections to $P$ and $Q$.
+    Given a pre-order $(P,\leq_P)$ we need to prove the functor
+    $$- \times (P,\leq_P) : PreOrd \rightarrow PreOrd$$
+    has a right adjoint.
+    Given a pre-order $(Q,\leq_Q)$, define $P \Rightarrow Q$ to be
+    the set of ordering preserving functions from $P$ to $Q$ and put
+    $$h \leq_{P \Rightarrow Q} h\prime$$
+    if $\forall x \in P$ one has $h(x) \leq_Q h\prime(x)$.
+    Observe that $(P \Rightarrow Q, \leq_{P \Rightarrow Q})$ is a pre-order.
+    Define $\epsilon_P : (P \Rightarrow Q) \times P \rightarrow Q$ by evaluation;
+    i.e. $\epsilon_P(h, x) = h(x)$,
+    observe that $\epsilon_P$ is order preserving.
+    Given any order preserving function of the form
+    $$f : R \times P \rightarrow Q$$
+    it follows from the cartesian closedness of Set that there is a unique
+    function $g$ from $R$ to the set of all functions from $P$ to $Q$
+    which makes the requisite diagram commute,
+    that function sending $z \in R$ to $f(z,−) : P \rightarrow Q$.
+    Finally observe that,
+    firstly for each $z$ the function $f(z,-)$ is order preserving,
+    and secondly if $z \leq_R z\prime$ then $f(z,-) \leq_{P \Rightarrow Q} f(z\prime, -)$.
+
+
+\end{proof}
+
+\subsection{Proof POSet is Cartesian Closed}
+\begin{proof}
+    First observe that \textit{Set}, the category of sets,
+    has a terminal object given by any one element set.
+    Binary products of the sets $X$ and $Y$ are given by the
+    cartesian product $X \times Y$,
+    together with the projections to $X$ and $Y$.
+    Given a set $X$, the functor $- \times X : Set \rightarrow Set$,
+    has a right adjoint given by
+    sending a set $Y$ to the set $X \Rightarrow Y$ of all functions from $X$ to $Y$,
+    with counit
+    $$\epsilon_X : ((X \Rightarrow Y) \times X) \rightarrow Y$$
+    given by evaluation i.e. $\epsilon_X(h,x) = h(x)$.
+\end{proof}
+
 \subsection{Proof $\omega$-CPOs is Cartesian Closed}
+
+\begin{lemma}
+    Given a doubly-indexed sequence
+    $(x_{nm})n\in N,m\in N$
+    of elements of an $\omega$-cpo such that for all $n$ and $m$ we have,
+    $$x_{n0} \leq x_{n1} \leq x_{n2} \leq \dots\quad\textrm{and}\quad
+    x_{m0} \leq x_{m1} \leq x_{m2} \leq \dots$$
+    then
+    $$lub_mlub_n(x_{nm}) = lub_nlub_m(x_{nm}) = lub_k(x_{kk})$$
+\end{lemma}
+
+%Given ω-cpo’s P and Q,
+%let ωCpo(P,Q) denote the set of maps of ω-cpo’s from P to Q.
+%Consider the partial order structure on ωCpo(P,Q)
+%givenbyputtingf≤gifforallxinP,onehasf(x)≤g(x)inQ.
+%Using Lemma , prove that this partial order has
+%least upper bounds of ω-chains and that evaluation respects them.
+
+\begin{proof}
+
+\end{proof}
 
 \subsection{Proof Monoid is not Cartesian Closed}
 \begin{proof}
@@ -538,6 +640,7 @@ We can also consider that in a cartesian closed category,
 for example Set where the initial object is the empty set $\varnothing$,
 we have $\varnothing \times X = \varnothing$ thus preserving the initial object.
 
+\pagebreak
 \section{Simply Typed Lambda Calculus}
 \begin{definition}
     The \textit{simply-typed $\lambda$-calculus} consists of
@@ -669,6 +772,63 @@ $$
 {\Gamma, y : T, z : T \vdash t : T\prime}
 {\Gamma, x : T \vdash t[x/y][x/z] : T\prime}
 $$
+
+\begin{proof}
+    The \textit{weakening rule} is derived as such
+    Proof of (Variable) and (Unit) are trivial.
+    (Function)
+    \begin{align*}
+         \textrm{Given a proof of }\Gamma \vdash f(t_1,\dots t_n) : T\ \exists \textrm{ proof of }
+         &\Gamma \vdash t_1 : T_1, \dots \Gamma \vdash t_n : T_n \\
+         \textrm{where }
+         &\Gamma \vdash f : T_1 \times \dots T_n \rightarrow T \\
+         \textrm{By induction } \exists \textrm{ proof of }
+         &\Gamma, x : T\prime \vdash t_1 : T_1, \dots \Gamma, x : T\prime \vdash t_n : T_n\\
+         \textrm{Append (function) to obtain proof of }
+         &\Gamma, x : T\prime \vdash f(t_1, \dots t_n) : T\\
+    \end{align*}
+
+    (Binary Product)
+    \begin{align*}
+        \textrm{The same as (Function)}
+    \end{align*}
+
+    ($\lambda$ Abstraction)
+    \begin{align*}
+         \textrm{Given a proof of }\Gamma \vdash \lambda x.t : T \Rightarrow T\prime\ \exists \textrm{ proof of }
+        &\Gamma, x : T \vdash t : T\prime \\
+         \textrm{By induction } \exists \textrm{ proof of }
+        &\Gamma, x : T, y : T\prime\prime \vdash t : T\prime \\
+         \textrm{Using the }\mathit{exchange\ rule\ } \exists \textrm{ proof of }
+        &\Gamma, y : T\prime\prime, x : T \vdash  t : T\prime \\
+         \textrm{Then append }(\lambda)\textrm{ for proof of }
+        &\Gamma, y : T\prime\prime \vdash \lambda x.t : T \Rightarrow T\prime
+    \end{align*}
+    The exchange rule can be derived from the well-formedness judgements.
+    It is defined as such
+    $$
+    \frac
+    {\Gamma \vdash t : T}
+    {\pi\Gamma \vdash t : T}
+    \quad
+    \textrm{where }
+    \pi \Gamma
+    \textrm{ is any permutation of}
+    \Gamma
+    $$
+
+    (Application)
+    \begin{align*}
+        \textrm{Given a proof of } \Gamma \vdash t_1 t_2 : T\ \exists \textrm{ a proof of }
+        &\Gamma \vdash t_1 : T \Rightarrow T\prime \textrm{ and } \Gamma \vdash t_2 : T\\
+        \textrm{By induction we have a proof of }
+        &\Gamma, x : T\prime\prime \vdash t_1 : T \Rightarrow T\prime \\
+        \textrm{ and }
+        &\Gamma, x : T\prime\prime \vdash t_2 : T \\
+        \textrm{Append (Application) to obtain proof of }
+        &\Gamma, x : T\prime\prime \vdash t_1 t_2 : T\prime
+    \end{align*}
+\end{proof}
 
 \subsection{Models}
 \begin{definition}

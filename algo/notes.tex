@@ -2,6 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 
+\DeclareUnicodeCharacter{2212}{-}
+
 \usepackage{amsfonts}
 \usepackage{amsthm}
 \usepackage{amssymb}
@@ -725,17 +727,20 @@ A formal definition can be found in textbooks on topology.
 \end{theorem}
 
 \begin{example}
-    Consider these examples of
+    Consider these examples
     \begin{enumerate}
-        \item The union %of open intervals W = (0, 1) ∪ (2, 3) ⊂ R is not connected. Intervals (0, 1) and (2, 3) are connected components of W .
-        \item The union %W = (0, 1) ∪ (1, 2) is not connected with (0, 1), (1, 2) being W ’s connected components.
-        \item The union %W = (0, 1) ∪ 1 ∪ (1, 2) = (0, 2) is connected and is its own unique connected component.
-        \item The semialgebraic set %W = {X ̸= Y } ⊂ R2 (which also can be written in the form W = {X2 − 2XY + Y 2 > 0}) is not connected and has two connected components: {X − Y > 0} and {Y − X > 0}.
+        \item The union of open intervals $W = (0, 1) \cup (2, 3) \subset R$ is \textbf{not} connected.
+            Intervals $(0, 1)$ and $(2, 3)$ are connected components of W .
+        \item The union $W = (0, 1) \cup (1, 2)$ is not connected with $(0, 1),\ (1, 2)$ being $W$’s connected components.
+        \item The union $W = (0, 1) \cup 1 \cup (1, 2) = (0, 2)$ is connected and is its own unique connected component.
+        \item The semialgebraic set $W = \{X \neq Y \} \in R^2$
+            (which also can be written in the form $W = \{X^2 − 2XY + Y^2 > 0\}$)
+            is not connected and has two connected components: $\{X − Y > 0\}$ and $\{Y − X > 0\}$.
     \end{enumerate}
 \end{example}
 
 \begin{theorem}
-    Projection %of a connected set W ⊂ Rn+m on a coordinate subspace Rn is also connected.
+    Projection of a connected set $W \subset R^{n+m}$ on a coordinate subspace $R^n$ is also connected.
 \end{theorem}
 
 \subsection{Lower bound for membership to a semialgebraic set: decision computation trees}
