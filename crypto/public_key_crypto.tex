@@ -315,5 +315,164 @@ We factor $n$ with probability half.
 \subsection{RSA in practice}
 \subsubsection{RSA Optimal Asymmetric Encryption Padding}
 
+\pagebreak
 \subsection{Diffie-Hellman key exchange}
+\textit{Diffie–Hellman key exchange} (DH) is a method of securely exchanging cryptographic keys over a public channel
+and was one of the first public-key protocols as originally conceptualized
+by Ralph Merkle and named after Whitfield Diffie and Martin Hellman.
+DH is one of the earliest practical examples of public key exchange implemented within the field of cryptography.
+
+\subsubsection{Cryptographic explanation}
+The simplest and the original implementation of the protocol uses the multiplicative group of integers modulo p,
+where p is prime, and $\alpha$ is a primitive root modulo p.
+These two values are chosen in this way to ensure that the resulting shared secret can take on any value from 1 to $p - 1$.
+Public parameters: $p$ prime, and $\alpha$, a primitive element modulo $p$ which has order $p − 1$.
+
+\begin{enumerate}
+    \item Alice chooses $1 \leq a \leq p − 1$ at random and computes and sends $A$ to Bob.
+        $$A = \alpha^a \Mod{p}$$
+        \item Bob chooses $1 \leq b \leq p - 1$ and sends $B$ to Alice
+        $$B = \alpha^b \Mod{p}$$
+        \item Alice receives B and computes
+        $$B^a = \alpha^{ab} \Mod{p}$$
+        \item Bob received A and computes
+        $$A^b = \alpha^{ab} \Mod{p}$$
+        \item Thus we have
+            $$k = A^b = B^a = \alpha^{ab} \Mod{p}$$
+\end{enumerate}
+Here is an example of the protocol, with \textcolor{blue}{non-secret values in blue},
+and \textcolor{red}{secret values in red}.
+
+\begin{enumerate}
+    \item Alice and Bob agree to use a modulus $\textcolor{blue}{p = 23}$ and base $\textcolor{blue}{\alpha = 5}$ (which is a primitive root modulo 23).
+    \item Alice chooses a secret integer \textcolor{red}{$a = 4$}, then sends Bob \textcolor{blue}{$A$}.
+        \begin{equation*}
+            \begin{split}
+                \textcolor{blue}{A} &= \textcolor{blue}{\alpha}^{\textcolor{red}{a}} \Mod{\textcolor{blue}{p}} \\
+                \textcolor{blue}{A} &= \textcolor{blue}{5}^{\textcolor{red}{4}} \Mod{\textcolor{blue}{23}} \\
+                \textcolor{blue}{A} &= \textcolor{blue}{4}
+            \end{split}
+        \end{equation*}
+    \item Bob chooses a secret integer \textcolor{red}{$b = 3$}, then sends Alice \textcolor{blue}{$B$}
+        \begin{equation*}
+            \begin{split}
+                \textcolor{blue}{B} &= \textcolor{blue}{\alpha}^{\textcolor{red}{b}} \Mod{\textcolor{blue}{p}} \\
+                \textcolor{blue}{B} &= \textcolor{blue}{5}^{\textcolor{red}{3}} \Mod{\textcolor{blue}{23}} \\
+                \textcolor{blue}{B} &= \textcolor{blue}{10}
+            \end{split}
+        \end{equation*}
+    \item Alice computes
+        \begin{equation*}
+            \begin{split}
+                \textcolor{red}{k} &= \textcolor{blue}{B}^{\textcolor{red}{a}} \Mod{\textcolor{blue}{p}} \\
+                \textcolor{red}{k} &= \textcolor{blue}{10}^{\textcolor{red}{4}} \Mod{\textcolor{blue}{23}} \\
+                \textcolor{red}{k} &= \textcolor{blue}{18}
+            \end{split}
+        \end{equation*}
+    \item Bob computes
+        \begin{equation*}
+            \begin{split}
+                \textcolor{red}{k} &= \textcolor{blue}{A}^{\textcolor{red}{b}} \Mod{\textcolor{blue}{p}} \\
+                \textcolor{red}{k} &= \textcolor{blue}{4}^{\textcolor{red}{3}} \Mod{\textcolor{blue}{23}} \\
+                \textcolor{red}{k} &= \textcolor{blue}{18}
+            \end{split}
+        \end{equation*}
+    \item Alice and Bob now share a secret (the number 18).
+\end{enumerate}
+
+\subsubsection{Computational Diffie-Hellman Problem (CDH)}
+Given $p$ prime, $\alpha$ a primitive element modulo $p$
+and two elements $\beta,\gamma \in \mathbb{Z}^*_p$
+find $\delta \in \mathbb{Z}^*_p$ such that
+$$log_\alpha\delta \equiv log_\alpha \beta \times log_\alpha \gamma \Mod{p}$$
+That is, given $\alpha^a$ and $\alpha^b$, find $\alpha^{ab}$.
+
+\vspace{4mm}
+\textbf{Man in the Middle Attack}
+\begin{itemize}
+    \item Oscar intercepts all messages between Alice and Bob and substitutes his own messages in their place.
+    \item At the end of the exchanges Alice has established a secret key with Oscar and Bob has established a secret key with Oscar.
+    \item Can this be avoided?
+\end{itemize}
+\textbf{Attempts to avoid the attack}
+\begin{itemize}
+    \item Can Alice and Bob detect the attack?
+    \item What if Alice and Bob prove their identities to each other before they start?
+    \item A more promising approach would be to design a key agreement scheme where the participants are authenticated at the same time as the key is established. These are called authenticated key agreement schemes and we won’t be studying these.
+\end{itemize}
+
+\pagebreak
 \subsection{The ElGamal cryptosystem}
+The ElGamal encryption system is an asymmetric key encryption algorithm for public-key cryptography which is based on the Diffie–Hellman key exchange. The system provides an additional layer of security by asymmetrically encrypting keys previously used for symmetric message encryption. It was described by Taher Elgamal in 1985.
+
+ElGamal encryption can be defined over any cyclic group
+G
+G. Its security depends upon the difficulty of a certain problem in
+G
+G related to computing discrete logarithms (see below).
+
+\subsubsection{Encryption and Decryption}
+\begin{itemize}
+    \item $P = \Z^*_p$
+    \item $C = \Z^*_p \times \Z^*_p$
+    \item $K = \{(p,\alpha,a,\beta)| \beta \equiv \alpha^a \Mod{p}\}$
+    \item The public key is $(p, \alpha, \beta)$. The private key is $a$
+\end{itemize}
+
+For $k = (p,\alpha,a,\beta) \in K$
+and for a secret random number $r \in \mathbb{Z}_{p - 1}$
+calculate $y \in \mathbb{Z}^*_p \times \mathbb{Z}^*_p$.
+\begin{align*}
+    e_k(x,r) &= (\alpha^r \Mod{p}, x\beta^r \Mod{p}) &\quad d_k(y_1,y_2) &= y_2(y_1^a)^{-1} \Mod{p} \\
+             &= (y_1,y_2)                            &                   &= x
+\end{align*}
+
+\subsubsection{Example}
+\begin{enumerate}
+    \item Let $p = 107$, $\alpha = 2$ (a primitive element modulo 107).
+    \item Let $a = 63$ so
+        $$\beta = \alpha^a = 2^{63} \Mod{107} = 46$$
+    \item Alice wants to send $x = 12$ to Bob and selects random number $r = 80$
+    \item She computes $(y_1,y_2)$
+            \begin{align*}
+                y_1 &= \alpha^r \Mod{p} &\quad y_2 &= x \times \beta^r \Mod{p} \\
+                    &= 2^{80} \Mod{107} &          &= 12 \times 46^{80} \Mod{107} \\
+                    &= 76               &          &= 44
+            \end{align*}
+    \item Bob receives $(76, 44)$ and computes
+        \begin{equation*}
+            \begin{split}
+                x &= y_2 \times (y_1^\alpha)^{-1} \Mod{p}\\
+                  &= 44 \times (76^{63})^{-1} \Mod{107} \\
+                  &= 12
+            \end{split}
+        \end{equation*}
+\end{enumerate}
+
+Notice that the encryption operation is randomised. A single plaintext may encrypt to many different ciphertexts depending on the value of r. How important is it that a different random number is used each time?
+Clearly for this to be% a public key cryptosystem we need p to be chosen such that the discrete logarithm problem in Z∗p is infeasible.
+There is no known poly%nomial time algorithm for this version of the discrete loga- rithm problem
+We need to
+• Prove that decryption works (problem sheet)
+• Check that it is feasible to compute the encryption and decryption functions (think about it yourselves)
+%• Consider algorithms for solving the discrete logarithm problem (next week)
+%• We have already seen that given p we can find an appropriate α
+
+\subsection{Discrete Logarithm Problem}
+%Discrete logarithm problem (DLog problem)
+%Given p prime, α a primitive element modulo p and β ∈ Z∗p find an element a, 0 ≤ a ≤ p−2
+%such that
+%αa≡β (modp) Generalized discrete logarithm problem
+%Given a finite cyclic group G of order n, α a generator of G and β ∈ G find an element a,
+%0 ≤ a ≤ n − 1 such that
+%αa = β
+%
+%Types of algorithms
+%• Algorithms which work in arbitrary groups
+%– Exhaustive search
+%– Shanks’ algorithm
+%– Pollard’s rho algorithm
+%• Algorithms which work in arbitrary groups but require the order of the group to have only small prime factors
+%– Pohlig-Hellman algorithm
+%• Algorithms which only work in certain groups
+%– Index-calculus method
