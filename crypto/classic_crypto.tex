@@ -1,73 +1,121 @@
-\section{Classical Cryptography}
+\section{Base Definitions}
+Cryptography allows for the secure exchange of information.
+It is important to begin by noting that cryptography does not mean security.
+What cryptography does is provide us \textit{primitives} for security; it also
+allows us to analyse how secure we are being.
+
+\vspace{5mm}
+\textbf{Areas of Cryptography}\\
+Firstly we should state that cryptography is not just limited to encryption
+(and decryption of course).
+However we will focus on encryption, most modern cryptography is encryption focused.
+\begin{itemize}
+    \item \textbf{Encryption} - Only the intended recipient can understand the message.
+    \item \textbf{Steganography} - Only the intended recipient is aware that there is a message.
+    \item \textbf{Chaffing and winnowing} - Only the intended recipient can find the real message.
+\end{itemize}
+
+
+\vspace{5mm}
+\textbf{What do we use encryption for?}\\
+Okay great, we know what encryption is but what is it used for?
+These are the problems we want to tackle,
+and encryption is going to be our tool.
+\begin{itemize}
+    \item \textbf{Confidentiality}: Keeping information a secret from those not authorised to have it.
+    \item \textbf{Integrity}: Ensuring information has not been altered.
+    \item \textbf{Authentication}: Confirmation of the identity of an entity.
+    \item \textbf{Message authentication}: Confirmation of the source of information.
+    \item \textbf{Signature}: A way of binding information to an entity.
+    \item \textbf{Certification}: Endorsement of information by a trusted entity.
+    \item \textbf{Non-repudiation}: Preventing an entity from denying previous actions or commitments.
+    \item \textbf{Revocation}: Retracting certification or authorisation.
+\end{itemize}
+
+\vspace{5mm}
+Now we can define a cryptosystem, which is the generic primitive of encryption.
 \begin{definition}
-	The \textit{subsitution cipher} has
-	\begin{itemize}
-		\item $P = C = \Z_{26}$
-		\item $K$ is the set of all permutations of $\Z_{26}$
-		\item
-			$
-			\forall\ \pi \in K
-			\ e_\pi(x) = \pi(x) = y
-			\ d_\pi(y) = \pi^{-1}(y) = x
-			$
-	\end{itemize}
+    A \textit{cryptosystem} (or encryption system) is a five-tuple $(P,C,K,E,D)$, where
+    \begin{enumerate}
+        \item $P$ is a set of possible plaintexts
+        \item $C$ is a set of possible ciphertexts
+        \item $K$ is a set of possible keys called the keyspace
+        \item For each key $k \in K$
+            there is an encryption rule $e_k \in E$ where $e_k : P \rightarrow C$
+            and a corresponding decryption rule where $d_k \in D$, $d_k : C \rightarrow P$
+            such that
+            $$\forall\ x \in P\ d_k(e_k(x)) = x$$
+    \end{enumerate}
 \end{definition}
 
-Consider
-
-\begin{definition}
-	The \textit{shift cipher}, also called the Caesar cipher,
-\end{definition}
-
-\begin{definition}
-	The \textit{Vigen\'ere cipher cipher}
-\end{definition}
-
-\begin{definition}
-	The \textit{permutation cipher}
-\end{definition}
-
-\subsection{What do we mean by secure?}
-
-\subsection{Kerckhoff's desiderata (1883)}
+For a cryptosystem to be useful in practice, we need:
+\begin{enumerate}
+    \item To be able to efficiently compute the encryption and the decryption functions.
+    \item That an unauthorised party should not be able to determine the key or the plaintext from the ciphertext.
+    \item We also need each encryption function $e_k$ to be injective or one to one.
+\end{enumerate}
 
 \subsection{Attack Models}
-\subsubsection{Ciphertext only attack}
-\subsubsection{Known plaintext attack}
-\subsubsection{Chosen plaintext attack}
-\subsubsection{Adaptive chosen plaintext attack}
-\subsubsection{Chosen ciphertext attack}
-\subsubsection{Non-cryptograph attacks}
+\begin{itemize}
+    \item \textbf{Ciphertext only attack}
+        Given: $y_1 = e_k(x_1),\dots y_i = e_k(x_i)$ deduce one of:
+        \begin{itemize}
+            \item $k$
+            \item An algorithm that outputs $x_{i+1}$ given $y_{i+1} = e_k(x_{i+1})$
+            \item $x_1,\dots x_i$
+        \end{itemize}
+    \item \textbf{Known plaintext attack}
+        Given: $x_1, y_1 = e_k(x_1),\dots x_i,y_i = e_k(x_i)$ deduce:
+        \begin{itemize}
+            \item $k$
+            \item An algorithm that outputs $x_{i+1}$ given $y_{i+1} = e_k(x_{i+1})$
+        \end{itemize}
+    \item \textbf{Chosen plaintext attack}
+        Given: x1,y1 = ek(x1),...,xi,yi = ek(xi) where the attacker has chosen x1,...,xi deduce:
+        \begin{itemize}
+            \item k or
+            \item an algorithm that outputs xi+1 given yi+1 = ek(xi+1)
+        \end{itemize}
+    \item \textbf{Adaptive chosen plaintext attack}\\
+        This is a special case of the chosen plaintext attack.
+        The attacker can modify his choice of plaintexts based on the results of earlier pairs.
+    \item \textbf{Chosen ciphertext attack}
+        Given: y1,x1 = dk(y1),...,yi,xi = dk(yi) deduce $k$
+    \item \textbf{Non-cryptograph attacks}
+        \begin{itemize}
+            \item Bribery
+            \item Physical theft
+            \item Blackmail
+            \item Threats
+            \item Torture
+        \end{itemize}
+        Harder to analyse mathematically however.
+\end{itemize}
 
 \subsection{Security}
-\subsubsection{Computational security}
-A cryptosystem is computationally secure if the best algorithm for breaking it requires a com- putational effort which is greater than the computational resources of the assumed attacker.
-• We need a measure of the computational effort to break the cryptosystem. • We can’t prove a system is computationally secure against all attacks.
+\begin{itemize}
+    \item \textbf{Computational security}\\
+        A cryptosystem is computationally secure if the best algorithm for breaking it requires a com- putational effort which is greater than the computational resources of the assumed attacker.
+        • We need a measure of the computational effort to break the cryptosystem. • We can’t prove a system is computationally secure against all attacks.
 
-\subsubsection{Provable security}
-For some cryptosystems that provide confidentiality we can provide evidence that the system is secure by proving a theorem of the form:
-If the cryptosystem can be broken then we can efficiently solve problem A, where problem A is
- Well studied
- Thought to be “difficult”
-This is not an absolute proof of security but a proof of the security relative to another problem.
+    \item \textbf{Provable security}
+        For some cryptosystems that provide confidentiality we can provide evidence that the system is secure by proving a theorem of the form:
+        If the cryptosystem can be broken then we can efficiently solve problem A, where problem A is
+        Well studied
+        Thought to be “difficult”
+        This is not an absolute proof of security but a proof of the security relative to another problem.
 
-\subsubsection{Unconditional security}
-A cryptosystem is said to be unconditionally secure if an attacker with infinite computational resources cannot break the system.
+    \item \textbf{Unconditional security}
+        A cryptosystem is said to be unconditionally secure if an attacker with infinite computational resources cannot break the system.
 
-\begin{definition}
-	\textit{Vernam cipher}
-\end{definition}
+\end{itemize}
 
-\begin{definition}
-	\textit{One time pad}
-\end{definition}
-
-\subsubsection{An unconditionally secure cryptosystem}
+\textbf{An unconditionally secure cryptosystem}
 In 1949 Shannon proved that the one-time pad is unconditionally secure.
 Theorem 1.
 %%Suppose (P, C, K, E, D) is a cryptosystem where |K| = |C| = |P|. Then the cryptosystem provides perfect secrecy if and only if every key is used with equal probability 1/|K|, and for everyx∈P andeveryy∈C,thereisauniquekeysuchthatek(x)=y.
 (as stated in Cryptography Theory and Practice)
 
-\subsubsection{Unconditional security is not practical}
+\textbf{Unconditional security is not practical}
 
 Instead of aiming for unconditional security researchers have tried to develop cryptosystems where one shared key can be used to send many messages between to entities while still main- taining computational security.
