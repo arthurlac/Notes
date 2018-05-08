@@ -1,0 +1,92 @@
+\section{Complexity and Quantum Computing}
+\subsection{Complex Numbers}
+Complex numbers play a very special role in quantum computing.
+A complex number may have three principal representations.\\
+
+\textbf{Pair Representation}\\
+As a pair of real numbers $(a, b)$, traditionally written as $a + ib$,
+where $a, b \in R$ and $i$ is \textit{a posteriori} interpreted as $\sqrt{-1}$.
+Arithmetic operations of $+$ and $\times$ are defined as
+\begin{align*}
+    (a+ib) +      (c+id) &= (a+c)   + i(b+d)  \\
+    (a+ib) \times (c+id) &= (ac−bd) + i(ad+bc)
+\end{align*}
+Observe this is consistent with our definition $i=\sqrt{-1}$.
+$$i^2 = (0 + i)(0 + i) = −1$$
+
+\textbf{Polar Representation}\\
+A complex number $z = a + ib$ has a natural representation
+as a vector $(a,b)$ in the real plane $R^2$.
+The norm of this vector, $|z| = \sqrt{a^2 +b^2}$,
+is called the \textit{modulus} or \textit{magnitude} of $z$,
+while the angle $\varphi = arctan(b/a)$ between vector $(a, b)$
+and the positive direction of the horizontal axis is called the argument of $z$.
+The pair $(m,\varphi)$ completely determines z and is called polar representation of z.
+Note that in physics literature modulus is usually called magnitude, while argument is called phase.
+We pass from polar representation (m, $\varphi$) to the original representation a + ib via formulas:
+a = m cos $\varphi$, b = m sin $\varphi$.
+A formula for multiplication of two complex numbers is particularly
+easy in the polar representation:
+$$(m_1, \varphi_1) \times (m_2, \varphi_2) = (m_1 \times m_2, \varphi_1 + \varphi_2)$$
+
+\textbf{Exponential Representation}\\
+From $a = m cos \varphi$, $b = m sin \varphi$ we deduce that
+$$a + ib = m(cos\varphi + isin\varphi)$$
+According to the Euler formula,
+$$cos\varphi + isin\varphi = e^{i\varphi}$$
+where $e = 2.71828\dots$
+This leads us to the exponential representation:
+$a + ib = me^{i\varphi}$
+Multiplication formula in this case is
+$$m_1e^{i\varphi_1} \times m_2e^{i\varphi_2} = m_1m_2e^{i(\varphi_1+\varphi_2)}$$
+For a complex number $z = a + ib$ its complex conjugate is the number $\bar{z} = a − ib$.
+It is clear that if $z \in R$, then $\bar{z} = z$, i.e. $b = 0$.
+
+\subsection{Vectors and matrices}
+We consider an $n$-dimensional vector space $C^n$ over complex numbers.
+Its elements are column vectors $z = (z_1,\dots,z_n)^T$,
+where every $z_i \in C$.
+
+In physics (and quantum computing) vector $z$ is also denoted by \textit{ket-notation},
+$|z\rangle$.
+There is also a sister \textit{bra-notation}, $\langle z|$,
+standing for the row vector $(\bar{z_1}, \dots , \bar{z_n})$.
+The \textit{bra-ket (bracket) notation} was introduced by P. Dirac.
+
+The notation $\langle x|y \rangle$,
+for two vectors $x = (x1, . . . xn)$ and $y = (y1, . . . yn)$,
+means the dot (inner) product of these vectors,
+namely the number x1y1 + · · · + xnyn.
+The notation $|y\rangle\langle x|$ also has some meaning.
+%There is also a sister bra-notation, ⟨z|, standing for the row vector (z ̄1, . . . , z ̄n). The bra-ket (bracket) notation was introduced by P. Dirac. The notation ⟨x|y⟩, for two vectors x = (x1, . . . xn) and y = (y1, . . . yn), means the dot (inner) product of these vectors, namely the number x ̄1y1 + · · · + x ̄nyn. The notation |y⟩⟨x| also has some meaning, discussed later.
+As usual, linear maps between vector spaces are described by matrices,
+in our case having complex numbers as elements.
+We will need the following special types of matrices.
+\begin{itemize}
+    \item Given a matrix A,
+    its adjoint matrix,
+    A†, is defined as (A)T = AT ,
+    where the bar denotes element-wise complex conjugation.
+    \item A matrix A is Hermitian if A† = A. Observe that A is a square matrix, and all its diagonal elements are real numbers.
+    \item A square matrix U is unitary if UU† = U†U = I,
+    where I is the identity matrix of the appropriate size. In other words, a matrix is unitary if its adjoint is inverse.
+\end{itemize}
+
+$$
+\begin{pmatrix}
+    cos\ \alpha & -sin\ \alpha  \\
+    sin\ \alpha & cos\ \alpha
+\end{pmatrix}
+$$
+$$
+\frac{1}{\sqrt{2}}
+\begin{pmatrix}
+    1 & 1  \\
+    1 & -1
+\end{pmatrix}
+$$
+\subsection{Qubits}
+\subsection{Bloch sphere}
+\subsection{Multiple Qubits}
+\subsection{Functions from bits to bits}
+\subsection{Deutsch’s Algorithm}

@@ -1,65 +1,140 @@
-\section{Private Key Cryptography}
-
-\subsection{Product Cipher}
+\section{Private Key Cryptography: Block Ciphers}
 \begin{definition}
     A \textit{product cipher} combines two or more components with the intention of producing a cipher that is more secure than the basic parts of which it is made.
-
-    In cryptography, a product cipher combines two or more transformations in a manner intending that the resulting cipher is more secure than the individual components to make it resistant to cryptanalysis.[1] The product cipher combines a sequence of simple transformations such as substitution (S-box), permutation (P-box), and modular arithmetic. The concept of product ciphers is due to Claude Shannon, who presented the idea in his foundational paper, Communication Theory of Secrecy Systems.
-
-    For transformation involving reasonable number of n message symbols, both of the foregoing cipher systems (the S-box and P-box) are by themselves wanting. Shannon suggested using a combination of S-box and P-box transformation—a product cipher. The combination could yield a cipher system more powerful than either one alone. This approach of alternatively applying substitution and permutation transformation has been used by IBM in the Lucifer cipher system, and has become the standard for national data encryption standards such as the Data Encryption Standard and the Advanced Encryption Standard. A product cipher that uses only substitutions and permutations is called a SP-network. Feistel ciphers are an important class of product ciphers.
 \end{definition}
+\begin{example}
+    Let $e_1(x) = x \oplus k_1$ and $e_2(x) = \pi(x)$,
+    a product cipher of $e_1$ and $e_2$ is $e_1(e_2(x))$, or $e_2(e_1(x))$.
+\end{example}
 
-\subsection{Substitution-permutation networks}
+The product cipher combines a sequence of simple
+transformations such as substitution (S-box),
+permutation (P-box),
+and modular arithmetic.
+Shannon suggested using a combination of S-box and P-box transformation,
+the combination could yield a cipher system more powerful than either one alone.
+A product cipher that uses only substitutions and permutations is called a SP-network.
+
 \begin{definition}
-In cryptography, an SP-network, or substitution–permutation network (SPN), is a series of linked mathematical operations used in block cipher algorithms such as AES (Rijndael), 3-Way, Kuznyechik, PRESENT, SAFER, SHARK, and Square.
-
-Such a network takes a block of the plaintext and the key as inputs, and applies several alternating "rounds" or "layers" of substitution boxes (S-boxes) and permutation boxes (P-boxes) to produce the ciphertext block. The S-boxes and P-boxes transform (sub-)blocks of input bits into output bits. It is common for these transformations to be operations that are efficient to perform in hardware, such as exclusive or (XOR) and bitwise rotation. The key is introduced in each round, usually in the form of "round keys" derived from it. (In some designs, the S-boxes themselves depend on the key.)
-
-Decryption is done by simply reversing the process (using the inverses of the S-boxes and P-boxes and applying the round keys in reversed order).
-
-An S-box substitutes a small block of bits (the input of the S-box) by another block of bits (the output of the S-box). This substitution should be one-to-one, to ensure invertibility (hence decryption). In particular, the length of the output should be the same as the length of the input (the picture on the right has S-boxes with 4 input and 4 output bits), which is different from S-boxes in general that could also change the length, as in DES (Data Encryption Standard), for example. An S-box is usually not simply a permutation of the bits. Rather, a good S-box will have the property that changing one input bit will change about half of the output bits (or an avalanche effect). It will also have the property that each output bit will depend on every input bit.
-
-A P-box is a permutation of all the bits: it takes the outputs of all the S-boxes of one round, permutes the bits, and feeds them into the S-boxes of the next round. A good P-box has the property that the output bits of any S-box are distributed to as many S-box inputs as possible.
-
-At each round, the round key (obtained from the key with some simple operations, for instance, using S-boxes and P-boxes) is combined using some group operation, typically XOR.
-
-A single typical S-box or a single P-box alone does not have much cryptographic strength: an S-box could be thought of as a substitution cipher, while a P-box could be thought of as a transposition cipher. However, a well-designed SP network with several alternating rounds of S- and P-boxes already satisfies Shannon's confusion and diffusion properties:
-
-The reason for diffusion is the following: If one changes one bit of the plaintext, then it is fed into an S-box, whose output will change at several bits, then all these changes are distributed by the P-box among several S-boxes, hence the outputs of all of these S-boxes are again changed at several bits, and so on. Doing several rounds, each bit changes several times back and forth, therefore, by the end, the ciphertext has changed completely, in a pseudorandom manner. In particular, for a randomly chosen input block, if one flips the i-th bit, then the probability that the j-th output bit will change is approximately a half, for any i and j, which is the Strict Avalanche Criterion. Vice versa, if one changes one bit of the ciphertext, then attempts to decrypt it, the result is a message completely different from the original plaintext—SP ciphers are not easily malleable.
-The reason for confusion is exactly the same as for diffusion: changing one bit of the key changes several of the round keys, and every change in every round key diffuses over all the bits, changing the ciphertext in a very complex manner.
-Even if an attacker somehow obtains one plaintext corresponding to one ciphertext—a known-plaintext attack, or worse, a chosen plaintext or chosen-ciphertext attack—the confusion and diffusion make it difficult for the attacker to recover the key.
-Although a Feistel network that uses S-boxes (such as DES) is quite similar to SP networks, there are some differences that make either this or that more applicable in certain situations. For a given amount of confusion and diffusion, an SP network has more "inherent parallelism"[1] and so — given a CPU with a large number of execution units — can be computed faster than a Feistel network.[2] CPUs with few execution units — such as most smart cards — cannot take advantage of this inherent parallelism. Also SP ciphers require S-boxes to be invertible (to perform decryption); Feistel inner functions have no such restriction and can be constructed as one-way functions.
+    A \textit{iterated cipher} is a block cipher is made up from:
+    \begin{itemize}
+        \item A key schedule of $Nr$ round keys: $(k_1, k_2, \dots, k_{Nr})$, derived, using a fixed public algorithm, from the key $k$.
+        \item A round function $f$ which takes a round key and a current state.
+    \end{itemize}
+    The encryption (and decryption) functions consist of repetition of the round function $Nr$ times.
 \end{definition}
 
-Cryptosystem 6 (SPN).
-Let $l,m,Nr$ be positive integers.
-\begin{itemize}
-    \item $\pi_S : \{0,1\}^l \rightarrow \{0,1\}^l$ is an S-box
-    \item $\pi_P : \{1,...,lm\} \rightarrow {1,...,lm}$ is a permutation
-    \item $P=C=\{0,1\}^{lm}$
-    \item $K \subseteq (\{0,1\}^{lm})^{Nr+1}$ is the set of all key schedules that can be derived from an initial key $k$
-    \item For a key schedule $(k^1,...,k^{Nr+1})$ we encrypt using an iterated cipher composed of substitution, permutation and x-or operations.
-\end{itemize}
+\subsection{Substitution-permutation networks (SPN)}
+\begin{definition}
+    A \textit{substitution–permutation network}
+    takes a block of the plaintext and the key as inputs,
+    and applies several alternating "rounds" or "layers" of
+    substitution boxes (S-boxes) and permutation boxes (P-boxes)
+    to produce the ciphertext block.\\
 
-the block is divided into two 32-bit halves and processed alternately; this criss-crossing is known as the Feistel scheme. The Feistel structure ensures that decryption and encryption are very similar processes—the only difference is that the subkeys are applied in the reverse order when decrypting. The rest of the algorithm is identical. This greatly simplifies implementation, particularly in hardware, as there is no need for separate encryption and decryption algorithms.
+    Decryption is done by simply reversing the process
+    (using the inverses of the S-boxes and P-boxes and applying the round keys in reversed order).
+\end{definition}
+
+A good S-box will have the property that changing one input bit will change about half of the output bits (or an avalanche effect).
+It will also have the property that each output bit will depend on every input bit.
+A good P-box has the property that the output bits of any S-box are distributed to as many S-box inputs as possible.
+
+At each round, the round key (obtained from the key with some simple operations, for instance, using S-boxes and P-boxes)
+is combined using some group operation, typically XOR.
+
+A well-designed SP network with several alternating rounds of S and P-boxes already satisfies Shannon's confusion and diffusion properties.
+
+\begin{example}
+    Let $l,m,Nr$ be positive integers.
+    \begin{itemize}
+        \item $\pi_S : \{0,1\}^l \rightarrow \{0,1\}^l$ is an S-box
+        \item $\pi_P : \{1,...,lm\} \rightarrow {1,...,lm}$ is a permutation
+        \item $P=C=\{0,1\}^{lm}$
+        \item $K \subseteq (\{0,1\}^{lm})^{Nr+1}$ is the set of all key schedules that can be derived from an initial key $k$
+        \item For a key schedule $(k^1,...,k^{Nr+1})$ we encrypt using an iterated cipher composed of substitution, permutation and x-or operations.
+    \end{itemize}
+\end{example}
+
+\subsection{Feistel Network}
+\begin{definition}
+    A \textit{feistel cipher} is an iterated cipher
+    in which the state on round $i$ is divided into two halves of equal length: $L_i$ and $R_i$.
+    The round function $g$ has the form $g(L_{i−1}, R_{i−1}, k_i) \rightarrow (L_i, R_i)$ and is computed:
+    \begin{align*}
+        L_i &= R_{i−1} \\
+        R_i &= L_{i−1} \oplus f(R_{i-1},k_i)
+    \end{align*}
+    for some function f.
+\end{definition}
+\begin{center}\feistel\end{center}
+The Feistel structure has the advantage that encryption and decryption operations are very similar,
+even identical in some cases, requiring only a reversal of the key schedule.
+Therefore, the size of the code or circuitry required to implement such a cipher is nearly halved.
+Although a Feistel network that uses S-boxes (such as DES) is quite similar to SP networks,
+there are some differences that make either this or that more applicable in certain situations.
+For a given amount of confusion and diffusion,
+an SP network has more "inherent parallelism" and so — given a CPU with a large number of execution units — can be computed faster than a Feistel network.
+CPUs with few execution units — such as most smart cards — cannot take advantage of this inherent parallelism.
+Also SP ciphers require S-boxes to be invertible (to perform decryption);
+Feistel inner functions have no such restriction and can be constructed as one-way functions.
+
+\subsection{The Data Encryption Standard (DES)}
+\begin{center}\des\end{center}
+\begin{definition}
+
+DES is a 16 round Feistel cipher where:
+• m = 64, Li and Ri are bitstrings of length 32.
+Ciphertext
+• k is 56 bits long, from this sixteen 48 bit round keys are produced consisting of a selection of bits of k, permuted.
+• There is a fixed initial permutation L0R0 = IP(x) before the first round. 20
+• The inverse permutation IP−1(R16L16) is applied after the last round. • f :{0,1}32 ×{0,1}48 →{0,1}32.
+• f consists of a substitution (S-box) followed by a fixed permutation.
+DES f function
+• Expand Ri−1 to 48 bits and x-or with ki: state = E(Ri−1) \oplus ki
+• Apply substitutions to state: map 6-bit substrings to 4-bit substrings • Permute state: state = P (state)
+
+DES f function
+• Expand Ri−1 to 48 bits and x-or with ki: state = E(Ri−1) \oplus ki
+• Apply substitutions to state: map 6-bit substrings to 4-bit substrings • Permute state: state = P (state)
+\end{definition}
+
+\textbf{Security of DES}
+
+\subsubsection{Triple DES (3DES)}
+Currently DES is insecure, however triple DES is still secure.
+Simply encrypt via DES three times. Yup that simple
+
+\subsection{Modes of Operation}
+Electronic codebook mode (ECB)
+Cipher block chaining mode (CBC)
+Output feedback mode (OFB)
+Cipher feedback mode (CFB)
+
+\subsection{Advanced Encryption Standard (AES)}
+Galois Fields
 
 \subsection{Attacks on substitution-permutation networks}
-Evaluating security of block ciphers
-• Key size
-• Block size
-• Estimated security level
-Computational security against exhaustive key search
+\textbf{Evaluating security of block ciphers}
+\begin{itemize}
+    \item Key size
+    \item Block size
+    \item Estimated security level
+\end{itemize}
+\textbf{Computational security against exhaustive key search}
 • A fixed key size defines an upper bound on the security of the cipher.
 • If the key k is a bitstring of length lk then there are 2lk keys.
 • Given a small number of plaintext-ciphertext pairs the attack has complexity of 2lk−1 operations.
-Computational security against exhaustive data analysis
+\textbf{Computational security against exhaustive data analysis}
 • Text dictionary attack: For block size m, if an attacker has collected 2m plaintext-
 ciphertext pairs then they have a complete dictionary of the cipher.
 • Matching ciphertext attack: If you have collected 2m/2 blocks you expect to find matching ciphertext blocks within them.
-Known attacks against private-key block ciphers
+\textbf{Known attacks against private-key block ciphers}
 In the next lecture we will consider
-• differential cryptanalysis, a chosen plaintext attack and • linear cryptanalysis, a known plaintext attack.
+• differential cryptanalysis, a chosen plaintext attack and
+• linear cryptanalysis, a known plaintext attack.
 These are attacks on SPNs which are also relevant to the design of DES and AES.
+
 \subsection{Differential Cryptanalysis}
 Objective
 Find targeted key bits.
@@ -73,29 +148,3 @@ the same key k.
 • Using probabilistic analysis we find biased linear approximations for the S-boxes. We construct a linear approximation, with a large bias, of the SPN (excepting the final round) in terms of plaintext bits and state bits.
 • For each candidate key we partially decrypt each ciphertext and see if the linear approx- imation holds for state, incrementing a counter for the key if it does.
 • The candidate key with largest bias (from |input pairs|/2) should contain the targeted key bits.
-\subsection{The Data Encryption Standard (DES)}
-On a high level DES is simple.
-Plain text in, cipher text out, with a given key.
-It is a block cipher
-Encrypts 64 bits at a time, 8 bytes
-gives 64 bits of output
-Key size is 56 bits
-
-How do we build a block cipher?
-You need lots of confusion and diffusion!
-Repeated several times!
-Substitute and permute!
-And a few more times again!
-
-DES is 16 sixteen rounds.
-In one round, split your 64 bits in into
-32 bits left, 32 bits right
-On $R_0$ do $f$ 
-then swap left and right
-
-\subsubsection{Triple DES (3DES)}
-Currently DES is insecure, however triple DES is still secure.
-Simply encrypt via DES three times. Yup that simple
-\subsection{Modes of operation}
-\subsection{After DES: 3DES and the Advanced Encryption Standard (AES)}
-Galois Fields

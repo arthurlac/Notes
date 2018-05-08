@@ -40,13 +40,16 @@
 
 \setlength{\parindent}{0pt}
 
+
+\usetikzlibrary{crypto.symbols}
+\tikzset{shadows=no}
 \include{diagrams}
 
 \begin{document}
 \tableofcontents
 
 \pagebreak
-\include{classic_crypto}
+\include{basics}
 
 \pagebreak
 \include{private_key_crypto}
@@ -55,37 +58,6 @@
 \include{cryptographic_hashes}
 
 \pagebreak
-\section{Key Distribution Problem}
-The problem: Distributing private keys
-We will consider two ways that an organisation might distribute keys:
-\begin{itemize}
-    \item. A key predistribution scheme
-    \item. A session key distribution scheme
-\end{itemize}
-25 A key predistribution scheme (PKS)
-Definition 18.
-\begin{definition}
-    \begin{itemize}
-        \item A trusted authority distributes keying information in advance
-        \item Keying information is distributed using secure channels
-        \item Keying information might be long lived keys or secret information that can later be used to produce keys
-    \end{itemize}
-\end{definition}
-26 A session key distribution scheme (SKDS) Definition 19.
-\begin{definition}
-    \begin{itemize}
-        \item A session key scheme involves a trusted authority and two users, Alice and Bob, who wish to communicate.
-        \item The objective is the production of a session key known only to Alice and Bob (and possibly the TA).
-        \item Session keys are used to encrypt information for a specified, short period of time.
-        \item Often each network user will share a different long lived key with the TA.
-    \end{itemize}
-\end{definition}
+\include{rsa}
 
-\pagebreak
-\include{public_key_crypto}
-
-\pagebreak
-\section{Signature Schemes}
-\pagebreak
-\section{Public Key Infrastructures}
 \end{document}
