@@ -16,7 +16,7 @@ the combination could yield a cipher system more powerful than either one alone.
 A product cipher that uses only substitutions and permutations is called a SP-network.
 
 \begin{definition}
-    A \textit{iterated cipher} is a block cipher is made up from:
+    An \textit{iterated cipher} is a block cipher is made up from:
     \begin{itemize}
         \item A key schedule of $Nr$ round keys: $(k_1, k_2, \dots, k_{Nr})$, derived, using a fixed public algorithm, from the key $k$.
         \item A round function $f$ which takes a round key and a current state.
@@ -39,10 +39,8 @@ A product cipher that uses only substitutions and permutations is called a SP-ne
 A good S-box will have the property that changing one input bit will change about half of the output bits (or an avalanche effect).
 It will also have the property that each output bit will depend on every input bit.
 A good P-box has the property that the output bits of any S-box are distributed to as many S-box inputs as possible.
-
 At each round, the round key (obtained from the key with some simple operations, for instance, using S-boxes and P-boxes)
 is combined using some group operation, typically XOR.
-
 A well-designed SP network with several alternating rounds of S and P-boxes already satisfies Shannon's confusion and diffusion properties.
 
 \begin{example}
@@ -57,6 +55,7 @@ A well-designed SP network with several alternating rounds of S and P-boxes alre
 \end{example}
 
 \subsection{Feistel Network}
+\begin{center}\feistel\end{center}
 \begin{definition}
     A \textit{feistel cipher} is an iterated cipher
     in which the state on round $i$ is divided into two halves of equal length: $L_i$ and $R_i$.
@@ -67,7 +66,6 @@ A well-designed SP network with several alternating rounds of S and P-boxes alre
     \end{align*}
     for some function f.
 \end{definition}
-\begin{center}\feistel\end{center}
 The Feistel structure has the advantage that encryption and decryption operations are very similar,
 even identical in some cases, requiring only a reversal of the key schedule.
 Therefore, the size of the code or circuitry required to implement such a cipher is nearly halved.
@@ -82,37 +80,168 @@ Feistel inner functions have no such restriction and can be constructed as one-w
 \subsection{The Data Encryption Standard (DES)}
 \begin{center}\des\end{center}
 \begin{definition}
-
-DES is a 16 round Feistel cipher where:
-• m = 64, Li and Ri are bitstrings of length 32.
-Ciphertext
-• k is 56 bits long, from this sixteen 48 bit round keys are produced consisting of a selection of bits of k, permuted.
-• There is a fixed initial permutation L0R0 = IP(x) before the first round. 20
-• The inverse permutation IP−1(R16L16) is applied after the last round. • f :{0,1}32 ×{0,1}48 →{0,1}32.
-• f consists of a substitution (S-box) followed by a fixed permutation.
-DES f function
-• Expand Ri−1 to 48 bits and x-or with ki: state = E(Ri−1) \oplus ki
-• Apply substitutions to state: map 6-bit substrings to 4-bit substrings • Permute state: state = P (state)
-
-DES f function
-• Expand Ri−1 to 48 bits and x-or with ki: state = E(Ri−1) \oplus ki
-• Apply substitutions to state: map 6-bit substrings to 4-bit substrings • Permute state: state = P (state)
+    DES is a 16 round Feistel cipher where:
+    \begin{itemize}
+        \item Block size $m = 64$, $L_i$ and $R_i$ are bitstrings of length 32.
+        \item $k$ is 56 bits long, from this sixteen 48 bit round keys are produced consisting of a selection of bits of $k$, permuted.
+        \item There is a fixed initial permutation $L_0R_0 = IP(x)$ before the first round.
+        \item The inverse permutation $IP^{−1}(R_{16}L_{16})$ is applied after the last round.
+        \item $f :\{0,1\}^{32} \times \{0,1\}^{48} \rightarrow \{0,1\}^{32}$
+        \item $f$ consists of a substitution (S-box) followed by a fixed permutation.
+    \end{itemize}
 \end{definition}
 
-\textbf{Security of DES}
+\textbf{DES f function}
+\begin{center}
+    \desf
+\end{center}
+\begin{itemize}
+    \item Expand $R_{i−1}$ to 48 bits and $\oplus$ with $k_i$.
+    \item Apply substitutions to state: map 6-bit substrings to 4-bit substrings
+    \item Permute state: $state = P(state)$
+\end{itemize}
+
+\begin{itemize}
+    \item A \textit{weak key} is a key $k$ for which $\forall\ x\ e_k(e_k(x)) = x$
+    \item A pair of keys $k_1, k_2$ is \textit{semi-weak} if $\forall\ x\ e_{k_1} (e_{k_2}(x)) = x$
+    \item DES has four weak keys and six pairs of semi-weak keys.
+\end{itemize}
 
 \subsubsection{Triple DES (3DES)}
-Currently DES is insecure, however triple DES is still secure.
-Simply encrypt via DES three times. Yup that simple
+Some facts
+\begin{itemize}
+    \item For a key $k$ in the DES keyspace DES encryption defines a permutation of 64 bits.
+    \item There are $2^{56}$ possible keys and hence up to $2^{56}$ different permutations.
+\end{itemize}
+Given $k_1, k_2$ can I find a third key $k_3$ such that
+$$e_{k_3}(x) = e_{k_2}(e_{k_1}(x))$$
+The set of $2^{56}$ permutations defined by the $2^{56}$ DES keys is not closed under function composition.
+DES is not a group.\\
+
+\textbf{Double DES (2DES)}\\
+Let $k_1, k_2$ be DES keys of length 56 bits,
+where $x, y$ are of length 64, the key length $(k_1,k_2)$ is 112 bits,
+define 2DES encryption by
+\begin{align*}
+    e_{k_1,k_2}(x) &= e_{k_2}(e_{k_1}(x)) \\
+    d_{k_1,k_2}(y) &= d_{k_1}(d_{k_2}(y))
+\end{align*}
+
+\textbf{Meet in the middle attack}\\
+Inputs: $x$ and $y$ where $y = e_{k_1,k_2}(x) = e_{k_2}(e_{k_1}(x))$
+\begin{enumerate}
+    \item For each key $k_1$ in the DES keyspace calculate $z = e_{k_1}(x)$ and store $(z,k_1)$ in table 1
+    \item For each key $k_2$ in the DES keyspace calculate $z = d_{k_2}(y)$ and store $(z,k_2)$ in table 2
+    \item Two table entries, $(z, k_1)$ and $(z, k_2)$,
+        match if they are in different tables and have equal z values.
+    \item For each matching pair save the key pair $(k_1,k_2)$ in the set of candidate keys.
+\end{enumerate}
+The candidate keys are all those for which $y = e_{(k_1,k_2)}(x)$.
+In an ideal cipher, with block size 64 bits, if we select a key $(k_1, k_2)$ at random we expect
+to find that $y = e_{(k_1,k_2)}(x)$ with probability $1/2^{64}$.
+The number of candidate key pairs will therefore be about $2^{112}/2^{64} = 2^{48}$.
+With high probability we find the correct key by testing each candidate key with a second plaintext-ciphertext pair.\\
+
+\textbf{Double-DES is essentially no more secure than DES itself}\\
+
+\textbf{Triple DES (3DES)}\\
+Variant 1: Select three independent keys $k_1, k_2, k_3$. Encryption is defined by
+$$e_{(k_1, k_2, k_3)}(x) = e_{k_3} \circ e_{k_2} \circ e_{k_1}$$
+Variant 2: Select two independent keys $k_1, k_2$. Encryption is defined by
+$$e_{(k_1, k_2)}(x) = e_{k_1} \circ d_{k_2} \circ e_{k_1}$$
+
+\textbf{Security of Triple-DES}
+\begin{itemize}
+    \item Variant 1:
+        \begin{itemize}
+            \item Naive exhaustive search: $2^{168}$
+            \item Meet in the middle attack: $2^{112}$
+        \end{itemize}
+    \item Variant 2:
+        \begin{itemize}
+            \item Naive exhaustive search: $2^{112}$
+        \end{itemize}
+    \item Differential and linear cryptanalysis become more difficult
+\end{itemize}
+
+\textbf{3DES: the standard}
+\begin{itemize}
+    \item Triple-DES or 3DES became the standard, replacing DES in 1999.
+    \item It continues to be used in many systems.
+\end{itemize}
+Why was a replacement still needed?
+\begin{itemize}
+    \item Small block size
+    \item Speed
+    \item Implementation inconveniences
+\end{itemize}
+
+\subsection{Advanced Encryption Standard (AES)}
+Rijndael: The chosen cipher
+\begin{itemize}
+    \item Invented by two Belguim researchers: Daemen and Rijmen • Iterated cipher with structure similar to an SPN
+\item Number of round depends on key size:
+\item Key 128 10 Rounds
+\item Key 192 12 Rounds
+\item Key 256 16 Rounds
+\end{itemize}
+In the 128 bit case, for instance, the plaintext is 16 bytes long: x0x1 . . . x15 state is represented as a 4 by 4 array of bytes:
+$$
+\begin{matrix}
+    x_{0} & x_{4} & x_{8}  & x_{12} \\
+    x_{1} & x_{5} & x_{9}  & x_{13} \\
+    x_{2} & x_{6} & x_{10} & x_{14} \\
+    x_{3} & x_{7} & x_{11} & x_{15}
+\end{matrix}
+$$
+Galois Fields
+SubBytes(state)
+• The state array is substituted byte by byte, each substitution uses the same S-box.
+• It is represented as a 16 by 16 array with the rows and columns indexed by hexadecimal
+numbers.
+• Unlike DES the AES S-box is algebraically defined using operations in a finite field
+ShiftRows(state)
+$$
+\begin{matrix}
+    a & b & c & d \\
+    e & f & g & h \\
+    i & j & k & l \\
+    m & n & o & p
+\end{matrix}
+\quad\longrightarrow\quad
+\begin{matrix}
+    a & b & c & d \\
+    f & g & h & e \\
+    k & l & i & j \\
+    p & m & n & o
+\end{matrix}
+$$
+• A linear transformation (multiplication by a matrix in the finite field) is applied to each column of the state array
+• Each input byte affects all output bytes
+• The effect is to linearly combine the bytes in the column
+High level description
+Algorithm 4 (AES). state = plaintext block AddRoundKey(state,k0)
+for r = 1 to Nr − 1 do
+Substitution: SubBytes(state) Permutation: ShiftRows(state)
+Linear transformation: MixColumns(state)
+AddRoundKey(state,kr ) end do
+Substitution: SubBytes(state) Permutation: ShiftRows(state) AddRoundKey(state,kN r )
+ciphertext block = state
+
+Security of AES
+Protection against differential cryptanalysis:
+• The use of the finite field operation to construct the S-box produces a difference distri- bution table in which entries are close to uniform
+• MixColumns, the linear transformation, promotes a “wide trail” of active S-boxes
+The best known attacks are on variants with a reduced number of rounds. These attacks have
+been shown not to be effective for Nr ≥ 10.
+AES is secure against all known attacks. There are no known attacks faster than
+exhaustive search.
 
 \subsection{Modes of Operation}
 Electronic codebook mode (ECB)
 Cipher block chaining mode (CBC)
 Output feedback mode (OFB)
 Cipher feedback mode (CFB)
-
-\subsection{Advanced Encryption Standard (AES)}
-Galois Fields
 
 \subsection{Attacks on substitution-permutation networks}
 \textbf{Evaluating security of block ciphers}

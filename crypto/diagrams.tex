@@ -73,7 +73,7 @@
     \draw[thick,latex-] (r0 |- p0.north) -- (r0);
 
     %% Outputs
-    \node (p4) [draw,thick,below of = f4, minimum width=5cm,minimum height=0.5cm,node distance=1cm] {$FP$}; 
+    \node (p4) [draw,thick,below of = f4, minimum width=5cm,minimum height=0.5cm,node distance=1cm] {$IP^{-1}$}; 
     \node (l4) [below of = xor4,node distance=2cm] {$L'$};
     \node (r4) [right of = l4, node distance = 4cm] {$R'$};
     \draw[thick,latex-latex] (f4.east) -| +(1.5cm,-0.75cm);
@@ -81,6 +81,166 @@
 
     \draw[thick,-latex] (l4 |- p4.south) -- (l4);
     \draw[thick,-latex] (r4 |- p4.south) -- (r4);
+
+\end{tikzpicture}
+}
+
+\newcommand\desf{\begin{tikzpicture}[scale=1]
+
+	%% Subkey XORs
+    \foreach \z in {0,...,47} {
+        \node[XOR, scale=0.8] (xor\z) at ($\z*(0.8em, 0)$) {};
+    }
+    \node[scale=0.6] (xor-2) at ($-2*(0.8em, 0)$) {};
+    \node[scale=0.6] (xor-1) at ($-1*(0.8em, 0)$) {};
+    \node[scale=0.6] (xor48) at ($48*(0.8em, 0)$) {};
+    \node[scale=0.6] (xor49) at ($49*(0.8em, 0)$) {};
+
+    %% Nodes positions
+    \foreach \z in {0,...,47} {
+        \node (i\z) [above = 0.75em of xor\z] {};
+        \node (ii\z) [above = 2em of i\z] {};
+        \node (o\z) [below = 2.5em of xor\z] {};
+        \node (oo\z) [below = 5em of o\z] {};
+        \draw[thick] (i\z.center) -- (xor\z) -- (o\z);
+	}
+    
+
+    \node (i-2) [above = 0.75em of xor-2] {};
+    \node (ii-2) [above = 2em of i-2] {};
+    \node (o-2) [below = 2.5em of xor-2] {};
+
+    \node (i-1) [above = 0.75em of xor-1] {};
+    \node (ii-1) [above = 2em of i-1] {};
+    \node (o-1) [below = 2.5em of xor-1] {};
+    	
+    \node (i48) [above = 0.75em of xor48] {};
+    \node (ii48) [above = 2em of i48] {};
+    \node (o48) [below = 2.5em of xor48] {};
+    	
+    \node (i49) [above = 0.75em of xor49] {};
+    \node (ii49) [above = 2em of i49] {};
+    \node (o49) [below = 2.5em of xor49] {};
+    
+
+	\draw[thick,densely dashed] ($(ii-2.south)-(0,0.25em)$) -- ($(i0.north)+(0,0.25em)$) -- (i0.center);
+	\draw[thick,densely dashed] ($(ii1.south)-(0,0.25em)$) -- ($(i-1.north)+(0,0.25em)$) -- (i-1.center);
+	
+	\draw[thick] (ii1.center) -- (i1.center);
+	\draw[thick] (ii2.center) -- (i2.center);
+	\draw[thick] (ii3.center) -- (i3.center);
+	\draw[thick] (ii4.center) -- (i4.center);
+
+	\draw[thick] ($(ii4.south)-(0,0.25em)$) -- ($(i6.north)+(0,0.25em)$) -- (i6.center);
+	\draw[thick] ($(ii7.south)-(0,0.25em)$) -- ($(i5.north)+(0,0.25em)$) -- (i5.center);
+	
+	\draw[thick] (ii7.center) -- (i7.center);
+	\draw[thick] (ii8.center) -- (i8.center);
+	\draw[thick] (ii9.center) -- (i9.center);
+	\draw[thick] (ii10.center) -- (i10.center);
+
+	\draw[thick] ($(ii10.south)-(0,0.25em)$) -- ($(i12.north)+(0,0.25em)$) -- (i12.center);
+	\draw[thick] ($(ii13.south)-(0,0.25em)$) -- ($(i11.north)+(0,0.25em)$) -- (i11.center);
+
+	\draw[thick] (ii13.center) -- (i13.center);
+	\draw[thick] (ii14.center) -- (i14.center);
+	\draw[thick] (ii15.center) -- (i15.center);
+	\draw[thick] (ii16.center) -- (i16.center);
+
+	\draw[thick] ($(ii16.south)-(0,0.25em)$) -- ($(i18.north)+(0,0.25em)$) -- (i18.center);
+	\draw[thick] ($(ii19.south)-(0,0.25em)$) -- ($(i17.north)+(0,0.25em)$) -- (i17.center);
+
+	\draw[thick] (ii19.center) -- (i19.center);
+	\draw[thick] (ii20.center) -- (i20.center);
+	\draw[thick] (ii21.center) -- (i21.center);
+	\draw[thick] (ii22.center) -- (i22.center);
+
+	\draw[thick] ($(ii22.south)-(0,0.25em)$) -- ($(i24.north)+(0,0.25em)$) -- (i24.center);
+	\draw[thick] ($(ii25.south)-(0,0.25em)$) -- ($(i23.north)+(0,0.25em)$) -- (i23.center);
+
+	\draw[thick] (ii25.center) -- (i25.center);
+	\draw[thick] (ii26.center) -- (i26.center);
+	\draw[thick] (ii27.center) -- (i27.center);
+	\draw[thick] (ii28.center) -- (i28.center);
+
+	\draw[thick] ($(ii28.south)-(0,0.25em)$) -- ($(i30.north)+(0,0.25em)$) -- (i30.center);
+	\draw[thick] ($(ii31.south)-(0,0.25em)$) -- ($(i29.north)+(0,0.25em)$) -- (i29.center);
+
+	\draw[thick] (ii31.center) -- (i31.center);
+	\draw[thick] (ii32.center) -- (i32.center);
+	\draw[thick] (ii33.center) -- (i33.center);
+	\draw[thick] (ii34.center) -- (i34.center);
+
+	\draw[thick] ($(ii34.south)-(0,0.25em)$) -- ($(i36.north)+(0,0.25em)$) -- (i36.center);
+	\draw[thick] ($(ii37.south)-(0,0.25em)$) -- ($(i35.north)+(0,0.25em)$) -- (i35.center);
+
+	\draw[thick] (ii37.center) -- (i37.center);
+	\draw[thick] (ii38.center) -- (i38.center);
+	\draw[thick] (ii39.center) -- (i39.center);
+	\draw[thick] (ii40.center) -- (i40.center);
+
+	\draw[thick] ($(ii40.south)-(0,0.25em)$) -- ($(i42.north)+(0,0.25em)$) -- (i42.center);
+	\draw[thick] ($(ii43.south)-(0,0.25em)$) -- ($(i41.north)+(0,0.25em)$) -- (i41.center);
+	
+	\draw[thick] (ii43.center) -- (i43.center);
+	\draw[thick] (ii44.center) -- (i44.center);
+	\draw[thick] (ii45.center) -- (i45.center);
+	\draw[thick] (ii46.center) -- (i46.center);
+
+	\draw[thick,densely dashed] ($(ii46.south)-(0,0.25em)$) -- ($(i48.north)+(0,0.25em)$);
+	\draw[thick,densely dashed] ($(ii49.south)-(0,0.25em)$) -- ($(i47.north)+(0,0.25em)$) -- (i47.center);
+    
+	
+	%%%%% To Permutation P
+	\draw[thick,->] (o1.north) -- (oo1.center);
+	\draw[thick,->] (o2.north) -- (oo2.center);
+	\draw[thick,->] (o3.north) -- (oo3.center);
+	\draw[thick,->] (o4.north) -- (oo4.center);
+
+	\draw[thick,->] (o7.north) -- (oo7.center);
+	\draw[thick,->] (o8.north) -- (oo8.center);
+	\draw[thick,->] (o9.north) -- (oo9.center);
+	\draw[thick,->] (o10.north) -- (oo10.center);
+
+	\draw[thick,->] (o13.north) -- (oo13.center);
+	\draw[thick,->] (o14.north) -- (oo14.center);
+	\draw[thick,->] (o15.north) -- (oo15.center);
+	\draw[thick,->] (o16.north) -- (oo16.center);
+
+	\draw[thick,->] (o19.north) -- (oo19.center);
+	\draw[thick,->] (o20.north) -- (oo20.center);
+	\draw[thick,->] (o21.north) -- (oo21.center);
+	\draw[thick,->] (o22.north) -- (oo22.center);
+
+	\draw[thick,->] (o25.north) -- (oo25.center);
+	\draw[thick,->] (o26.north) -- (oo26.center);
+	\draw[thick,->] (o27.north) -- (oo27.center);
+	\draw[thick,->] (o28.north) -- (oo28.center);
+
+	\draw[thick,->] (o31.north) -- (oo31.center);
+	\draw[thick,->] (o32.north) -- (oo32.center);
+	\draw[thick,->] (o33.north) -- (oo33.center);
+	\draw[thick,->] (o34.north) -- (oo34.center);
+
+	\draw[thick,->] (o37.north) -- (oo37.center);
+	\draw[thick,->] (o38.north) -- (oo38.center);
+	\draw[thick,->] (o39.north) -- (oo39.center);
+	\draw[thick,->] (o40.north) -- (oo40.center);
+
+
+	\draw[thick,->] (o43.north) -- (oo43.center);
+	\draw[thick,->] (o44.north) -- (oo44.center);
+	\draw[thick,->] (o45.north) -- (oo45.center);
+	\draw[thick,->] (o46.north) -- (oo46.center);
+
+
+
+	%% SBoxes
+    \foreach \z in {0,...,7} {
+    		\node[draw,thick,minimum width=4.5em,minimum height=2em,fill=white!25] (s\z) at ($\z*(4.8em,0) + (2em,-2em)$) {$S_\z$};
+	}
+	
+    \node[draw,thick,minimum width=38em,minimum height=3.5em,fill=white!25,below = 4em of s0.west,anchor=west] (p) {$P\ (8 \times 4\ bits)$};
 
 \end{tikzpicture}
 }
