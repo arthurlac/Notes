@@ -1,28 +1,28 @@
 \section{Polynomial Transformations and Equivalence}
 \textbf{Polynomial Transformations}
 \begin{definition}
-    Consider two languages $\mathcal{L_1} \subset A_1$ and $\mathcal{L_2} \subset A_2$,
-    $\mathcal{L_1}$ is said to be \textit{polynomially transformable} to $\mathcal{L_2}$ if
+    Consider two languages $L_1 \subset A_1$ and $L_2 \subset A_2$,
+    $L_1$ is said to be \textit{polynomially transformable} to $L_2$ if
     $$\exists\ f : A_1 \rightarrow A_2$$
     such that $f$ can be computed with polynomially complexity and $f$ preserves the language. I.e.
-    $$\forall\ x \in A_1\ x \in \mathcal{L_1}\ \mathrm{iff}\ f(x)\in \mathcal{L_2}$$
+    $$\forall\ x \in A_1\ x \in L_1\ \mathrm{iff}\ f(x)\in L_2$$
 \end{definition}
 
-Practically $\mathcal{L_1} \propto \mathcal{L_2}$ means that
-$\mathcal{L_2}$ is not harder than $\mathcal{L_1}$;
-i.e. if $\mathcal{L_2} \in P$ then $\mathcal{L_1} \in P$.
+Practically $L_1 \propto L_2$ means that
+$L_2$ is not harder than $L_1$;
+i.e. if $L_2 \in P$ then $L_1 \in P$.
 Furthermore this relation is transitive.
 $$
-  \mathcal{L_1} \propto \mathcal{L_2},\ 
-  \mathcal{L_2} \propto \mathcal{L_3},\Rightarrow
-  \mathcal{L_1} \propto \mathcal{L_3}
+  L_1 \propto L_2,\ 
+  L_2 \propto L_3,\Rightarrow
+  L_1 \propto L_3
 $$
 
 \textbf{Polynomial Equivalence}
 \begin{definition}
-    If we have two languages such $\mathcal{L_1} \propto \mathcal{L_2}$ and
-    $\mathcal{L_2} \propto \mathcal{L_1}$, then they are said to be \textit{polynomially equivalent}.
-    Thus we have $\mathcal{L_1} \approx \mathcal{L_2}$.
+    If we have two languages such $L_1 \propto L_2$ and
+    $L_2 \propto L_1$, then they are said to be \textit{polynomially equivalent}.
+    Thus we have $L_1 \approx L_2$.
 \end{definition}
 This is an equivalence as such it is reflexive, symmetric, and transitive;
 as such $\forall\ R,\ S,\ T$:
@@ -40,7 +40,7 @@ as such $\forall\ R,\ S,\ T$:
 In practise what this means is that we can see what problem a class is in if we can
 polynomially translate it to another problem in a known class; for example:
 $$
-  \forall\ \mathcal{L_1} \in P\ 
-  \forall\ \mathcal{L_2} \in P\ 
-  \mathcal{L_1} \approx \mathcal{L_2}
+  \forall\ L_1 \in P\ 
+  \forall\ L_2 \in P\ 
+  L_1 \approx L_2
 $$

@@ -1,4 +1,4 @@
-\section{Complexity Class P and NP}
+\section{Complexity Classes}
 \subsection{Class P}
 \begin{definition}
     \textit{Class P} is the class of all Yes - No computational problems
@@ -7,30 +7,29 @@
 \end{definition}
 \textbf{Examples}
 \begin{itemize}
-    \item “Even unary non-negative numbers” is in P , take $n + 1$ as polynomial $p(n)$ from the definition
-    \item “Palindromes” is in P, $p(n) = cn^2$ for a large enough positive constant $c$
-    \item “Primality” is in P . This is a problem of deciding for a given integer number $n > 0$,
+    \item \textit{Even unary non-negative numbers} is in P , take $n + 1$ as polynomial $p(n)$ from the definition
+    \item \textit{Palindromes} is in P, $p(n) = cn^2$ for a large enough positive constant $c$
+    \item \textit{Primality} is in P . This is a problem of deciding for a given integer number $n > 0$,
         represented in decimal (or binary) form, whether $n$ is prime
-    \item “Traveling Salesman” and “Satisfiability” are \textit{probably} not in P, but no proofs for any of them are known
 \end{itemize}
 
 \subsection{Class NP}
-We say that NTM solves the Yes - No problem $L$ if it accepts exactly all Yes inputs in $L$.
 \begin{definition}
-    \textit{Class NP} consists of Yes - No problems (languages) $L$ such that
-    there exist polynomial $p(n)$ and NTM for solving $L$ with complexity $T(n) \leq p(n)$ for any $n \geq 1$.
+    \textit{Class NP} consists of languages $L$ such that
+    there exist polynomial $p(n)$ and NTM T for solving $L$
+    with complexity $T(n) \leq p(n)$.\\
+
     \textbf{Examples}
     \begin{itemize}
-        \item Travelling Salesman $\in$ NP.
-            To show this, we need to construct a NTM for solving this problem with polynomial complexity.
+        \item \textit{Travelling Salesman} $\in$ NP.
+            We need to construct a NTM for solving this problem with polynomial complexity.
             On the guessing stage the NTM produces an arbitrary permutation of cities,
-            and on the verifying stage, working like an “ordinary” TM,
+            and the verifying stage, working like an “ordinary” TM,
             checks whether the length of the guessed tour does no exceed the boundary $B$.
             An accepting computation for an input $x$ exists if and only if there is a short tour.
             This computation consists in writing out a guess and finding the corresponding sum of all distances.
             Clearly the complexity of this computation is polynomial.
-            According to the definition, a non-accepting computation does not contibute to the complexity.
-        \item Boolean satisfiability $\in$ NP.
+        \item \textit{Boolean satisfiability} $\in$ NP.
             NTM first guesses a satisfying assignment of truth values to variables,
             and then verifies the guess in polynomial time.
     \end{itemize}
@@ -41,138 +40,270 @@ We say that NTM solves the Yes - No problem $L$ if it accepts exactly all Yes in
 \end{theorem}
 \begin{proof}
     Let $L$ be a Yes-No problem from P,
-    and M be a (deterministic) TM for solving L in polynomial time.
-    We get a NTM for solving $L$ in polynomial time by imitating $M$ on the verification stage
+    and $D$ be a (deterministic) TM for solving $L$ in polynomial time.
+    We get a NTM for solving $L$ in polynomial time by imitating $D$ on the verification stage
     and ignoring the guessing stage.
-    The question whether P = NP, is a famous open problem.
 \end{proof}
+
+\begin{center}
+The question whether P = NP, is a famous open problem.
+\end{center}
 
 \begin{theorem}
     Let $L \in NP$,
     then there exist a polynomial $p(n)$ and TM for solving $L$ with complexity $O(2^{p(n)})$.
 \end{theorem}
 \begin{proof}
-    Let $N$ be an NTM for solving $L$ with complexity $TN (n) \leq r(n)$
+    Let $N$ be an NTM for solving $L$ with complexity $T_N(n) \leq r(n)$
     where $r(n)$ is a polynomial.
-    By the definition of NTM, for every accepted input $x$ with $|x| = n$
-    there is a guess word in the tape alphabet $\Gamma$ of the length not greater than $r(n)$
+    For every accepted input $x$ (with $|x| = n$)
+    there is a guess word of length $\leq r(n)$
     such that $N$ adopts the state $q_Y$ in no more than $r(n)$ steps.
-    The total number of possible guesses is less than $|\Gamma|r(n)+1$
+    The total number of possible guesses is less than
+    $$|\Gamma|^{r(n)+1}$$
+
     Now we construct a (deterministic) TM $M$ as follows.
     $M$ examines every possible guess in turn,
     and for each of them runs the verification stage of $N$ up to $r(n)$ steps.
-    That will take $$O(r(n)|\Gamma|r(n))$$ steps.
+    That will take $$O(r(n)|\Gamma|^{r(n)})$$ steps.
     By the definition of O-symbol, that’s the same as $O(2p(n))$ for a certain polynomial $p(n)$.
 \end{proof}
 
-\section{Structure of the Class NP}
-Recall that it is not known whether or not P = NP, the widely accepted hypothesis being that this equality is wrong.
-Let NPC ⊂ NP denote the class of all NP-complete problems,
-and denote NPI := NP \ (NPC ∪ P).
-Theorem. If P \neq NP, then:
-\begin{itemize}
-    \item NPI \neq \varnothing;
-    \item there exist the problems A,B \in NPI such that neither A \propto B, nor B \propto A.
-        Proof is nontrivial.
-        The item (2) of the Theorem states that under the hypothesis P \neq NP the set NPI is divided into more that one equivalence classes with respect to polynomial transformation.
-\end{itemize}
-
-2. Complements to languages
-Definition. Let L ⊂ Σ∗ be a language over an alphabet Σ. The set of words L = Σ∗ \ L
-is called the complement to L.
-Observe that L is not necessarily a language, i.e. a set of words generated by a grammar (or accepted by a TM). For all problems from NP the complement is indeed a language, however it is not at all obvious that if L ∈ NP, then L ∈ NP. That is because the definition of NTM (unlike the definition of Yes - No TM) is non-symmetrical with respect to Yes - No output.
-Example. For the problem CNF SAT, the complement is the following Yes - No prob- lem.
-Input: Boolean formula F in conjunctive normal form.
-Output: Yes if F is not satisfiable (i.e., identically false), else No.
-There is no apparent way of taking advantage of the non-determinism (i.e., guessing module) for solving this problem. It seems to be nothing essentially better than just examining one by one every true/false assignment to all variables and checking whether it gives the value false to F .
-
-\subsection{Class co-NP}
-Definition
- (1) co−NP ={L: L∈NP}; (2) co−P={L: L∈P};
- Hypothesis. NP ̸= co−NP.
-This hypothesis is “stronger” than P ̸= NP since obviously P = co−P, thus if
-P = NP, then NP = co−NP.
-Theorem. Let L be an NP-complete problem such that L ∈ NP. Then NP = co−NP.
-Proof is relatively straightforward. We don’t consider it in this course.
-4. Some famous candidates for problems in NPI
-(1) Graph Isomorphism
-Input: Two graphs G = (V, E) and G′ = (V ′, E′).
-Output: Yes if there is a bijective (one-to-one) map (function), called isomorphism, f: V −→V′ suchthat(v,w)∈Eisequivalentto(f(v),f(w))∈E′;elseNo.
-The status of Graph Isomorphism is unknown. Despite many efforts no polynomial time algorithm was found. On the other hand, the problem seems to be too “rigid” to be NP-complete. Compare it with the following NP-complete problem Isomorphism to Subgraph.
-Input: Two graphs G = (V, E) and G′ = (V ′, E′).
-Output: Yes if there is a subgraph in G which is isomorphic to G′; else No.
-Isomorphism to Subgraph is NP-complete problem which is proved by polynomially transforming to it the k-clique problem (take as G′ the complete graph with k vertices).
-(2) Linear Programming
-Input : System of linear inequalities in several variables with integer coefficients. Output : Yes if the system is consistent (i.e., has a solution) in real numbers, else No.
-The status of Linear Programming was open for a long time until in late seventies a polynomial-time algorithm was discovered. Even before that it seemed quite unlikely for the problem to be NP-complete since the complement to Linear Programming is in NP (follows from so-called Duality Theorem in linear programming). If Linear Programming was NP-complete, then, by Theorem from previous section, NP = co−NP, which is probably wrong.
-
-\subsection{NP-hard problems}
-Definition. A search problem L is NP-hard if for any language L′ ∈ NP the following holds:
-L′ ∝T L. (∗∗) Theorem. A search problem L is NP-hard if and only if for at least one (thus, for any)
-NP-complete language L′ relation (∗∗) is true.
-Proof. If L is NP-hard, then for any language from NP, in particular, for any NP- complete language L′ the relation (∗∗) is true.
-Conversely, if there exists an NP-complete language L′ such that (∗∗) is true, then for any language L′′ ∈ NP we have
-L′′ ∝ L′ ∝T L,
-which, by Theorems 1 and 2 of Section 8, implies that L′′ ∝T L, thus L is NP-hard by
-the definition.
-Example. Consider a modification of Travelling Salesman problem as a search problem in which the output is the tour of the smallest length. Call this modification Optimal Travelling Salesman (OptTS), as opposed to Yes - No modification (TS) which involves a threshold.oTheorem. TS ∝T OptTS, therefore OptTS is N P -hard.
-Proof. The OTM for TS with threshold B first uses the oracle to solve the OptTS with the same set of cities and distances as the input of TS (one step of computation), then in polynomial time finds the length l of the produced optimal tour and checks whether B ≥ l. If the latter inequality is true, then the answer is Yes, else – No.
-Observe that this example does not use the relation ∝T in full force, addressing the oracle only once.
-
-\subsection{NP-Complete Problems}
+\subsection{Class NP-Complete}
 \begin{definition}
-	$\mathcal{L}$ is \textit{NP-Complete} if
-	\begin{itemize}
-		\item $\mathcal{L} \in NP$
-		\item $\forall\ \mathcal{L\prime} \in NP\ \mathcal{L\prime} \propto \mathcal{L}$
-	\end{itemize}
+    $L$ is \textit{NP-Complete} if $L \in NP$ and
+    $\forall\ L\prime \in NP\ L\prime \propto L$.
 \end{definition}
 
-What does this definition mean?
-Any two NP-complete languages are polynomially equivalent.
-Any NP-Complete problem is at least as hard as any other problem in NP.
+\textbf{What does this definition mean?}\\
+Firstly, any NP-Complete problem is at least as "hard" as any other problem in NP.
+Secondly, any two NP-complete languages are polynomially equivalent.
 
 \begin{theorem}
-	Given two languages $\mathcal{S}, \mathcal{T} \in NP$,
-	if $\mathcal{S} \in NPC$ and $\mathcal{S} \propto \mathcal{T}$ then
-	$\mathcal{T} \in NPC$.
+    Given two languages $L_1 \in NP$ and $L_2 \in NPC$,
+    if $L_2 \propto L_1$ then $L_1 \in NPC$.
 \end{theorem}
 
 This theorem is rather useful for proving that a language is NP-Complete,
-however it leaves us with the issue of proving a first language is NP-Complete.
+consider that all we have to prove of a candidate NPC language $L$ is that, firstly,
+it is in NP and, secondly, that it is polynomially transformable to a problem known to be in NPC.
+The catch, however, is proving a first language is NP-Complete.
 
 \begin{definition}
-	A boolean formula $F$ is in \textit{conjunctive normal form} if it is in the form
-	\begin{equation}
-	\begin{split}
-		F &= f_1 \land f_2 \dots \land f_n \\
-		f_i &= y_1 \lor y_2 \dots \lor y_m \\
-		y_j &= x\ |\ \neg x
-	\end{split}
-	\end{equation}
+    A boolean formula $F$ is in \textit{conjunctive normal form} if it is in the form
+    \begin{equation}
+        \begin{split}
+            F &= f_1 \land f_2 \dots \land f_n \\
+            f_i &= y_1 \lor y_2 \dots \lor y_m \\
+            y_j &= x\ |\ \neg x
+        \end{split}
+    \end{equation}
 \end{definition}
 
-The following is in conjunctive normal form:
-$$(x_1 \lor x_2) \land \neg x_3$$
-The following is not in conjunctive normal form;
-however it is in \textit{disjunctive normal form}
-$$(x_1 \lor x_2) \lor \neg x_3$$
-This is because there is the negation on the left hand side of the logical or.
+\subsection{Class co-NP}
+\textbf{Complements to languages}
+\begin{definition}
+    Let $L \subset \Sigma\ast$ be a language over an alphabet $\Sigma$.
+    The set of words $\bar{L} = \Sigma\ast \setminus L$ is called the complement to $L$.
+\end{definition}
+
+Observe that $\bar{L}$ is not necessarily a language,
+i.e. a set of words generated by a grammar (or accepted by a TM).
+However, for all languages $\in$ NP, the complement $\bar{L}$is indeed a language.
+It is not at all obvious that if $L \in NP$, then $\bar{L} \in NP$.
+
+\begin{example}
+    Consider the complement to CNF-SAT:
+    \begin{itemize}
+        \item \textbf{Input}: Boolean formula $F$ in conjunctive normal form.
+        \item \textbf{Output}: Yes iff $F$ is not satisfiable (i.e. false).
+    \end{itemize}
+    There is no apparent way of using non-determinism to solve this problem.
+    Brute force is our approach here, just examining, one by one, every true/false assignment.
+\end{example}
 
 \begin{definition}
-	Given an undirected graph $\mathcal{G}$ which is a pair of vertices and edges $(V,E)$,
-	a subset of vertices $S \subset V$ is a \textit{clique} iff
-	$$\forall\ x, y \in S\ \exists\ \textrm{an edge}\ (x,y) \in E$$
+    Let \textit{co−NP} be the set of languages $L$ such that $\bar{L} \in NP$.
 \end{definition}
-
+Similarly we also have co-P.
 \begin{definition}
-	If $S$ is a clique in $\mathcal{G}$ and $|S| = q$ then $S$ is called a \textit{$q$-clique}.
+    Let \textit{co−P} be the set of languages $L$ such that $\bar{L} \in P$.
 \end{definition}
 
-An obvious consequence of this definition is that for any edge $(x,y)$ there is a 2-clique.
+\begin{theorem}
+    P $=$ co-P, observe that if we have a TM for a language $L$
+    then simply negating our answer provides us with a TM for $\bar{L}$.
+\end{theorem}
 
+\begin{hypothesis}
+    NP $\neq$ co−NP\\
+    This hypothesis is \textit{stronger} than P $\neq$ NP
+    as it implies if P = NP, that NP = co−NP.
+\end{hypothesis}
+
+
+\subsection{Class NP-Intermediate}
+Recall that it is not known whether or not $P = NP$,
+the widely accepted hypothesis being that this equality is wrong.
+Let NP-Intermediate (NPI) be defined as $NP \setminus (NPC \cup P)$,
+i.e. the class of problems in NP but not in NPC.
+\begin{theorem}
+    If P $\neq$ NP then:
+    \begin{itemize}
+        \item NPI $\neq \varnothing$
+        \item There exist the problems $A,B \in$ NPI such that
+            neither $A \propto B$, nor $B \propto A$
+            (proof of this is nontrivial).
+            This states that under the hypothesis P $\neq$ NP
+            the set NPI is divided into more that one equivalence classes
+            with respect to polynomial transformation.
+    \end{itemize}
+\end{theorem}
+
+\textbf{Some famous candidates for problems in NPI}\\
+
+\textit{Graph Isomorphism}
+\begin{itemize}
+    \item \textbf{Input}:
+        Two graphs $\mathcal{G} = (V, E)$
+        and $\mathcal{G}\prime = (V\prime, E\prime)$.
+    \item \textbf{Output}:
+        Yes iff there is a bijective (one-to-one) map $f: V \rightarrow V\prime$
+        such that $(v,w) \in E$ is equivalent to $(f(v),f(w)) \in E\prime$.
+\end{itemize}
+The status of Graph Isomorphism is unknown.
+Despite many efforts no polynomial time algorithm was found.
+On the other hand, the problem seems to be too “rigid” to be NP-complete.
+Compare it with the following NP-complete problem.\\
+
+\textit{Isomorphism to Subgraph}:
+\begin{itemize}
+    \item \textbf{Input}:
+        Two graphs $\mathcal{G} = (V, E)$
+        and $\mathcal{G}\prime = (V\prime, E\prime)$.
+    \item \textbf{Output}:
+        Yes iff there is a subgraph in $\mathcal{G}$ which is isomorphic to $\mathcal{G}\prime$.
+\end{itemize}
+
+Isomorphism to Subgraph is an NP-complete problem
+which is proved by polynomially transforming to it to the k-clique problem
+(take as $\mathcal{G}\prime$ the complete graph with $k$ vertices).
+
+\textit{Linear Programming}
+\begin{itemize}
+    \item \textbf{Input}: System of linear inequalities in several variables with integer coefficients.
+    \item \textbf{Output}: Yes iff the system has a solution (in real numbers).
+\end{itemize}
+
+The status of Linear Programming was open for a long time
+until in late seventies a polynomial-time algorithm was discovered.
+Even before that it seemed quite unlikely for the problem to be NP-complete
+since the complement to Linear Programming is in NP
+(follows from so-called Duality Theorem in linear programming).
+If Linear Programming was NP-complete then NP = co−NP, which is probably wrong.
+
+\subsection{Class NP-Hard}
+\textbf{Search Problems}\\
+The computational problems we considered so far were Yes - No problems,
+which were associated with languages of inputs with the output Yes.
+It appears important,
+however to consider also the problems with more complicated output.
+In fact, natural modifications of our basic NP-complete problems
+require a search of an object whose existence is checked.
+For instance, a modification of the Travelling Salesman problem asks
+to produce one of the shortest tours,
+a modification of SAT requires construction of a satisfying assignment.
+Observe that these modifications
+(we shall call them search problems)
+are “harder” than the corresponding Yes - No problems
+in the sense that any algorithm for a search problem automatically solves the Yes - No version.
+The theory we had developed so far is not very well adjusted for search problems.
+Firstly, the concept of nondeterministic Turing Machine
+is formulated for Yes-No problems.
+Secondly, and most importantly,
+the definition of ∝ relation is very specific,
+formulated essentially in terms of languages.
+We will start with generalization of the concept of polynomial transformation.
+
+\textbf{Turing Transformation Informally}\\
+Let us first recall that for two languages L1 , L2 the relation L1 ∝ L2 informally means that there is an algorithm such that:
+\begin{enumerate}
+    \item for given input word x1 of the first problem the algorithm computes an input word x2 of the second problem, herewith x1 ∈ L1 if and only if x2 ∈ L2;
+    \item the algorithm uses a “subroutine” to solve the problem 2 on the input x2 and finds output y2;
+    \item y2 is also the answer for problem 1.
+\end{enumerate}
+The algorithm uses polynomial time for all its work, except the “subroutine”. Now
+we generalize this informal definition for search problems L1 and L2:
+We say that L1 is Turing transformable to L2 if there exists an algorithm which for a given input x1 of L1 computes the required output using (zero, or one, or more times) an algorithm for the problem L2 as a subroutine. The running time of the algorithm is polynomial if each call of the subroutine is counted as one elementary step.
+
+\textbf{Oracle Turing Machine}\\
+Oracle Turing Machine (OTM) differs from ordinary (deterministic) TM
+with arbitrary output in the following way.
+Apart from the usual working tape,
+OTM has an additional oracle tape equipped with the oracle read-write head
+which is attached to the control module.
+OTM works like ordinary TM,
+but can at an arbitrary moment adopt (via “asking” state) a special asking mode in which:
+\begin{enumerate}
+    \item the oracle head writes a word (which was generated during the previous normal work of the machine) on the oracle tape (oracle input);
+    \item after (1) is done,
+        the oracle head writes a word on the oracle tape (oracle output).
+        Passage from (1) to (2) is determined by a function
+        $$g: \Gamma\ast \rightarrow \Gamma\ast$$
+        where $\Gamma$ is the tape alphabet.
+\end{enumerate}
+Each application of asking mode counts as one step for complexity.
+Since OTM depends on a concrete build-in function $g$,
+the notation OTMg might be more appropriate.
+The formal definition of OTM and its complexity is straightforward.
+
+\textbf{Turing transformation: Definition}\\
 \begin{definition}
-	The \textit{$q$-clique problem} is finding if there exists a $q$-clique in a given graph
-	$\mathcal{G}$ where $q \in \mathbb{N}$.
+    Let L1,L2 be search problems,
+    herewith L2 is a problem of computing
+    a function g of the form (∗).
+    We say that L1 is Turing transformable to L2
+    (notation: L1 ∝T L2)
+    if there exists OTMg for solving L1
+    using as oracle the function g and having polynomial complexity.
 \end{definition}
 
+\begin{theorem}
+    For any two Yes - No problems (languages L1 , L2 ), if L1 ∝ L2 , then L1 ∝T L2.
+\begin{theorem}
+
+Trivial, since as we had seen before, ∝ is a particular case of ∝T .
+It is not known whether the statement inverse to Theorem 1 is true or not for languages.
+
+\begin{theorem}
+    The relation ∝T is transitive.
+    Proof is straightforward.
+\end{theorem}
+
+\textbf{Definition of NP-Hard}\\
+\begin{definition}
+    A search problem L is NP-hard if for any language L′ ∈ NP the following holds: L′ ∝T L. (∗∗)
+\end{definition}
+\begin{theorem}
+    A search problem L is NP-hard if and only if for at least one (thus, for any)
+    NP-complete language L′ relation (∗∗) is true.
+\end{theorem}
+\begin{proof}
+    If L is NP-hard, then for any language from NP, in particular, for any NP- complete language L′ the relation (∗∗) is true.
+    Conversely, if there exists an NP-complete language L′ such that (∗∗) is true, then for any language L′′ ∈ NP we have
+    L′′ ∝ L′ ∝T L,
+    which, by Theorems 1 and 2 of Section 8, implies that L′′ ∝T L, thus L is NP-hard by
+    the definition.
+\end{proof}
+\begin{example}
+    Consider a modification of Travelling Salesman problem as a search problem in which the output is the tour of the smallest length. Call this modification Optimal Travelling Salesman (OptTS), as opposed to Yes - No modification (TS) which involves a threshold.o
+\end{example}
+
+\end{theorem}
+    TS ∝T OptTS, therefore OptTS is N P -hard.
+\end{theorem}
+
+\begin{proof}
+    The OTM for TS with threshold B first uses the oracle to solve the OptTS with the same set of cities and distances as the input of TS (one step of computation), then in polynomial time finds the length l of the produced optimal tour and checks whether B ≥ l. If the latter inequality is true, then the answer is Yes, else – No.
+Observe that this example does not use the relation ∝T in full force, addressing the oracle only once.
+\end{proof}
