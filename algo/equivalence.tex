@@ -1,11 +1,11 @@
 \section{Polynomial Transformations and Equivalence}
-\subsection{Polynomial Transformations}
+\textbf{Polynomial Transformations}
 \begin{definition}
-	Consider two languages $\mathcal{L_1} \subset A_1$ and $\mathcal{L_2} \subset A_2$,
-	$\mathcal{L_1}$ is said to be \textit{polynomially transformable} to $\mathcal{L_2}$ if
-	$$\exists\ f : A_1 \rightarrow A_2$$
-	such that $f$ can be computed with polynomially complexity and $f$ preserves the language. I.e.
-	$$\forall\ x \in A_1\ x \in \mathcal{L_1}\ \mathrm{iff}\ f(x)\in \mathcal{L_2}$$
+    Consider two languages $\mathcal{L_1} \subset A_1$ and $\mathcal{L_2} \subset A_2$,
+    $\mathcal{L_1}$ is said to be \textit{polynomially transformable} to $\mathcal{L_2}$ if
+    $$\exists\ f : A_1 \rightarrow A_2$$
+    such that $f$ can be computed with polynomially complexity and $f$ preserves the language. I.e.
+    $$\forall\ x \in A_1\ x \in \mathcal{L_1}\ \mathrm{iff}\ f(x)\in \mathcal{L_2}$$
 \end{definition}
 
 Practically $\mathcal{L_1} \propto \mathcal{L_2}$ means that
@@ -18,11 +18,11 @@ $$
   \mathcal{L_1} \propto \mathcal{L_3}
 $$
 
-\subsection{Polynomial Equivalence}
+\textbf{Polynomial Equivalence}
 \begin{definition}
-	If we have two languages such $\mathcal{L_1} \propto \mathcal{L_2}$ and
-	$\mathcal{L_2} \propto \mathcal{L_1}$, then they are said to be \textit{polynomially equivalent}.
-	Thus we have $\mathcal{L_1} \approx \mathcal{L_2}$.
+    If we have two languages such $\mathcal{L_1} \propto \mathcal{L_2}$ and
+    $\mathcal{L_2} \propto \mathcal{L_1}$, then they are said to be \textit{polynomially equivalent}.
+    Thus we have $\mathcal{L_1} \approx \mathcal{L_2}$.
 \end{definition}
 This is an equivalence as such it is reflexive, symmetric, and transitive;
 as such $\forall\ R,\ S,\ T$:
@@ -30,10 +30,10 @@ as such $\forall\ R,\ S,\ T$:
     \item $R \approx R$
     \item if $R \approx S$ then $S \approx R$.
     \item $
-		R \approx S,\ 
-		S \approx T \Rightarrow
-		R \approx T
-	$
+        R \approx S,\ 
+        S \approx T \Rightarrow
+        R \approx T
+        $
 \end{itemize}
 
 %%TODO

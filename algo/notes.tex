@@ -28,7 +28,7 @@
 \section{Two problems}
 Firstly we shall look at two problems which belong to the complexity class NP.
 
-\subsection{Traveling Sales Person}
+\textbf{Traveling Sales Person}\\
 Consider a finite set $N$ of cities; $\{1, 2 \dots n\}$. The distance, or cost,
 of traveling between cities $i$ and $j$ is given by $D(i,j)$ where $D$
 is a symmetric matrix.
@@ -42,7 +42,7 @@ cost is minimised.
 The brute force solution is to consider all paths, doing this would require
 considering $!n$ paths.
 
-\subsection{Boolean Formula Satisfiability}
+\textbf{Boolean Formula Satisfiability}\\
 A boolean formula consists of the logical binary operators $(\land, \lor, \neg)$
 and a finite set of variables $X$ where each variable can be either true or false.
 The problem consists of deciding if there exists a set of values for the variables $X$
@@ -64,74 +64,16 @@ tractable for large values of $n$.
 \include{big_o}
 
 \pagebreak
-\include{class_p}
-
-\pagebreak
-\include{class_np}
-
-\pagebreak
 \include{equivalence}
 
 \pagebreak
-\section{NP-Complete problems}
-\begin{definition}
-	$\mathcal{L}$ is \textit{NP-Complete} if
-	\begin{itemize}
-		\item $\mathcal{L} \in NP$
-		\item $\forall\ \mathcal{L\prime} \in NP\ \mathcal{L\prime} \propto \mathcal{L}$
-	\end{itemize}
-\end{definition}
-
-What does this definition mean?
-Any two NP-complete languages are polynomially equivalent.
-Any NP-Complete problem is at least as hard as any other problem in NP.
-
-\begin{theorem}
-	Given two languages $\mathcal{S}, \mathcal{T} \in NP$,
-	if $\mathcal{S} \in NPC$ and $\mathcal{S} \propto \mathcal{T}$ then
-	$\mathcal{T} \in NPC$.
-\end{theorem}
-
-This theorem is rather useful for proving that a language is NP-Complete,
-however it leaves us with the issue of proving a first language is NP-Complete.
-
-\begin{definition}
-	A boolean formula $F$ is in \textit{conjunctive normal form} if it is in the form
-	\begin{equation}
-	\begin{split}
-		F &= f_1 \land f_2 \dots \land f_n \\
-		f_i &= y_1 \lor y_2 \dots \lor y_m \\
-		y_j &= x\ |\ \neg x
-	\end{split}
-	\end{equation}
-\end{definition}
-
-The following is in conjunctive normal form:
-$$(x_1 \lor x_2) \land \neg x_3$$
-The following is not in conjunctive normal form;
-however it is in \textit{disjunctive normal form}
-$$(x_1 \lor x_2) \lor \neg x_3$$
-This is because there is the negation on the left hand side of the logical or.
-
-\begin{definition}
-	Given an undirected graph $\mathcal{G}$ which is a pair of vertices and edges $(V,E)$,
-	a subset of vertices $S \subset V$ is a \textit{clique} iff
-	$$\forall\ x, y \in S\ \exists\ \textrm{an edge}\ (x,y) \in E$$
-\end{definition}
-
-\begin{definition}
-	If $S$ is a clique in $\mathcal{G}$ and $|S| = q$ then $S$ is called a \textit{$q$-clique}.
-\end{definition}
-
-An obvious consequence of this definition is that for any edge $(x,y)$ there is a 2-clique.
-
-\begin{definition}
-	The \textit{$q$-clique problem} is finding if there exists a $q$-clique in a given graph
-	$\mathcal{G}$ where $q \in \mathbb{N}$.
-\end{definition}
+\include{class_p_np}
 
 \pagebreak
 \include{cooks}
+
+\pagebreak
+\include{knapsack}
 
 \pagebreak
 \include{approx}
