@@ -130,3 +130,22 @@ However in non palindrome cases, say $aaa \dots ab$, then $T(n)$ is very small.
     \end{equation}
     If such $x$ does not exist let $T(n) = 1$.
 \end{definition}
+
+\subsection{$O, \Omega, \Theta$ Notation}
+\begin{definition}
+    Given a computation $T(x)$ where $|x| = n$,
+    constants $c > 0$ and $n_0 > 0$,
+    and functions $f_1, f_2, f_3$ defined on $n$,
+    we have
+    \begin{itemize}
+        \item $O(f_1(n))$ where $\forall\ |x| \geq n_0$ we have $f_1(n) \leq c\,T(x)$
+        \item $O(f_1(n))$ describes the upper bound for $T(x)$.
+        \item $\Omega(f_2(n))$ where $\forall\ |x| \geq n_0$ we have $f_2(n) \geq c\,T(x)$
+        \item $\Omega(f_2(n))$ describes the lower bound for $T(x)$.
+        \item $\Theta(f_3(n))$ where we have both $O(f_3(n))$ and $\Omega(f_3(n))$,
+            or relying on the fact that $O(g(n))$ and $\Omega(g(n))$ are sets of functions, we can define
+            $$\Theta(g(n)) \equiv O(g(n)) \cap \Omega(g(n))$$
+        \item $\Theta(f_3(n))$ describes the exact bound of for $T(x)$.
+
+    \end{itemize}
+\end{definition}
