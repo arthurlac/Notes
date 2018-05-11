@@ -2,7 +2,7 @@
 \subsection{Deterministic Turing Machines}
 %TODO
 What do Turing machines do? Why are we looking at them?
-Conceptually a turing machine is a \textit{tape} which is infinite in both directions,
+Conceptually a Turing machine is a \textit{tape} which is infinite in both directions,
 the input is writen on this tape with the rest of the tape being blank. We have a head
 which can read and write to the tape. The machine moves across the tape acording to
 a transition function until it reaches a terminal state which produces a yes or no result.
@@ -53,11 +53,11 @@ a transition function until it reaches a terminal state which produces a yes or 
 
 \textbf{Even or odd}
 \begin{example}
-    In this example we will present a turing machine to decide if a number is even.
+    In this example we will present a Turing machine to decide if a number is even.
     \begin{itemize}
         \item Input: a number $x \in \mathbb{Z}$ in unary form; i.e. $\{1 = X, 2 = XX\dots\}$,
             thus $\Sigma = \{X\}$.
-        \item Output: yes iff $x$ is even, otherwise no. I.e. the turing machine will finish
+        \item Output: yes iff $x$ is even, otherwise no. I.e. the Turing machine will finish
             in state $q_y$ iff $x$ is even.
         \item Transition function $\delta$ is described as a matrix below with the states
             $Q\prime = \{q_0,q_1\}$ and $\Sigma = \{X,\beta\}$,
