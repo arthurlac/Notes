@@ -303,16 +303,16 @@ the notation OTMg might be more appropriate.\\
 
 Consider a modification of the Travelling Salesman problem
 which is to find the minimal tour.
-Call this modification Optimal Travelling Salesman $(OptTS)$,
+Call this modification Optimal Travelling Salesman $(Opt\,TS)$,
 as opposed to Yes-No $(TS)$ which involves a threshold $B$.
 
 \begin{theorem}
-    $TS \propto_T OptTS$, therefore $OptTS$ is NP-hard.
+    $TS \propto_T Opt\,TS$, therefore $Opt\,TS$ is NP-hard.
 \end{theorem}
 
 \begin{proof}
     The OTM for $TS$ with threshold $B$ first uses the oracle
-    to solve the $OptTS$ with the same set of cities and distances as the input of TS
+    to solve the $Opt\,TS$ with the same set of cities and distances as the input of TS
     (one step of computation),
     then in polynomial time finds the length $l$ of the produced optimal tour
     and checks whether $B \geq l$.

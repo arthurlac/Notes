@@ -7,9 +7,9 @@ data of a relatively small size, so that even an exponential-time algorithm is a
 Finally, we can try to solve the problem approximately;
 i.e. solve the problem as close to optimally as possible but accept some degree of error
 or incorrectness.
-This last approach is suitable for optimization search problems.
+This last approach is suitable for optimization search problems.\\
 
-Examples of optimization search problems.
+\textbf{Examples of optimization search problems}
 \begin{itemize}
     \item Travelling Salesperson (find the smallest tour)
     \item Find the largest clique in a graph
@@ -29,7 +29,7 @@ We will assume that the objective function is always positive.
 Let $C$ denote the value of the objective function at our approximate solution,
 and $C\prime$ at an optimal solution.
 
-\subsubsection{Ratio Bound}
+\textbf{Ratio Bound}\\
 \begin{definition}
     An approximation algorithm has \textit{ratio bound $\rho(n)$}
     if for any input of the size $n$ the value $C$ of the objective function
@@ -52,7 +52,7 @@ By definition a large ratio bound (might) means that the approximate
 solution is much worse than an optimal one.
 This is an issue of trading speed for correctness.
 
-\subsubsection{Relative Error Bound}
+\textbf{Relative Error Bound}\\
 \begin{definition}
     For $C, C\prime$ and $n$  the \textit{relative error bound $\epsilon(n)$} is defined as
     $$\frac{abs(C - C\prime)}{C\prime} \leq \epsilon(n)$$
@@ -61,8 +61,7 @@ This is an issue of trading speed for correctness.
 Observe that $\rho(n) - 1 \leq abs(C\prime - C)/C\prime$,
 i.e., $\rho(n) - 1$ is a relative error bound.
 
-\subsection{Approximation algorithm for Vertex Covering}
-\subsubsection{Vertex Covering Problem}
+\textbf{Approximation algorithm for Vertex Covering}\\
 Recall that the vertex covering problem is defined as such
 \begin{itemize}
     \item \textbf{Input}:
@@ -74,7 +73,7 @@ Recall that the vertex covering problem is defined as such
         and the fewest possible vertices are in $S$.
 \end{itemize}
 
-\subsubsection{Algorithm}
+\textbf{Algorithm}\\
 \begin{enumerate}
     \item Let $S$ be $\varnothing$
     \item Let $E\prime$ be the set of edges $E$
@@ -91,7 +90,7 @@ Recall that the vertex covering problem is defined as such
 
 \end{enumerate}
 
-\subsubsection{Properties of the Algorithm}
+\textbf{Properties of the Algorithm}\\
 \begin{enumerate}
     \item The algorithm is correct
     \item The algorithm has polynomial complexity
@@ -114,8 +113,7 @@ Recall that the vertex covering problem is defined as such
         $$\frac{S}{|S\prime|} \leq 2$$
 \end{enumerate}
 
-\subsection{Approximation algorithm for Travelling Salesperson with triangle inequality}
-\subsubsection{$\Delta$Travelling Salesperson Problem}
+\textbf{Approximation algorithm for Travelling Salesperson with triangle inequality}\\
 The problem is formulated as such
 \begin{itemize}
     \item \textbf{Input}:
@@ -127,7 +125,7 @@ The problem is formulated as such
         A tour such that every 
 \end{itemize}
 
-\subsubsection{Algorithm for $\Delta$Traveling Salesperson}
+\textbf{Algorithm for $\Delta$Traveling Salesperson}\\
 Given a connected graph $\mathcal{G}\ (V,E)$,
 \begin{enumerate}
     \item

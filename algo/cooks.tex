@@ -1,34 +1,52 @@
 \section{Cook’s Theorem}
+we will prove that CNF-satisfiability problem is NP-complete.
 
-\subsection{Formulation}
+\textbf{The Idea of the proof}\\
+We will use the fact that a Boolean formula has two different faces. Firstly, a formula is a formal object, combination of symbols, constructed from the letters of a certain alphabet using certain rules. Secondly, a formula is a sentence, i.e., a meaningful statement, if the variables are sentences.
+We are going to present an arbitrary problem from the class NP by the Nondeter- ministic Turing Machine M which solves this problem in polynomial time. To prove the theorem we need to produce a function f from the definition of the polynomial transfor- mation. An argument x for this function will be an input of M, while the value f(x) will be a Boolean formula F expressing the statement that M accepts x. If M does accept x, then F = f(x) is satisfiable, else F is not satisfiable.
+
+\textbf{Formulation}\\
 \begin{theorem}
     Boolean Satisfiability problem is NP-complete.
 \end{theorem}
 Actually we will prove that CNF-satisfiability problem is NP-complete.
 
-\subsection{Proof}
-\subsection{Formulation}
+\textbf{Proof}\\
+%Fix a Yes – No problem (language) L ∈ NP. By the definition of the class NP, there is a Nondeterministic Turing Machine M for solving L in polynomial time. The machine M completely determines L, and, in this sense, is identical to L.
+%As any NTM, the machine M has
+%Γ = {s0 = b,s1,s2,...,sv}, the tape alphabet;
+%Q = {q0,q1 = qY ,q2 = qN,q3,...,qr}, the set of states; δ, the transition function such that
+%δ(qk,sl) = (qk′,sl′,∆),
+%where ∆ ∈ {−1, 0, 1} is playing the role of T ∈ {L, S, R} in our previous version of NTM.
+%Let p(n) be a polynomial with integer coefficients such that the complexity TM (n) of M satisfies the inequality
+%TM (n) < p(n)
+%for all n >= 1
+%The formula F = f(x) that we are building containes the following variables. In what
+%follows, a comment that follows the introduction of a group of variables explaines their
+%interpretation in F; the words “At the moment i...” mean “After execution of the step number i of verification stage . . .
+%Q[i,k], 0≤i≤p(n),0≤k≤r.AtthemomentithemachineMisinthestateqk. H[i,j], 0 ≤ i ≤ p(n), −p(n) ≤ j ≤ p(n)+1. At the moment i the working head observes
+%the cell j.
+%S[i,j,k], 0≤i≤p(n),−p(n)≤j≤p(n)+1,0≤k≤v. Atthemomentithecellj
+%containes the letter sk.
+%Observe that any computation with input x induces on the set of variables a certain
+%truth assignment assuming that:
+%(1) after the termination the truth values of variables do not change;
+%(2) At the moment 0 on the tape of M the input word x is written in the the cells from
+%1 to n, while the guess-word w is written (from right to left) in celles from −1 to −|w|.
+%Note that an arbitrary assignment of truth values to variables not necessarily corre- sponds to a computation. For instance, assignment
+%Q[i, 1] − true; Q[i, 2] − true
+%means that at the moment i the machine M is simultaneously in the state q1 and in the state q2, which can’t be in any computation.
+%We are going to construct a formula F in a conjunctive normal form such that the truth assignment to variables makes F true if and only if this assignment is induced by a certain accepting computation which uses not more than p(n) steps for verification.
+%
+%Formula F, being in CNF, is a conjunction of disjunctions of literals. We distinguish six groups G1 , . . . , G6 of disjunctions, here are their interpretations:
+%G1: At any moment i the machine M is in the exactly one state.
+%G2: At any moment i the working head observes the exactly one cell.
+%G3: At any moment i every cell containes the exactly one letter from Γ.
+%G4: At the moment 0 the computation is in the initial configuration of the verification
+%stage with input x.
+%G5: Not later than after p(n) steps the machine M adopts the state qY .
+%G6: For any moment i, the configuration of M at the moment i + 1 is obtained from the
+%%configuration at the moment i by a single application of the transition function δ.
+%It is clear that the disjunctions in groups G1, . . . , G6 are simultaneously true if and
+%only if M accepts the input x. We now formally describe each group. To understand why
 
-The following is in conjunctive normal form:
-$$(x_1 \lor x_2) \land \neg x_3$$
-The following is not in conjunctive normal form;
-however it is in \textit{disjunctive normal form}
-$$(x_1 \lor x_2) \lor \neg x_3$$
-This is because there is the negation on the left hand side of the logical or.
-
-\begin{definition}
-    Given an undirected graph $\mathcal{G}$ which is a pair of vertices and edges $(V,E)$,
-    a subset of vertices $S \subset V$ is a \textit{clique} iff
-    $$\forall\ x, y \in S\ \exists\ \textrm{an edge}\ (x,y) \in E$$
-\end{definition}
-
-\begin{definition}
-    If $S$ is a clique in $\mathcal{G}$ and $|S| = q$ then $S$ is called a \textit{$q$-clique}.
-\end{definition}
-
-An obvious consequence of this definition is that for any edge $(x,y)$ there is a 2-clique.
-
-\begin{definition}
-    The \textit{$q$-clique problem} is finding if there exists a $q$-clique in a given graph
-    $\mathcal{G}$ where $q \in \mathbb{N}$.
-\end{definition}

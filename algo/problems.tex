@@ -55,3 +55,33 @@ tractable for large values of $n$.
     \item \textbf{Input}: Real numbers $x_1,\dots x_n$
     \item \textbf{Output}: Yes iff there exists a subset of $x_i$ which sum to 1.
 \end{itemize}
+
+The following is in conjunctive normal form:
+$$(x_1 \lor x_2) \land \neg x_3$$
+The following is not in conjunctive normal form;
+however it is in \textit{disjunctive normal form}
+$$(x_1 \lor x_2) \lor \neg x_3$$
+This is because there is the negation on the left hand side of the logical or.
+
+\begin{definition}
+    Given an undirected graph $\mathcal{G}$ which is a pair of vertices and edges $(V,E)$,
+    a subset of vertices $S \subset V$ is a \textit{clique} iff
+    $$\forall\ x, y \in S\ \exists\ \textrm{an edge}\ (x,y) \in E$$
+\end{definition}
+
+\begin{definition}
+    If $S$ is a clique in $\mathcal{G}$ and $|S| = q$ then $S$ is called a \textit{$q$-clique}.
+\end{definition}
+
+An obvious consequence of this definition is that for any edge $(x,y)$ there is a 2-clique.
+
+\begin{definition}
+    The \textit{$q$-clique problem} is finding if there exists a $q$-clique in a given graph
+    $\mathcal{G}$ where $q \in \mathbb{N}$.
+\end{definition}
+
+\textbf{Distinctness problem: upper bound}\\
+\begin{itemize}
+    \item \textbf{Input}: $(x_0, x_1,\dots x_n) \in \mathbb{R}^n$
+    \item \textbf{Output}: Yes iff $\forall\ i,j$ where $0 \leq i,j \leq n, i \neq j$ we have $x_i \neq x_j$
+\end{itemize}
