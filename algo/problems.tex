@@ -55,6 +55,20 @@ tractable for large values of $n$.
     \item \textbf{Input}: Real numbers $x_1,\dots x_n$
     \item \textbf{Output}: Yes iff there exists a subset of $x_i$ which sum to 1.
 \end{itemize}
+Consider the union $\Sigma$ of all $2n − 1$ hyperplanes
+in $\mathbb{R}^n$ defined by equations $x_{i_1} + \dots + x_{i_m} = 1$.
+The Knapsack problem is the problem of testing membership in $\Sigma$.
+This is a connected algebraic set.
+It can be proved (not easy) that
+the number of all connected components in $\mathbb{R}^n \ \Sigma$
+(complement to $\Sigma$) is at least $2^{\binom{n}{2}}$,
+where $\binom{n}{2}$ is the binomial coefficient.
+Observe that $\log (2^{\binom{n}{2}}) \geq cn^2$ for a suitable constant $c$.
+Then Ben-Or’s theorem implies that the height of any algebraic computation tree testing membership in complement to $\Sigma$,
+and hence to $\Sigma$, is not less than $cn^2$.
+Note that there is an algebraic computation tree testing membership to $\Sigma$ having the height $O(n^5)$.
+So there is a gap between the known upper $O(n^5)$ and lower $(cn^2)$ complexity bounds.
+An interesting unsolved problem is to either reduce this upper bound or to increase this lower bound.
 
 The following is in conjunctive normal form:
 $$(x_1 \lor x_2) \land \neg x_3$$
@@ -80,8 +94,11 @@ An obvious consequence of this definition is that for any edge $(x,y)$ there is 
     $\mathcal{G}$ where $q \in \mathbb{N}$.
 \end{definition}
 
-\textbf{Distinctness problem: upper bound}\\
+\textbf{Distinctness Problem}
 \begin{itemize}
     \item \textbf{Input}: $(x_0, x_1,\dots x_n) \in \mathbb{R}^n$
     \item \textbf{Output}: Yes iff $\forall\ i,j$ where $0 \leq i,j \leq n, i \neq j$ we have $x_i \neq x_j$
+    \item $\Omega(n\log n)$
 \end{itemize}
+
+\textbf{NP-completeness of k-Clique and k-Vertex Covering}

@@ -145,30 +145,39 @@ We can now propose three properties of this algorithm:
 \begin{proof}
     Let $L*$ denote an optimal tour,
     $d(L)$ be the length of $L$,
-    $d(L*)$ be the length of $L*$.
+    $d(L*)$ be the length of $L*$.\\
+
     Observe that a spanning tree for $\G$ can be obtained by deleting any edge from any tour.
     Thus, for a minimal spanning tree $T$,
     with sum of weights on all edges $d(T)$,
     the following inequality holds
     $$d(T) \leq d(L*)$$
-    Let W be a Full Walk of $T$,
+    Let $W$ be a Full Walk of $T$,
     and $d(W)$ be its length.
     Since $W$ visits every edge of $T$ exactly twice,
-    $$d(W ) = 2d(T )$$
-    It follows that
-    $$d(W) \leq 2d(L*)$$
-    By the triangle inequality,
-    Preorder Walk L is not longer than $W$:
-    $$d(L) \leq d(W)$$
-    As a result, we have:
     \begin{align*}
+        d(W) &= 2d(T) \\
+        d(W) &\leq 2d(L*)
+    \end{align*}
+    By the triangle inequality,
+    Preorder Walk $L$ is not longer than $W$:
+    \begin{align*}
+        d(L) &\leq d(W) \leq 2d(L*)\\
         d(L) &\leq 2d(L*)\\
-        d(L) &\leq 2d(L*), d(L)/d(L*) wu 2 \\
-        \rho(n) &= 2
+           2 &\geq d(L)/d(L*) \\
+           2 &\geq C/C* \\
+           2 &= \rho(n)
     \end{align*}
 \end{proof}
 
-\textbf{No Ratio Bound for Traveling Salesperson}\\
+\textbf{No Ratio Bound for Traveling Salesperson}
+\begin{definition}
+    A \textit{Hamiltonian path} is a path in a graph that visits each vertex exactly once.
+    A \textit{Hamiltonian cycle} is a Hamiltonian path where the last vertex is adjacent to the first vertex.
+    Determining whether such paths and cycles exist in graphs is the Hamiltonian path problem,
+    which is NP-complete.
+\end{definition}
+
 \begin{theorem}
     If P $\neq$ NP then there is no
     approximation algorithm for general Travelling Salesman with polynomial complexity
@@ -176,13 +185,30 @@ We can now propose three properties of this algorithm:
 \end{theorem}
 
 \begin{proof}
-%We show how to solve Hamiltonian Cycle (HC) problem in polynomial time using a hypothetical approximation algorithm, with polynomial complexity and constant ratio bound ρ, for general Travelling Salesman (TS), as a subroutine.
-%Let G = (V, E) be an input of HC. Construct an input of TS with the set of cities V and the distance function:
-%d(u, v) = 1 if (u, v) ∈ E
-%d(u, v) = ρ|V | + 1 if (u, v) ∈/ E.
-%Clearly, this input of TS can be constructed from G in polynomial time.
-%If G contains a hamiltonian cycle, then its length will be |V |. If G does not contain a hamiltonian cycle, then there is a pair (u,v) of subsequent cities in any tour such that (u, v) ∈/ E, thus the size of any tour will be at least
-%(ρ|V | + 1) + (|V | − 1) = (ρ + 1)|V | > ρ|V |.
-%Thus, we can decide whether G contains a hamiltonian cycle by approximately solving the instance of TS. If the size of the solution tour is ≤ ρ|V |, then G contains a hamiltonian cycle, else G has no hamiltonian cycles.
+    We show how to solve Hamiltonian Cycle ($HC$) problem
+    in polynomial time using a hypothetical approximation algorithm,
+    with polynomial complexity and constant ratio bound $\rho$,
+    for general Travelling Salesman ($TS$), as a subroutine.\\
+
+    Let $\G = (V, E)$, and be an input of $HC$.
+    Construct an input of $TS$ with the set of cities $V$ and the distance function:
+    $$ d(u,v)= \begin{cases}
+                      1 & \text{if } (u, v) \in E \\
+            \rho|V| + 1 & \text{if } (u, v) \not\in E
+    \end{cases}
+    $$
+    Clearly, this input of $TS$ can be constructed from $\G$ in polynomial time.
+    If $\G$ contains a hamiltonian cycle,
+    then its length will be $|V|$.
+    If $\G$ does not contain a hamiltonian cycle,
+    then there is a pair $(u,v)$ of subsequent cities in any tour such that
+    $(u, v) \not\in E$,
+    thus the size of any tour will be at least
+    $$(\rho|V| + 1) + (|V| − 1) = (\rho + 1)|V| > \rho|V|$$
+    Thus, we can decide whether $\G$ contains a hamiltonian cycle
+    by approximately solving the instance of $TS$.
+    If the size of the solution tour is $\leq \rho|V|$,
+    then $\G$ contains a hamiltonian cycle,
+    else $\G$ has no hamiltonian cycles.
 \end{proof}
 
