@@ -1,6 +1,6 @@
 \section{Approximate Algorithms}
-Many problems in NP-hard are problems for which we need a polynomial algorithm;
-thus we are left with few, but not none, options.
+Many important practical problems are in NP-hard,
+we need a tractable solution for them.
 It may be the case that we can find an algorithm for our relevant cases.
 Alternatively we may need to solve the problem for the input
 data of a relatively small size, so that even an exponential-time algorithm is acceptable.
@@ -18,25 +18,24 @@ This last approach is suitable for optimization search problems.\\
 
 \subsection{Ratio bound and relative error}
 For approximation algorithms we need an \textit{objective function}
-which will allow us to measure the difference of the approximate and optimal algorithms.
+which will allow us to measure the difference of the approximate and optimal algorithms.\\
+
 For example in the traveling sales person problem,
 the objective function is the length of the tour produced by the algorithm.
-We want to determine how "close" our approximate algorithm is to the
-optimal one.  We define "closeness" as \textit{ratio bound and relative error bound}.
-
+We want to determine how "close" our approximate algorithm is to the optimal one.
 We will assume that the objective function is always positive.
 
-Let $C$ denote the value of the objective function at our approximate solution,
-and $C\prime$ at an optimal solution.
-
-\textbf{Ratio Bound}\\
 \begin{definition}
-    An approximation algorithm has \textit{ratio bound $\rho(n)$}
+    Let $C$ denote the value of the objective function at our approximate solution,
+    and $C\prime$ at an optimal solution.
+\end{definition}
+
+\textbf{Ratio Bound}
+\begin{definition}
+    An approximation algorithm has \textit{ratio bound} $\rho(n)$
     if for any input of the size $n$ the value $C$ of the objective function
     at the approximate solution satisfies the inequality
-    $$
-    max(C/C\prime, C\prime/C) \leq \rho(n)
-    $$
+    $$max(C/C\prime, C\prime/C) \leq \rho(n)$$
 \end{definition}
 
 Observe that
@@ -46,20 +45,18 @@ $$ max(C/C\prime, C\prime/C) = C\prime/C $$
 and for minimization problems
 $$ max(C/C\prime, C\prime/C) = C/C\prime $$
 
-Firstly observe that $\rho(n) \geq 1$,
+Observe that $\rho(n) \geq 1$,
 and secondly that when $\rho(n) = 1$ we have an optimal solution.
-By definition a large ratio bound (might) means that the approximate
+By definition a large  ratio bound (might) means that the approximate
 solution is much worse than an optimal one.
-This is an issue of trading speed for correctness.
+Usually $\rho(n)$ is a constant,
+i.e. the ratio bound does not grow with the size of the input.\\
 
-\textbf{Relative Error Bound}\\
+\textbf{Relative Error Bound}
 \begin{definition}
     For $C, C\prime$ and $n$  the \textit{relative error bound $\epsilon(n)$} is defined as
     $$\frac{abs(C - C\prime)}{C\prime} \leq \epsilon(n)$$
 \end{definition}
-
-Observe that $\rho(n) - 1 \leq abs(C\prime - C)/C\prime$,
-i.e., $\rho(n) - 1$ is a relative error bound.
 
 \textbf{Approximation algorithm for Vertex Covering}\\
 Recall that the vertex covering problem is defined as such
@@ -73,7 +70,7 @@ Recall that the vertex covering problem is defined as such
         and the fewest possible vertices are in $S$.
 \end{itemize}
 
-\textbf{Algorithm}\\
+\textbf{Algorithm}
 \begin{enumerate}
     \item Let $S$ be $\varnothing$
     \item Let $E\prime$ be the set of edges $E$
@@ -84,46 +81,48 @@ Recall that the vertex covering problem is defined as such
             \item
                 Let $S$ be $S \cup \{v,w\}$
             \item
-                Let $E\prime$ be $E\prime \setminus (v,w)$
+                Remove from $E\prime$ every edge having either $v$ or $w$ as a vertex
         \end{enumerate}
     \item Return the set $S$ as the vertex covering
 
 \end{enumerate}
 
-\textbf{Properties of the Algorithm}\\
+\textbf{Properties of the Algorithm}
 \begin{enumerate}
     \item The algorithm is correct
     \item The algorithm has polynomial complexity
     \item The algorithm $\rho(n) = 2$
 \end{enumerate}
 \textbf{Proof}
-\begin{enumerate}
-    \item
-        The correctness is trivial
-        as the algorithm simply loops until each edge has been covered.
-    \item
-        Polynomial time complexity is also trivial for same reason.
-    \item
-        Let $A$ denote the set of all edges that are chosen during the execution of the item (3) of the algorithm.
-        No two edges of A have a common vertex, since once the edge (v, w) is chosen, all edges having either v or w as vertices are deleted.
-        Thus, each execution of (3) adds exactly two new vertices to S and |S| = 2|A|.
-        Any covering, in particular optimal $S\prime$, must cover every edge in $A$, thus any covering has at least $|A|$ vertices.
-        So because we have $S\prime \supset A$ we also have
-        $$|S\prime| \geq |A| = \frac{|S|}{2}$$
-        $$\frac{S}{|S\prime|} \leq 2$$
-\end{enumerate}
+\begin{proof}
+    Let $A$ denote the set of all edges that are chosen by the algorithm.
+    No two edges of $A$ have a common vertex,
+    since once the edge $(v, w)$ is chosen,
+    all edges having either $v$ or $w$ as vertices are deleted.
+    Thus, each new execution adds exactly two new vertices to $S$, thus $|S| = 2|A|$.
+    The optimal covering $S\prime$, by definition, must cover every edge in $A$.
+    Hence
+    \begin{align*}
+           S\prime &\supset A \\
+         |S\prime| &\geq |A|\\
+         |S\prime| &\geq |S|/2\\
+        2|S\prime| &\geq |S|\\
+                 2 &\leq |S|/|S\prime|\\
+                   &\leq C/C\prime \\
+           \rho(n) &= 2
+    \end{align*}
+\end{proof}
 
 \textbf{Approximation algorithm for Travelling Salesperson with triangle inequality}\\
-The problem is formulated as such
 \begin{itemize}
     \item \textbf{Input}:
-        A matrix $d_{ij}$ such that $\forall\ i,j\, d(i,j) > 0$
-        $$
-        i,j,k d(i,j) \leq d(i,k) + d(k,j)
-        $$
+        A matrix $d_{ij}$ such that $\forall\ i,j\, d(i,j) > 0$ and $\forall\ i,j,k$
+        $$d(i,j) \leq d(i,k) + d(k,j)$$
     \item \textbf{Output}:
-        A tour such that every 
+        A permutation $i_1, i_2,\dots i_m$ (called “tour”) of such that the following sum is minimised.
+        $$\sum_{1\leq x < m} d(x,x+1)$$
 \end{itemize}
+Travelling Salesman with triangle inequality is NP-hard.\\
 
 \textbf{Algorithm for $\Delta$Traveling Salesperson}\\
 Given a connected graph $\mathcal{G}\ (V,E)$,
@@ -136,19 +135,54 @@ Given a connected graph $\mathcal{G}\ (V,E)$,
         Perform a pre-order walk on the tree $T$ returning the list of nodes as a tour.
 \end{enumerate}
 
-We can now propose three properties of this algorithm
+We can now propose three properties of this algorithm:
 \begin{enumerate}
     \item It is correct
     \item It has polynomial complexity
     \item It has a ratio bound $\rho(n) = 2$
 \end{enumerate}
-\textbf{Proof}
-\begin{enumerate}
-    \item
-        The correctness is trivial
-    \item
-        Proof of polynomial complexity is trivial.
-    \item
-        The ratio bound
-\end{enumerate}
+
+\begin{proof}
+    Let $L*$ denote an optimal tour,
+    $d(L)$ be the length of $L$,
+    $d(L*)$ be the length of $L*$.
+    Observe that a spanning tree for $\G$ can be obtained by deleting any edge from any tour.
+    Thus, for a minimal spanning tree $T$,
+    with sum of weights on all edges $d(T)$,
+    the following inequality holds
+    $$d(T) \leq d(L*)$$
+    Let W be a Full Walk of $T$,
+    and $d(W)$ be its length.
+    Since $W$ visits every edge of $T$ exactly twice,
+    $$d(W ) = 2d(T )$$
+    It follows that
+    $$d(W) \leq 2d(L*)$$
+    By the triangle inequality,
+    Preorder Walk L is not longer than $W$:
+    $$d(L) \leq d(W)$$
+    As a result, we have:
+    \begin{align*}
+        d(L) &\leq 2d(L*)\\
+        d(L) &\leq 2d(L*), d(L)/d(L*) wu 2 \\
+        \rho(n) &= 2
+    \end{align*}
+\end{proof}
+
+\textbf{No Ratio Bound for Traveling Salesperson}\\
+\begin{theorem}
+    If P $\neq$ NP then there is no
+    approximation algorithm for general Travelling Salesman with polynomial complexity
+    and constant ratio bound.
+\end{theorem}
+
+\begin{proof}
+%We show how to solve Hamiltonian Cycle (HC) problem in polynomial time using a hypothetical approximation algorithm, with polynomial complexity and constant ratio bound ρ, for general Travelling Salesman (TS), as a subroutine.
+%Let G = (V, E) be an input of HC. Construct an input of TS with the set of cities V and the distance function:
+%d(u, v) = 1 if (u, v) ∈ E
+%d(u, v) = ρ|V | + 1 if (u, v) ∈/ E.
+%Clearly, this input of TS can be constructed from G in polynomial time.
+%If G contains a hamiltonian cycle, then its length will be |V |. If G does not contain a hamiltonian cycle, then there is a pair (u,v) of subsequent cities in any tour such that (u, v) ∈/ E, thus the size of any tour will be at least
+%(ρ|V | + 1) + (|V | − 1) = (ρ + 1)|V | > ρ|V |.
+%Thus, we can decide whether G contains a hamiltonian cycle by approximately solving the instance of TS. If the size of the solution tour is ≤ ρ|V |, then G contains a hamiltonian cycle, else G has no hamiltonian cycles.
+\end{proof}
 
