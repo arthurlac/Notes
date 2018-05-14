@@ -55,7 +55,7 @@ For a cryptosystem to be useful in practice, we need:
     \item We also need each encryption function $e_k$ to be injective or one to one.
 \end{enumerate}
 
-\subsection{Attack Models}
+\textbf{Attack Models}\\
 \begin{itemize}
     \item \textbf{Ciphertext only attack}
         Given: $y_1 = e_k(x_1),\dots y_i = e_k(x_i)$ deduce one of:
@@ -92,7 +92,7 @@ For a cryptosystem to be useful in practice, we need:
         Harder to analyse mathematically however.
 \end{itemize}
 
-\subsection{Security}
+\textbf{Security}
 \begin{itemize}
     \item \textbf{Computational security}\\
         A cryptosystem is computationally secure if the best algorithm for breaking it requires a com- putational effort which is greater than the computational resources of the assumed attacker.
@@ -110,19 +110,20 @@ For a cryptosystem to be useful in practice, we need:
 
 \end{itemize}
 
-\textbf{An unconditionally secure cryptosystem}
 In 1949 Shannon proved that the one-time pad is unconditionally secure.
-Theorem 1.
-%%Suppose (P, C, K, E, D) is a cryptosystem where |K| = |C| = |P|. Then the cryptosystem provides perfect secrecy if and only if every key is used with equal probability 1/|K|, and for everyx∈P andeveryy∈C,thereisauniquekeysuchthatek(x)=y.
-(as stated in Cryptography Theory and Practice)
+\begin{definition}
+%%Suppose (P, C, K, E, D) is a cryptosystem where |K| = |C| = |P|.
+%Then the cryptosystem provides perfect secrecy if and only if every key is used with equal probability 1/|K|,
+%and for everyx∈P andeveryy∈C,thereisauniquekeysuchthatek(x)=y.
+\end{definition}
 
 \textbf{Unconditional security is not practical}
 
 Instead of aiming for unconditional security researchers have tried to develop cryptosystems where one shared key can be used to send many messages between to entities while still main- taining computational security.
 
 
-\subsection{Confusion}
-\subsection{Diffusion}
+\textbf{Confusion}\\
+\textbf{Diffusion}\\
 In cryptography, confusion and diffusion are two properties of the operation of a secure cipher.
 Confusion and diffusion were identified by Claude Elwood Shannon in his paper, "Communication Theory of Secrecy Systems" published in 1949. In Shannon's original definitions:
 Confusion refers to making the relationship between the key and the ciphertext as complex and as involved as possible
