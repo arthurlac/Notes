@@ -305,7 +305,19 @@ We factor $n$ with probability half.
 
 \subsection{RSA Security}
 \subsubsection{Small Private Exponent}
+To increase the speed of decryption perhaps we can use a small private exponent a?
+Wiener presented an attack that computes a from the public key if 3a<n1/4 and q<p<2q
 \subsubsection{Small Public Exponent}
+To reduce encryption time a small public exponent b is often used.
+• The smallest possible value is b = 3
+• However, very small exponents are not secure
+Attacker can use the Chinese remainder theorem to compute solution to
+Alice wants to broadcast a message $x$:
+\begin{align*}
+    Y &\equiv y_1 \Mod{n_1} \\
+    Y &\equiv y_2 \Mod{n_2} \\
+    Y &\equiv y_3 \Mod{n_3}
+\end{align*}
 \subsubsection{Coppersmith’s Theorem}
 \subsubsection{Hastad’s Broadcast Attack}
 \subsubsection{Franklin-Reiter Related Messages}

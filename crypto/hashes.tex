@@ -2,72 +2,101 @@
 
 \textit{Hash functions} are functions which
 map data of arbitrary size to a bit string of a fixed size,
-the output being called a hash.
-To qualify as hash functions these functions must have several qualities;
-firstly that the function \textit{compresses} the input,
-the output must always be the same size.
-Secondly the function must be "easy" to compute;
-i.e. computable algorithmically in polynomial time
-with no massive hidden constants.
+the output being called a \textit{hash}.\\
 
-More formally we have
-\begin{itemize}
-	\item $\X$ is the set of messages.
-	\item $\Y$ is the finite set of hashes,
-		where each hash is of fixed size $n$ such that
-		$\forall\ y \in \Y\ |y| = n$.
-	\item $h : \X \rightarrow \Y$ is the hash function.
-	\item A pair $(x,y) \in (\X,\Y)$ is valid iff $h(x) = y$.
-\end{itemize}
+To qualify as hash functions these functions must have several qualities;
+firstly the output must always be the same size.
+Secondly the function must be easy to compute;
+i.e. computable algorithmically in polynomial time
+with no massive hidden constants.\\
 
 \begin{definition}
-	A \textit{keyed hash function} is the tuple $(\X,\Y,\K,\Hsh)$ where
-	\begin{enumerate}
-		\item $\X$ is the set of messages
-		\item $\Y$ is the finite set of hashes.
-		\item $\forall\ k \in \K$ there exists $h_k : \X \rightarrow \Y \in \Hsh$
-			such that a pair $(x,y) \in (\X, \Y)$ is considered valid iff $h_k(x) = y$.
-	\end{enumerate}
+    More formally we have
+    \begin{itemize}
+        \item $\X$ is the set of messages.
+        \item $\Y$ is the finite set of hashes,
+            where each hash is of fixed size $n$ such that
+            $\forall\ y \in \Y\ |y| = n$.
+        \item $h : \X \rightarrow \Y$ is the hash function.
+        \item A pair $(x,y) \in (\X,\Y)$ is valid iff $h(x) = y$.
+    \end{itemize}
 \end{definition}
 
-\textit{Cryptographic hash functions} are a subset of hash functions
-for which given $h(x) = y$ it is easy to verify that $h(x)$ is $y$
-but given just $y$ it is not easy to find $x$.
-The ideal cryptographic hash function has five main properties:
-\begin{enumerate}
-	\item it is deterministic so the same message always results in the same hash
-	\item it is quick to compute the hash value for any given message
-	\item it is infeasible to generate a message from its hash value except by trying all possible messages
-	\item a small change to a message should change the hash value so extensively that the new hash value appears uncorrelated with the old hash value
-	\item it is infeasible to find two different messages with the same hash value
-\end{enumerate}
-A hash function is considered to be secure if three problems are difficult to solve.
+\begin{definition}
+    A \textit{keyed hash function} is the tuple $(\X,\Y,\K,\Hsh)$ where
+    \begin{enumerate}
+        \item $\X$ is the set of messages
+        \item $\Y$ is the finite set of \textbf{authentication tags}
+        \item $\forall\ k \in \K$ there exists $h_k : \X \rightarrow \Y \in \Hsh$
+            such that a pair $(x,y) \in (\X, \Y)$ is considered valid iff $h_k(x) = y$.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    \textit{Cryptographic hash functions} are a subset of hash functions
+    for which given $h(x) = y$ it is easy to verify that $h(x)$ is $y$
+    but given just $y$ it is not easy to find $x$.\\
+
+    The ideal cryptographic hash function has five main properties:
+    \begin{enumerate}
+        \item It is \textbf{deterministic} so the same message always results in the same hash
+        \item It is \textbf{quick to compute} the hash value for any given message
+        \item It is infeasible to generate a message from its hash value except by trying all possible messages,
+            i.e. \textbf{one-way}.
+        \item A small change to a message should change the hash value so extensively that the new hash value appears uncorrelated with the old hash value,
+            i.e. \textbf{diffusion}.
+        \item It is infeasible to find two different messages with the same hash value,
+            i.e. \textbf{no hash collisions}.
+    \end{enumerate}
+\end{definition}
+
+A hash function is considered to be \textbf{secure} if three problems are difficult to solve.
 \begin{itemize}
-	\item \textit{Preimage 1}
-		Given $h : \X \rightarrow \Y$
-		and $y \in Y$
-		find $x \in X$
-		such that $h(x) = y$.
-	\item \textit{Preimage 2}
-		Given $h : \X \rightarrow \Y$
-		and $x \in \X$
-		find $x\prime \in \X\ x \neq x\prime$
-		such that $h(x) = h(x\prime)$.
-	\item \textit{Collision}
-		Given only $h : \X \rightarrow \Y$
-		find $x, x\prime \in \X$
-		such that $x \neq x\prime, h(x) = h(x\prime)$.
+    \item \textit{Preimage 1}
+        Given $h : \X \rightarrow \Y$
+        and $y \in Y$
+        find $x \in X$
+        such that $h(x) = y$.
+    \item \textit{Preimage 2}
+        Given $h : \X \rightarrow \Y$
+        and $x \in \X$
+        find $x\prime \in \X\ x \neq x\prime$
+        such that $h(x) = h(x\prime)$.
+    \item \textit{Collision}
+        Given only $h : \X \rightarrow \Y$
+        find $x, x\prime \in \X$
+        such that $x \neq x\prime, h(x) = h(x\prime)$.
 \end{itemize}
 
-Na\"ive attack
+\textbf{Na\"ive attack}\\
+\begin{itemize}
+    \item $h$ produces hashes of length $n$ bits
+    \item Let $y = h(x)$ for some message $x$
+    \item For random bitstrings $x\prime$ of bounded bitlength,
+        calculate $h(x\prime)$ and check if $h(x\prime) = y$
+\end{itemize}
 
-Birthday attack problem
+\textbf{Birthday Attack problem}\\
+In a group of 23 randomly chosen people,
+at least two will share a birthday with probability at least $0.5$.
+How is this relevant anyway?
+Define $h$ : humans $\rightarrow$ days of year by setting $h(x)$ equal to the birth day of person $x$.
+Finding two people with the same birthday is the same as finding a collision for this hash.
+
+What is the probability that k people don’t share a birthday?
+$$
+    p = 1 \times \frac{364}{365} \times \frac{363}{365} \times \dots \times \frac{365 - (k - 1)}{365}
+$$
+Probability that there is at least one shared birthday amongst k people is 1 − p
+Let h : X → Y produce hashes y of length n bits and hence |Y| = 2n.
+We expect to find a collision by brute force in around 2n/2 operations.
 
 Summarily, a hash function is secure if
-a preimage attack requires $2^n$ operations and
-a collision attack requires attack $2^{n/2}$ operations.
+\begin{itemize}
+    \item a preimage attack requires $2^n$ operations and
+    \item a collision attack requires attack $2^{n/2}$ operations.
+\end{itemize}
 
-\textit{Birthday paradox}
 
 \subsection{Merkle-Damg\aa rd Construction}
 The Merkle-Damg\aa rd construction is 
@@ -86,20 +115,146 @@ The algorithm starts with an initial value, the initialization vector (IV). The 
 the padding scheme used in the Merkle–Damgård construction must be chosen carefully to ensure the security of the scheme
 With these conditions in place, we find a collision in the MD hash function exactly when we find a collision in the underlying compression function. Therefore, the Merkle–Damgård construction is provably secure when the underlying compression function is secure
 
+Merkle-Damg ̊ard (MD) Strengthening
+Definition 17.
+Let x = x1x2 . . . xr of bitlength b be a message which has been broken into r blocks of length t. MD strengthening is defined to be the addition of a length-block xr+1 containing, say, the binary representation of b (b < 2t).
 
 \subsection{Message Digest (MD) Hash functions}
 
-\subsubsection{MD4}
+\textbf{MD5}\\
+MD5 is no longer considered to be secure:
+Preprocessing
+Let x be a b bit message. Padding (always performed):
+• Pad x so that it has a bitlength congruent to 448 (mod 512) • 1 bit is appended then 0 bits to the correct length
+Append length:
+• Append a 64 bit representation of b
+• If b > 264 the low-order 64 bits of b are appended Initialisation:
+• A four word state (A, B, C, D) is initialised with fixed public values • TableT: Ti =abs(sini)×232,1≤i≤64,iinradians
 
-\subsubsection{MD5}
+Auxiliary functions
+Define four auxiliary functions that each take as input three 32-bit words and produce as output one 32-bit word:
+F(X,Y,Z) = (X∧Y)∨(¬X∧Z) G(X,Y,Z) = (X∧Z)∨(Y∧¬Z)
+H(X,Y,Z) = X⊕Y⊕Z I(X,Y,Z) = Y⊕(X∨¬Z)
+
+Iteration and output
+Let y be the padded input.
+Iteration of MD5 compression function:
+for each 512 bit block of y do
+Modify the 128 bit state (A, B, C, D):
+Round inputs: current block, state and table T.
+Four similar rounds each of 16 operations based on one of the non-linear functions F, G, H or I, modular arithmetic and left rotation.
+end do
+Output h(x) = A∥B∥C∥D
+
 
 \subsection{Secure Hash Algorithm (SHA)}
+\textbf{SHA-1}
+Preprocessing
+Letxbeab<264 bitmessage. Padding:
+• Identical to MD5 Append length:
+• Append a 64 bit representation of b Initialisation:
+• A five word state (A, B, C, D, E) is initialised with fixed public values • A sequence T of 80 elements is initialised with fixed public values
+Auxiliary functions
+Define four auxiliary functions that each take as input three 32-bit words and produce as output one 32-bit word:
+F(X,Y,Z) = (X∧Y)∨(¬X∧Z) G(X,Y,Z) = X⊕Y⊕Z
+H(X,Y,Z) = (X ∧Y)∨(X ∧Z)∨(Y ∧Z) I(X,Y,Z) = X⊕Y⊕Z
+Iteration and output
+Let y be the padded input.
+Iteration of SHA-1 compression function:
+for each 512 bit block of y do:
+Modify the 160 bit state (A, B, C, D, E):
+Round inputs: current block, state and sequence T.
+Using the current block define 80 32-bit words using ⊕ and left rotations.
+Four similar rounds each of 20 operations based on one of the non-linear functions F, G, H or I, modular arithmetic and left rotation.
+end do
+Output h(x) = A∥B∥C∥D∥E
 
-\subsubsection{SHA-1}
+\textbf{SHA-2 Family}
 
-\subsubsection{SHA-2 Family}
+\textbf{SHA-3}
 
-\subsubsection{SHA-3}
+\textbf{Using unkeyed hash functions}\\
 
 \subsection{Message Digest Codes {MDC}}
+A message digest code is an unkeyed hash function.
+Let compress : {0, 1}m+t → {0, 1}m be a compression function (t ≥ 1). We construct an iterated hash function:
+h: \bigcup ∞ {0,1}i →{0,1}n i=m+t+1
+
+Let g : {0, 1}m → {0, 1}n be a (public) optional transformation function. Steps:
+1. Preprocessing
+2. Iteration
+3. Optional transformation
+
 \subsection{Message Authentication Codes {MAC}}
+\begin{definition}
+    A family of keyed hash functions is a four-tuple $(X,Y,K,H)$ where:
+    1. $X$ is the set of possible messages
+    2. $Y$ is a finite set of possible authentication tags
+    3. $K$ is the keyspace, a finite set of possible keys
+    4. For each $k\inK$, thereisahashfunctionhk $\in H$
+    $$hk : X \rightarrow Y$$
+    A pair $(x,y)$, is valid under key $k$ if $h_k(x) = y$
+\end{definition}
+
+\textbf{What do we mean by secure?}
+Computation-resistance:
+without prior knowledge of k, given zero or more pairs
+$(x_i,h_k(x_i))$ it is computationally infeasible to compute $(x,h_k(x))$ for a new input $x \neq x_i$
+
+MAC forgery: severity of attack
+The attacker is able to produce a new valid pair $(x,h_k(x))$
+• for his choice (or partial choice) of x
+• but has no control over the value of x
+Key recovery by exhaustive search
+Input: (x,hk(x)), key of length l Output: k
+Compute n-bit MAC using all possible keys
+• This requires 2l MAC operations.
+• In an ideal MAC, 2l−n keys will remain as candidates • Further valid pairs can test the remaining candidates
+A MAC key should not be recoverable in fewer than 2l operations. Cost of guessing a MAC
+For an n-bit MAC we expect to guess a correct MAC with probability 2−n.
+But we cannot check guesses without either the key or an (adaptive) chosen-text scenario.
+We should not be able to produce MAC forgeries with probability higher than
+max(2−l, 2−n)
+How to create a MAC?
+I have a cunning plan...
+Why not recycle?
+Lets construct a MAC as follows:
+• Take your favourite secure unkeyed iterated hash function h which uses compress: {0, 1}m+t → {0, 1}m as the compression function
+• For simplicity assume there is no preprocessing step and no output transformation
+• Hence every message x will need to have length a multiple t
+• Let hk be created by setting IV = k and keeping the IV secret.
+...but Oscar knows better
+Suppose Oscar has a valid pair (x,hk(x)) and a message extension x′ of length t.
+• Oscar can calculate a valid pair for the extended message x∥x′ without knowledge of k
+Problem solved?
+We try to stop this forgery by re-introducing the preprocessing step (padding): Oscar has valid pair (x,hk(x)). The preprocessing step for x produces:
+y = x∥pad(x), |y| = rt for some r ∈ Z Let w be of length t and define
+x′ = y∥w = x∥pad(x)∥w The preprocessing step for x′ produces:
+where |y′| = r′t, r′ > r
+y′ = x′∥pad(x′) = x∥pad(x)∥w∥pad(x′) 38
+• Oscar wishes to find hk(x′) without knowledge of k. He has hk(x) which would be the current state at round r in this computation. He computes:
+compress(hk(x)∥yr′ +1)
+compress(zr+1∥yr′ +2) . .
+Perhaps we could set
+This will fail for the same reasons as above! Or we could set
+hk(x) = h(x∥k) • Susceptible to a birthday attack
+• MAC value depends only on the last chaining value, key is only used in one step
+The above examples should provide some motivation for the ideas in the following section. I
+also formally rename this section “How not to create a MAC”.
+How to create a MAC (for real this time)
+HMAC
+Suffix and postfix key
+The above attacks suggest that the MAC key should be used as both a suffix and a postfix: hk(x) = h(k∥p∥x∥k)
+with padding to ensure that there is at least two iterations in the computation of h. HMAC
+Algorithm 7.
+Inputs: key k, MDC h
+Define ipad and opad each of length 512 bits: ipad = 3636...36
+opad = 5C5C ...5C
+HMACk (x) = h􏰇 (k ⊕ opad􏰈 􏰎􏰎 h((k ⊕ ipad)∥x) 􏰈
+• Keyed-Hash Message Authentication Code, FIPS standard 198, 2002
+• h can be any approved unkeyed hash, examples in the standard use SHA-1. • Argument for security is given in course book
+hk(x′) = zr′ =
+What about incorporating the key in other ways?
+zr+1 = zr+2 =
+compress(zr′−1∥yr′ ′ ) hk(x) = h(k∥x)
+CBC-MAC
